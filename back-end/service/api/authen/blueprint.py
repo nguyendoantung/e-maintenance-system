@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 from flask import Blueprint, Flask, jsonify, request
+from flask_cors import cross_origin
 from flask_jwt_extended import (
     JWTManager,
     create_access_token,
@@ -14,11 +15,12 @@ from flask_jwt_extended import (
 blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 
 @blueprint.route('/token', methods=["POST"])
+@cross_origin()
 def create_token():
     email=request.json.get("email", "")
     password = request.json.get("password", "")
 
-    if email != "tungn173451@sis.hust.edu.vn" or password != "WnnL4454":
+    if email != "tung.nd173451@sis.hust.edu.vn" or password != "WnnL4454":
         return {"msg": "Wrong email or password"}, 401
 
     access_token = create_access_token(identity=email)
@@ -43,6 +45,7 @@ def refresh_expiring_jwts(response):
         return response
 
 @blueprint.route("/logout", methods=["POST"])
+@cross_origin()
 def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
@@ -50,6 +53,7 @@ def logout():
 
 @blueprint.route("/profile", methods=["GET"])
 @jwt_required()
+@cross_origin()
 def my_profile():
     response_body = {
         "name": "Nagato",
