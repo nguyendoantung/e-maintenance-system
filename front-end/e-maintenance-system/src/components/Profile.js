@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import rootApi from "../api/rootApi";
 import path from "../api/path";
 
-function Profile(props) {
+function Profile() {
   const { data } = useQuery(
     ["get data"],
     () => rootApi.get(path.auth.profile),

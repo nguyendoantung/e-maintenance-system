@@ -56,8 +56,8 @@ def logout():
 @cross_origin()
 def my_profile():
     response_body = {
-        "name": "Nagato",
-        "about" :"Hello! I'm a full stack developer that loves python and javascript"
+        "name": "Nguyen Doan Tung",
+        "about" :"tung.nd173451@sis.hust.edu.vn"
     }
 
     return response_body

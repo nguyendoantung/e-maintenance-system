@@ -31,13 +31,6 @@ function App() {
               <Login setToken={setToken} />
             ) : (
               <Profile />
-              // <>
-              //   <Route
-              //     exact
-              //     path="/profile"
-              //     element={<Profile token={token} setToken={setToken} />}
-              //   ></Route>
-              // </>
             )}
           </div>
         </BrowserRouter>
