@@ -1,9 +1,37 @@
+import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { BrowserRouter } from "react-router-dom";
-import Login from "./components/Login";
+
+import configureStore from "./redux/store";
+
+import { Provider } from "react-redux";
 import Profile from "./components/Profile";
-import Header from "./components/Header";
 import useToken from "./utils/token";
+
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Modal from "@material-ui/core/Modal";
+
+import LoginPage from "./page/login/LoginPage";
+
+const store = configureStore();
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: "-8px",
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,16 +43,23 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { token, removeToken, setToken } = useToken();
+  const { token } = useToken();
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <div className="App">
-          <header className="App-header">
-            <p>Here's the music!</p>
-          </header>
-        </div>
-        <BrowserRouter>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          {/* <BrowserRouter>
           <div className="App">
             <Header token={removeToken} />
             {!token && token !== "" && token !== undefined ? (
@@ -33,8 +68,45 @@ function App() {
               <Profile />
             )}
           </div>
-        </BrowserRouter>
-      </QueryClientProvider>
+        </BrowserRouter> */}
+          <div className={classes.root}>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <>
+                  <Typography variant="h6" className={classes.title}>
+                    Welcome
+                  </Typography>
+                  {!token && token !== "" && token !== undefined ? (
+                    <>
+                      <Button color="inherit" onClick={handleOpen}>
+                        Đăng nhập
+                      </Button>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                      >
+                        <LoginPage />
+                      </Modal>
+                    </>
+                  ) : (
+                    <Profile />
+                  )}
+                </>
+              </Toolbar>
+            </AppBar>
+          </div>
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 }

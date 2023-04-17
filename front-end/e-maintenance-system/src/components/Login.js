@@ -46,7 +46,7 @@ function Login(props) {
 
   return (
     <div>
-      <h1>Login di dcmm</h1>
+      <h1>Login</h1>
       <form className="login">
         <input
           onChange={handleChange}
