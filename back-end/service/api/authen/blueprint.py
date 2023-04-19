@@ -17,13 +17,13 @@ blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 @blueprint.route('/token', methods=["POST"])
 @cross_origin()
 def create_token():
-    email=request.json.get("email", "")
+    user=request.json.get("user", "")
     password = request.json.get("password", "")
 
-    if email != "tung.nd173451@sis.hust.edu.vn" or password != "WnnL4454":
+    if user != "tung.nd173451@sis.hust.edu.vn" or password != "WnnL4454":
         return {"msg": "Wrong email or password"}, 401
 
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=user)
     response = {"access_token":access_token}
     return response
 

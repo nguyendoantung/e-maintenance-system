@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import Input from '@material-ui/core/Input'
+import TextField from '@material-ui/core/TextField'
+
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import {InputAdornment} from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
@@ -45,7 +47,7 @@ export default function InputField(props) {
   const helperTextId = uuidv4()
   return (
     <FormField {...props}>
-      <Input
+      <TextField
         {...input}
         data-testid={`${props.input.name}-input`}
         multiline={multiline}

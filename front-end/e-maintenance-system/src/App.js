@@ -2,11 +2,12 @@ import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 
 import configureStore from "./redux/store";
+import Routers from "./routers/Routers";
 
 import { Provider } from "react-redux";
 import Profile from "./components/Profile";
 import useToken from "./utils/token";
-
+import { CssBaseline } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -44,6 +45,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const { token } = useToken();
+
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -59,6 +61,8 @@ function App() {
     <>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
+          <CssBaseline />
+          <Routers />
           {/* <BrowserRouter>
           <div className="App">
             <Header token={removeToken} />
@@ -70,16 +74,8 @@ function App() {
           </div>
         </BrowserRouter> */}
           <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="fixed">
               <Toolbar>
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  color="inherit"
-                  aria-label="menu"
-                >
-                  <MenuIcon />
-                </IconButton>
                 <>
                   <Typography variant="h6" className={classes.title}>
                     Welcome

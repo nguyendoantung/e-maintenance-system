@@ -3,48 +3,66 @@ import { reduxForm, Field, reset, Form, change } from "redux-form";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Joi from "joi";
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  Box,
+  DialogActions,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core";
 import InputField from "../../components/FormControls/InputField";
 import createValidator from "../../components/createValidator";
-import DialogActions from "@material-ui/core/DialogActions";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const FORM_NAME = "LOGIN_FORM";
 
 const LoginForm = (props) => {
   const { handleSubmit, busy, onCancel } = props;
+  const [textSubmit, setTextSubmit] = React.useState("Login");
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Field
-          name="user"
-          component={InputField}
-          labelMultiline
-          justifyAlignment={6}
-          label="Email"
-          placeholder="example@gmail.com"
-        />
-        <Field
-          name="password"
-          type="password"
-          component={InputField}
-          labelMultiline
-          justifyAlignment={6}
-          label="Email"
-          placeholder="example@gmail.com"
-        />
-        <DialogActions>
-          <Button onClick={onCancel}>Cancel</Button>
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={busy ? <CircularProgress size={20} /> : <span />}
-            disabled={busy}
-          >
-            Login
-          </Button>
-        </DialogActions>
+        <Box
+          m="auto"
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Field
+            name="user"
+            component={InputField}
+            labelMultiline
+            label="Email"
+            style={{
+              width: "calc(100% + 8px)",
+            }}
+            placeholder="example@gmail.com"
+          />
+          <Field
+            name="password"
+            type="password"
+            component={InputField}
+            labelMultiline
+            label="Password"
+          />
+          <DialogActions>
+            <Button onClick={onCancel}>Cancel</Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              endIcon={busy ? <CircularProgress size={20} /> : <span />}
+              disabled={busy}
+            >
+              {textSubmit}
+            </Button>
+          </DialogActions>
+        </Box>
       </Form>
     </>
   );
