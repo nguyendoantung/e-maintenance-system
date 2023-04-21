@@ -1,3 +1,4 @@
+import React from "react";
 import { useQuery } from "react-query";
 import rootApi from "../api/rootApi";
 import path from "../api/path";
@@ -5,14 +6,16 @@ import { Button, Typography } from "@material-ui/core";
 
 function Profile({ token, setToken }) {
   const { data } = useQuery(
-    ["get data"],
+    ["get data", token],
     () => rootApi.get(path.auth.profile),
     {
       refetchInterval: 120000,
     }
   );
-  const profileData = data?.data;
-
+  const [profileData, setProfileData] = React.useState({});
+  React.useEffect(() => {
+    setProfileData(data?.data);
+  }, [data]);
   return (
     <div className="Profile">
       {profileData && (

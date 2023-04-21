@@ -5,6 +5,7 @@ import LoginForm from "./LoginForm";
 import { useMutation } from "react-query";
 import rootApi from "../../api/rootApi";
 import path from "../../api/path";
+import makeRandom from "../../utils/RandomString";
 
 function getModalStyle() {
   const top = 50;
@@ -35,12 +36,15 @@ const useStyles = makeStyles((theme) => ({
 const LoginPage = ({ setOpen }) => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-
-  const { mutateAsync, isLoading } = useMutation(["login"], (formValues) => {
-    const { user, password } = formValues;
-    const body = { user, password };
-    return rootApi.post(path.auth.login, body);
-  });
+  const [randomToken] = React.useState(makeRandom(32));
+  const { mutateAsync, isLoading } = useMutation(
+    ["login", randomToken],
+    (formValues) => {
+      const { user, password } = formValues;
+      const body = { user, password };
+      return rootApi.post(path.auth.login, body);
+    }
+  );
 
   const onSubmitForm = (formValues) => {
     mutateAsync(formValues).then((res) => {
