@@ -5,8 +5,7 @@ import LoginForm from "./LoginForm";
 import { useMutation } from "react-query";
 import rootApi from "../../api/rootApi";
 import path from "../../api/path";
-import useToken from "../../utils/token";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function getModalStyle() {
   const top = 50;
@@ -34,9 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = () => {
+const LoginPage = ({ setOpen }) => {
   const history = useHistory();
-  const { setToken } = useToken();
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -51,13 +49,14 @@ const LoginPage = () => {
       const { data } = res || {};
       console.log(data);
       const { access_token: token } = data;
-      setToken(token);
-      history.push();
+      localStorage.setItem("token", token);
+      setOpen(false);
     });
   };
   const onBackToList = () => {
     console.log("back to list");
   };
+
   return (
     <Box m="auto" style={modalStyle} className={classes.paper}>
       <LoginForm

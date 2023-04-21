@@ -2,10 +2,8 @@ import { useQuery } from "react-query";
 import rootApi from "../api/rootApi";
 import path from "../api/path";
 import { Button, Typography } from "@material-ui/core";
-import useToken from "../utils/token";
 
-function Profile() {
-  const { removeToken } = useToken();
+function Profile({ token, setToken }) {
   const { data } = useQuery(
     ["get data"],
     () => rootApi.get(path.auth.profile),
@@ -26,14 +24,26 @@ function Profile() {
           >
             Welcome
           </Typography>
-          <Typography
-            style={{
-              textSize: "16px",
-            }}
-          >
-            {profileData.name}
-          </Typography>
-          <Button onClick={() => removeToken()}>Clear token</Button>
+
+          {token && (
+            <>
+              <Typography
+                style={{
+                  textSize: "16px",
+                }}
+              >
+                {profileData.name}
+              </Typography>
+              <Button
+                onClick={() => {
+                  setToken(null);
+                  localStorage.clear();
+                }}
+              >
+                Clear token
+              </Button>
+            </>
+          )}
         </>
       )}
     </div>

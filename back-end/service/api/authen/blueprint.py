@@ -14,18 +14,20 @@ from flask_jwt_extended import (
 
 blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 
-@blueprint.route('/token', methods=["POST"])
+
+@blueprint.route("/token", methods=["POST"])
 @cross_origin()
 def create_token():
-    user=request.json.get("user", "")
+    user = request.json.get("user", "")
     password = request.json.get("password", "")
 
-    if user != "tung.nd173451@sis.hust.edu.vn" or password != "WnnL4454":
+    if user != "tung.nd173451@sis.hust.edu.vn" or password != "1":
         return {"msg": "Wrong email or password"}, 401
 
     access_token = create_access_token(identity=user)
-    response = {"access_token":access_token}
+    response = {"access_token": access_token}
     return response
+
 
 @blueprint.after_request
 def refresh_expiring_jwts(response):
@@ -37,12 +39,13 @@ def refresh_expiring_jwts(response):
             access_token = create_access_token(identity=get_jwt_identity())
             data = response.get_json()
             if type(data) is dict:
-                data["access_token"] = access_token 
+                data["access_token"] = access_token
                 response.data = json.dumps(data)
         return response
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original respone
         return response
+
 
 @blueprint.route("/logout", methods=["POST"])
 @cross_origin()
@@ -51,14 +54,14 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
+
 @blueprint.route("/profile", methods=["GET"])
 @jwt_required()
 @cross_origin()
 def my_profile():
     response_body = {
         "name": "Nguyen Doan Tung",
-        "about" :"tung.nd173451@sis.hust.edu.vn"
+        "about": "tung.nd173451@sis.hust.edu.vn",
     }
 
     return response_body
-

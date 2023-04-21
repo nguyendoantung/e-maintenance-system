@@ -44,7 +44,11 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { token } = useToken();
+  const [token, setToken] = React.useState(localStorage.getItem("token"));
+
+  React.useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, [localStorage.getItem("token")]);
 
   const classes = useStyles();
 
@@ -80,7 +84,7 @@ function App() {
                   <Typography variant="h6" className={classes.title}>
                     Welcome
                   </Typography>
-                  {!token && token !== "" && token !== undefined ? (
+                  {!token ? (
                     <>
                       <Button color="inherit" onClick={handleOpen}>
                         Đăng nhập
@@ -91,11 +95,11 @@ function App() {
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                       >
-                        <LoginPage />
+                        <LoginPage setOpen={setOpen} />
                       </Modal>
                     </>
                   ) : (
-                    <Profile />
+                    <Profile setToken={setToken} token />
                   )}
                 </>
               </Toolbar>
