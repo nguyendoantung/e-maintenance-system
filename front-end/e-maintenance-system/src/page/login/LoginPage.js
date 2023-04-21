@@ -5,7 +5,6 @@ import LoginForm from "./LoginForm";
 import { useMutation } from "react-query";
 import rootApi from "../../api/rootApi";
 import path from "../../api/path";
-import { useHistory } from "react-router-dom";
 
 function getModalStyle() {
   const top = 50;
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginPage = ({ setOpen }) => {
-  const history = useHistory();
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 

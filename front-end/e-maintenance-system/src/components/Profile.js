@@ -40,7 +40,7 @@ function Profile({ token, setToken }) {
                   localStorage.clear();
                 }}
               >
-                Clear token
+                Đăng xuất
               </Button>
             </>
           )}
