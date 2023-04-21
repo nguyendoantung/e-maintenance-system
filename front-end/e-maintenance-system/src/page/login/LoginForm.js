@@ -39,7 +39,7 @@ const LoginForm = (props) => {
             labelMultiline
             label="Email"
             style={{
-              width: "calc(100% + 8px)",
+              width: "calc(100% + 64px)",
             }}
             placeholder="example@gmail.com"
           />
@@ -48,6 +48,9 @@ const LoginForm = (props) => {
             type="password"
             component={InputField}
             labelMultiline
+            style={{
+              width: "calc(100% + 64px)",
+            }}
             label="Password"
           />
           <DialogActions>
