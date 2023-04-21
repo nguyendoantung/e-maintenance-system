@@ -52,7 +52,7 @@ const LoginPage = ({ setOpen }) => {
     });
   };
   const onBackToList = () => {
-    console.log("back to list");
+    setOpen(false);
   };
 
   return (
