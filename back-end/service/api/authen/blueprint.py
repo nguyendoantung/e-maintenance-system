@@ -1,16 +1,17 @@
 import json
 from datetime import datetime, timedelta, timezone
 
-from flask import Blueprint, Flask, jsonify, request
+from data import User
+from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from flask_jwt_extended import (
-    JWTManager,
     create_access_token,
     get_jwt,
     get_jwt_identity,
     jwt_required,
     unset_jwt_cookies,
 )
+from utils import create_session
 
 blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 
@@ -21,10 +22,21 @@ def create_token():
     user = request.json.get("user", "")
     password = request.json.get("password", "")
 
-    if user != "tung.nd173451@sis.hust.edu.vn" or password != "1":
-        return {"msg": "Wrong email or password"}, 401
+    session = create_session()
+    user = (
+        session.query(User)
+        .filter(User.email == user, User.password == password)
+        .first()
+    )
+    if not user:
+        return {"msg": "unauthorized"}, 401
 
-    access_token = create_access_token(identity=user)
+    customer_identity = {
+        "user_name": user.user_name,
+        "role": user.role,
+    }
+
+    access_token = create_access_token(identity=customer_identity)
     response = {"access_token": access_token}
     return response
 
@@ -59,9 +71,13 @@ def logout():
 @jwt_required()
 @cross_origin()
 def my_profile():
+    information = get_jwt()["sub"]
+    user_name = information.get("user_name")
+    user = create_session().query(User).filter(User.user_name == user_name).first()
+
     response_body = {
-        "name": "Nguyen Doan Tung",
-        "about": "tung.nd173451@sis.hust.edu.vn",
+        "name": f"{user.FirstName} {user.LastName}",
+        "about": user.email,
     }
 
     return response_body
