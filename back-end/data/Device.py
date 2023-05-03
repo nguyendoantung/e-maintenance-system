@@ -1,5 +1,6 @@
 from data.Base import Base
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 from sqlalchemy_utils import UUIDType
 
 
@@ -8,7 +9,7 @@ class Device(Base):
 
     id = Column(UUIDType(), nullable=False, primary_key=True)
     device_type = Column(
-        ForeignKey("device_type.id", ondelete="CASCADE", onupdate="CASCADE"),
+        ForeignKey("category.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
     price = Column(Integer(), nullable=False)
@@ -16,6 +17,10 @@ class Device(Base):
         ForeignKey("shop.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False
     )
     image_link = Column(String(1000))
+
+    type_device = relationship(
+        "Category", primaryjoin="Device.device_type == Category.id"
+    )
 
     def __repr__(self):
         return str(self.__dict__)

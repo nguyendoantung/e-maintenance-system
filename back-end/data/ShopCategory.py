@@ -1,6 +1,7 @@
 from data.Base import Base
-from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy_utils import UUIDType
+from sqlalchemy import Column, ForeignKey
+from sqlalchemy.orm import relationship
+
 
 class ShopCategory(Base):
     __tablename__ = "shop_category"
@@ -8,10 +9,17 @@ class ShopCategory(Base):
     shop_id = Column(
         ForeignKey("shop.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
+        primary_key=True,
     )
     category_id = Column(
         ForeignKey("category.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
+        primary_key=True,
+    )
+
+    shop = relationship("Shop", primaryjoin="ShopCategory.shop_id == Shop.id")
+    category = relationship(
+        "Category", primaryjoin="ShopCategory.category_id == Category.id"
     )
 
     def __repr__(self):

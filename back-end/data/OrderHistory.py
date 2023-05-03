@@ -1,8 +1,8 @@
-import datetime
+from datetime import datetime
 
 from data.Base import Base
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
-from sqlalchemy_utils import UUIDType
+from sqlalchemy.orm import relationship
 
 
 class OrderHistory(Base):
@@ -11,6 +11,7 @@ class OrderHistory(Base):
     id = Column(
         ForeignKey("repair_order.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
+        primary_key=True,
     )
     customer_id = Column(
         ForeignKey("user.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False
@@ -24,6 +25,12 @@ class OrderHistory(Base):
     complete_time = Column(DateTime(), nullable=False, default=datetime.now)
     note = Column(String(200))
     rate = Column(Integer(), default=1)
+
+    order = relationship("RepairOrder", primaryjoin="OrderHistory.id == RepairOrder.id")
+    customer = relationship("User", primaryjoin="OrderHistory.customer_id == User.id")
+    staff = relationship(
+        "ShopMember", primaryjoin="OrderHistory.staff_id == ShopMember.user_id"
+    )
 
     def __repr__(self):
         return str(self.__dict__)
