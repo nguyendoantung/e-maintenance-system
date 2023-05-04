@@ -56,7 +56,7 @@ const HomePage = () => {
               </Modal>
             </>
           ) : (
-            <Profile setToken={setToken} token />
+            <Profile setToken={setToken} token={token} />
           )}
         </>
       </Toolbar>
