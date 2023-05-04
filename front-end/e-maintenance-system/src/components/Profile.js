@@ -2,7 +2,8 @@ import React from "react";
 import { useQuery } from "react-query";
 import rootApi from "../api/rootApi";
 import path from "../api/path";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 function Profile({ setToken, token }) {
   const { data, isError } = useQuery(
@@ -28,33 +29,28 @@ function Profile({ setToken, token }) {
     <div className="Profile">
       {profileData && (
         <>
-          <Typography
+          <div
             style={{
-              textSize: "16px",
+              textAlign: "right",
             }}
           >
-            Welcome
-          </Typography>
-
-          {token && (
-            <>
-              <Typography
-                style={{
-                  textSize: "16px",
-                }}
-              >
-                {profileData.name}
-              </Typography>
-              <Button
-                onClick={() => {
-                  setToken(null);
-                  localStorage.clear();
-                }}
-              >
-                Đăng xuất
-              </Button>
-            </>
-          )}
+            <Typography
+              style={{
+                textSize: "16px",
+              }}
+            >
+              {profileData.name}
+            </Typography>
+            <ExitToAppIcon
+              style={{
+                fontSize: "1rem",
+              }}
+              onClick={() => {
+                setToken(null);
+                localStorage.clear();
+              }}
+            />
+          </div>
         </>
       )}
     </div>

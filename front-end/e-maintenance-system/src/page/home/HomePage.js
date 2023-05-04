@@ -36,7 +36,11 @@ const HomePage = () => {
   };
   return (
     <AppBar position="fixed">
-      <Toolbar>
+      <Toolbar
+        style={{
+          backgroundColor: "#35994B",
+        }}
+      >
         <>
           <Typography variant="h6" className={classes.title}>
             Welcome
