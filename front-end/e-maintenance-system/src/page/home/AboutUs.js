@@ -1,12 +1,15 @@
 import React from "react";
-import BuildIcon from '@material-ui/icons/Build';
-import { Box, Typography, Button, Card, CardContent } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 const AboutUs = () => {
   return (
-    <Typography variant="h6" gutterBottom style={{ textAlign: "center" }}>
-      About Us
-    </Typography>
+    <>
+      <Typography variant="h6" gutterBottom style={{ textAlign: "center" }}>
+        Về chúng tôi
+      </Typography>
+      <Typography>An toàn và tin cậy</Typography>
+      <Typography>Dịch vụ sửa chữa uy tín hàng đầu</Typography>
+    </>
   );
 };
 

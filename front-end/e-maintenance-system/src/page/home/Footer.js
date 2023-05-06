@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     height: 200,
     width: 400,
-    backgroundColor: "gray",
+    backgroundColor: "#3f51b5",
+    color: "white"
   },
   control: {
     padding: theme.spacing(2),

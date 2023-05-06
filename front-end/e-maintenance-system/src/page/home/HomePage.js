@@ -1,9 +1,31 @@
 import React from "react";
 import Profile from "../../components/Profile";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import { AppBar, Toolbar, Typography, Button, Modal } from "@material-ui/core";
 import LoginPage from "../login/LoginPage";
 import Footer from "./Footer";
+import Content from "./Content";
+import HomeIcon from "@material-ui/icons/Home";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+
+function ElevationScroll(props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
+
+ElevationScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+  window: PropTypes.func,
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,49 +59,36 @@ const HomePage = () => {
   };
   return (
     <>
-      <AppBar
-        position="fixed"
-        style={{
-          backgroundColor: "gray",
-        }}
-      >
-        <Toolbar>
-          <>
-            <Typography variant="h6" className={classes.title}>
-              Welcome
-            </Typography>
-            {!token ? (
-              <>
-                <Button color="inherit" onClick={handleOpen}>
-                  Đăng nhập
-                </Button>
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                >
-                  <LoginPage setOpen={setOpen} />
-                </Modal>
-              </>
-            ) : (
-              <Profile setToken={setToken} token={token} />
-            )}
-          </>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-        position="fixed"
-        style={{
-          top: "auto",
-          bottom: 0,
-          backgroundColor: "gray",
-        }}
-      >
-        <Toolbar>
-          <Footer />
-        </Toolbar>
-      </AppBar>
+      <ElevationScroll>
+        <AppBar position="fixed">
+          <Toolbar>
+            <>
+              <HomeIcon />
+              <Typography variant="h6" className={classes.title}>
+                Welcome
+              </Typography>
+              {!token ? (
+                <>
+                  <Button color="inherit" onClick={handleOpen}>
+                    Đăng nhập
+                  </Button>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+                    <LoginPage setOpen={setOpen} />
+                  </Modal>
+                </>
+              ) : (
+                <Profile setToken={setToken} token={token} />
+              )}
+            </>
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <Content position="relative" />
     </>
   );
 };
