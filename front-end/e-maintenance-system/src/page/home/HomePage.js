@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomePage = () => {
+const HomePage = (props) => {
   const [token, setToken] = React.useState(localStorage.getItem("token"));
 
   React.useEffect(() => {
@@ -58,7 +58,7 @@ const HomePage = () => {
   };
   return (
     <>
-      <ElevationScroll>
+      <ElevationScroll {...props}>
         <AppBar position="fixed">
           <Toolbar>
             <>
@@ -77,7 +77,11 @@ const HomePage = () => {
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                   >
-                    <LoginPage setOpen={setOpen} />
+                    <LoginPage
+                      setOpen={setOpen}
+                      setToken={setToken}
+                      token={token}
+                    />
                   </Modal>
                 </>
               ) : (
@@ -87,6 +91,7 @@ const HomePage = () => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
+      <Toolbar />
       <Content />
     </>
   );

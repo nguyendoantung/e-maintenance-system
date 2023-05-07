@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = ({ setOpen }) => {
+const LoginPage = ({ setOpen, setToken }) => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [randomToken] = React.useState(makeRandom(32));
@@ -51,6 +51,7 @@ const LoginPage = ({ setOpen }) => {
       const { data } = res || {};
       const { access_token: token } = data;
       localStorage.setItem("token", token);
+      setToken(token);
       setOpen(false);
     });
   };

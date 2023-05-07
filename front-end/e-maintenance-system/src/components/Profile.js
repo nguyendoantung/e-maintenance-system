@@ -10,7 +10,7 @@ function Profile({ setToken, token }) {
     ["get data", token],
     () => rootApi.get(path.auth.profile),
     {
-      refetchInterval: 120000,
+      refetchInterval: 5000,
     }
   );
 
@@ -39,13 +39,15 @@ function Profile({ setToken, token }) {
     });
   };
 
-  return (
-    <div className="Profile">
+    return (
+      <div className="Profile">
       {profileData && (
         <>
           <div
             style={{
-              textAlign: "right",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
             }}
           >
             <Typography
@@ -66,8 +68,8 @@ function Profile({ setToken, token }) {
           </div>
         </>
       )}
-    </div>
-  );
+      </div>
+    );
 }
 
 export default Profile;

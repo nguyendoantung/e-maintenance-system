@@ -53,11 +53,7 @@ const MainContent = () => {
                       width: "200px",
                     }}
                   >
-                    <repairType.icon
-                      style={{
-                        marginTop: "16px",
-                      }}
-                    />
+                    <repairType.icon />
                     <CardContent>
                       <Typography
                         component="h5"
