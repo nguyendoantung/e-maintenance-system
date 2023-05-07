@@ -8,12 +8,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     border: "0",
+    backgroundColor: "#3f51b5",
   },
   paper: {
     height: 200,
     width: 400,
     backgroundColor: "#3f51b5",
-    color: "white"
+    color: "white",
   },
   control: {
     padding: theme.spacing(2),

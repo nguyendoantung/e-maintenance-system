@@ -49,7 +49,6 @@ const LoginPage = ({ setOpen }) => {
   const onSubmitForm = (formValues) => {
     mutateAsync(formValues).then((res) => {
       const { data } = res || {};
-      console.log(data);
       const { access_token: token } = data;
       localStorage.setItem("token", token);
       setOpen(false);

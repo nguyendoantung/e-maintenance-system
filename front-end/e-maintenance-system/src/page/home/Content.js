@@ -1,14 +1,20 @@
 import React from "react";
 import Footer from "./Footer";
-import Container from "@material-ui/core/Container";
+import { AppBar } from "@material-ui/core";
+import MainContent from "./MainContent";
 
 const Content = () => {
   return (
     <>
-      <Container>
-        <div>This is content</div>
+      <MainContent />
+      <AppBar
+        style={{
+          top: "auto",
+          bottom: 0,
+        }}
+      >
         <Footer />
-      </Container>
+      </AppBar>
     </>
   );
 };

@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { AppBar, Toolbar, Typography, Button, Modal } from "@material-ui/core";
 import LoginPage from "../login/LoginPage";
-import Footer from "./Footer";
 import Content from "./Content";
 import HomeIcon from "@material-ui/icons/Home";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -88,7 +87,7 @@ const HomePage = () => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <Content position="relative" />
+      <Content />
     </>
   );
 };
