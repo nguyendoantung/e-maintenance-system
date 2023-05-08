@@ -7,14 +7,15 @@ const Content = () => {
   return (
     <>
       <MainContent />
-      <AppBar
+      <Footer />
+      {/* <AppBar
         style={{
           top: "auto",
           bottom: 0,
         }}
       >
         <Footer />
-      </AppBar>
+      </AppBar> */}
     </>
   );
 };

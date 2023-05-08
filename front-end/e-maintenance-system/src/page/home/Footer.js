@@ -9,6 +9,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     border: "0",
     backgroundColor: "#3f51b5",
+    top: "auto",
+    bottom: 0,
   },
   paper: {
     height: 200,

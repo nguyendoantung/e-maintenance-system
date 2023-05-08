@@ -10,6 +10,8 @@ import {
 } from "@material-ui/core";
 import KitchenIcon from "@material-ui/icons/Kitchen";
 
+import PowerIcon from "@material-ui/icons/Power";
+
 const repairTypes = [
   {
     text: "Tủ lạnh",
@@ -25,7 +27,7 @@ const repairTypes = [
   },
   {
     text: "Điện",
-    icon: KitchenIcon,
+    icon: PowerIcon,
   },
 ];
 
@@ -44,9 +46,9 @@ const MainContent = () => {
       <Grid container spacing={1}>
         <Grid item xs={12} sx={{ border: 0 }}>
           <Grid container justifyContent="center" spacing={1}>
-            {repairTypes.map((repairType, index) => {
+            {repairTypes.map((repairType) => {
               return (
-                <Grid key={index} item sx={{ border: 0 }}>
+                <Grid key={repairType?.text} item sx={{ border: 0 }}>
                   <Card
                     style={{
                       display: "flex",
@@ -60,7 +62,7 @@ const MainContent = () => {
                         variant="h5"
                         style={{ color: "#3f51b5" }}
                       >
-                        {repairType.text}
+                        {repairType?.text}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -70,6 +72,10 @@ const MainContent = () => {
           </Grid>
         </Grid>
       </Grid>
+
+      <Typography>
+        <div></div>
+      </Typography>
     </>
   );
 };
