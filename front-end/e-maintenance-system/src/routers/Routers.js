@@ -10,7 +10,7 @@ const Routers = () => {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
-          {/* <Route component={Page404} exact/> */}
+          <Route component={Page404} exact />
         </Switch>
       </BrowserRouter>
     </>
