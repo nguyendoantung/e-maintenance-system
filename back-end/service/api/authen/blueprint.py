@@ -11,6 +11,9 @@ from flask_jwt_extended import (
     jwt_required,
     unset_jwt_cookies,
 )
+from flask_pydantic import validate
+from service.managers.Authenticate import Authenticate
+from service.model.Authenticate import LoginModel, RegisterAccount
 from utils import create_session
 
 blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
@@ -18,27 +21,18 @@ blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 
 @blueprint.route("/token", methods=["POST"])
 @cross_origin()
-def create_token():
-    user = request.json.get("user", "")
-    password = request.json.get("password", "")
-
-    session = create_session()
-    user = (
-        session.query(User)
-        .filter(User.email == user, User.password == password)
-        .first()
-    )
-    if not user:
-        return {"msg": "unauthorized"}, 401
-
-    customer_identity = {
-        "user_name": user.user_name,
-        "role": user.role,
-    }
-
-    access_token = create_access_token(identity=customer_identity)
-    response = {"access_token": access_token}
+@validate(body=LoginModel)
+def create_token(body: LoginModel):
+    # api receive user_name or email then check user
+    response = Authenticate().login(body)
     return response
+
+
+@blueprint.route("/register", methods=["POST"])
+@cross_origin()
+@validate(body=RegisterAccount)
+def register(body: RegisterAccount):
+    return Authenticate().register(body)
 
 
 @blueprint.after_request
