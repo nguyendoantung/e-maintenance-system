@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Profile from "../../components/Profile";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -47,15 +48,7 @@ const HomePage = (props) => {
   }, [localStorage.getItem("token")]);
 
   const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  console.log("Hone page token ", token);
   return (
     <>
       <ElevationScroll {...props}>
@@ -68,21 +61,9 @@ const HomePage = (props) => {
               </Typography>
               {!token ? (
                 <>
-                  <Button color="inherit" onClick={handleOpen}>
+                  <Button color="inherit" component={Link} to="/login">
                     Đăng nhập
                   </Button>
-                  <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                  >
-                    <LoginPage
-                      setOpen={setOpen}
-                      setToken={setToken}
-                      token={token}
-                    />
-                  </Modal>
                 </>
               ) : (
                 <Profile setToken={setToken} token={token} />

@@ -35,4 +35,10 @@ const defaultOptions = {
  */
 const rootApi = axios.create(defaultOptions);
 
+rootApi.interceptors.request.use(function (config) {
+  let token = localStorage.getItem("token");
+  config.headers["Authorization"] = "Bearer " + token;
+  return config;
+});
+
 export default rootApi;

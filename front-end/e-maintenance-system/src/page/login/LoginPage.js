@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import LoginForm from "./LoginForm";
@@ -33,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = ({ setOpen, setToken }) => {
+const LoginPage = () => {
+  const history = useHistory();
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [randomToken] = React.useState(makeRandom(32));
@@ -41,7 +43,7 @@ const LoginPage = ({ setOpen, setToken }) => {
     ["login", randomToken],
     (formValues) => {
       const { user, password } = formValues;
-      const body = { user, password };
+      const body = { user_name: user, password };
       return rootApi.post(path.auth.login, body);
     }
   );
@@ -51,12 +53,11 @@ const LoginPage = ({ setOpen, setToken }) => {
       const { data } = res || {};
       const { access_token: token } = data;
       localStorage.setItem("token", token);
-      setToken(token);
-      setOpen(false);
+      history.push("/");
     });
   };
   const onBackToList = () => {
-    setOpen(false);
+    history.push("/");
   };
 
   return (
