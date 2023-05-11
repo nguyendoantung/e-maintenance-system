@@ -11,6 +11,12 @@ function Profile({ setToken, token }) {
     () => rootApi.get(path.auth.profile),
     {
       refetchInterval: 5000,
+      onError(err) {
+        if (err.code.status == 401) {
+          setToken(null);
+          localStorage.clear();
+        }
+      },
     }
   );
 
@@ -39,8 +45,8 @@ function Profile({ setToken, token }) {
     });
   };
 
-    return (
-      <div className="Profile">
+  return (
+    <div className="Profile">
       {profileData && (
         <>
           <div
@@ -68,8 +74,8 @@ function Profile({ setToken, token }) {
           </div>
         </>
       )}
-      </div>
-    );
+    </div>
+  );
 }
 
 export default Profile;
