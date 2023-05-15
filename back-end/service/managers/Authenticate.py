@@ -34,6 +34,7 @@ class Authenticate:
             return {"msg": AuthenticateMessage.UNAUTHORIZED}, HTTPStatus.UNAUTHORIZED
 
         customer_identity = {
+            "id": user.id,
             "user_name": user.user_name,
             "role": user.role,
         }

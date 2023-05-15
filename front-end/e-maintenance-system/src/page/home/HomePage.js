@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import Profile from "../../components/Profile";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import { AppBar, Toolbar, Typography, Button, Modal } from "@material-ui/core";
-import LoginPage from "../login/LoginPage";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import Content from "./Content";
 import HomeIcon from "@material-ui/icons/Home";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -48,7 +47,6 @@ const HomePage = (props) => {
   }, [localStorage.getItem("token")]);
 
   const classes = useStyles();
-  console.log("Hone page token ", token);
   return (
     <>
       <ElevationScroll {...props}>
