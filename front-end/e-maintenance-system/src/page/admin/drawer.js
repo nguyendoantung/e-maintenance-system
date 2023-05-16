@@ -16,6 +16,7 @@ const adminFeatures = [
 ];
 
 const userFeatures = [
+  { text: "Quản lý đơn đặt hàng", value: "UserOrder", icon: "" },
   {
     text: "Cập nhật thông tin",
     value: "UpdateInfo",
@@ -26,18 +27,17 @@ const userFeatures = [
     value: "ChangePassword",
     icon: "",
   },
-  {
-    text: "Đăng xuất",
-    value: "LogOut",
-    icon: "",
-  },
+  // {
+  //   text: "Đăng xuất",
+  //   value: "LogOut",
+  //   icon: "",
+  // },
 ];
 
 const Features = (props) => {
   const history = useHistory();
-  const { page, setPage, role } = props;
+  const { setPage, role } = props;
 
-  console.log(page);
   return (
     <div>
       <KeyboardBackspaceIcon onClick={() => history.push("/")} />

@@ -43,17 +43,16 @@ class Authenticate:
         return {"access_token": access_token}, HTTPStatus.OK
 
     def register(self, register_model: RegisterAccount):
-        check_duplicate_filed = (
-            self.session.query(User)
-            .filter(
-                or_(
-                    User.user_name == register_model.user_name,
-                    User.email == register_model.email,
-                    User.phone == register_model.phone,
-                )
+        query = self.session.query(User).filter(
+            or_(
+                User.user_name == register_model.user_name,
+                User.email == register_model.email,
             )
-            .first()
         )
+        if register_model.phone:
+            query.filter(or_(User.phone == register_model.phone))
+        check_duplicate_filed = query.first()
+
         if check_duplicate_filed:
             return {"msg": AuthenticateMessage.DUPLICATE_INFO}, 409
         else:
