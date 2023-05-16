@@ -56,8 +56,9 @@ class Authenticate:
         if check_duplicate_filed:
             return {"msg": AuthenticateMessage.DUPLICATE_INFO}, 409
         else:
+            user_id = uuid.uuid4()
             new_user = User(
-                id=uuid.uuid4(),
+                id=user_id,
                 email=register_model.email,
                 FirstName=register_model.first_name,
                 LastName=register_model.last_name,
@@ -68,6 +69,7 @@ class Authenticate:
             )
             self.session.add(new_user)
             customer_identity = {
+                "id": user_id,
                 "user_name": register_model.user_name,
                 "role": "user",
             }
