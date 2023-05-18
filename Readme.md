@@ -6,6 +6,7 @@ yarn 1.22.19
 node 16.19.0
 
 1st
+
     run backend:
         cd back-end
         python -m venv venv
