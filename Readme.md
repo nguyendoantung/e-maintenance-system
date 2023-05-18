@@ -19,5 +19,7 @@ node 16.19.0
         yarn start
 
 Future (in root folder):
+
     make be
+
     make fe
