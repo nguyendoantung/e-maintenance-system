@@ -6,6 +6,10 @@ const path = {
     logout: "/authenticate/logout",
     profile: "/authenticate/profile",
   },
+  admin: {
+    listStaff: ({ page, pageSize }) =>
+      `/admin/staff?page=${page}&pageSize=${pageSize}`,
+  },
 };
 
 export default path;

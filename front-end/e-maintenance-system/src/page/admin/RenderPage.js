@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import rootApi from "../../api/rootApi";
 import path from "../../api/path";
 import Page404 from "../Page404";
+import ManagerPage from "./manager";
 
 const RenderPage = (props) => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const RenderPage = (props) => {
   });
   const { page } = props;
   if (page === "ManagerShop") {
-    return "This is manager shop";
+    return <ManagerPage />;
   } else if (page === "UserOrder") {
     return "Manger order";
   } else if (page === "UpdateInfo") {

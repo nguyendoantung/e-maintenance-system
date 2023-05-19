@@ -27,7 +27,8 @@
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.11.3",
     "web-vitals": "^2.1.4",
-    "mui-modal-provider": "^1.4.1"
+    "mui-modal-provider": "^1.4.1",
+    "query-string": "^7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
