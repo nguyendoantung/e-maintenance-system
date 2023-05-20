@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 
 const GetStaff = ({ page, pageSize }) => {
   return useQuery(
-    ["get_staff"],
+    ["get_staff", page, pageSize],
     () => rootApi.get(path.admin.listStaff({ page, pageSize })),
     {}
   );

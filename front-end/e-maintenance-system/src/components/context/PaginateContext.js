@@ -26,7 +26,7 @@ function PaginateProvider(props) {
   const { defaultPageSize, defaultPage } = props;
   const [page, setPage] = useState(parseInt(pageUrl || defaultPage || 1, 10));
   const [pageSize, setPageSize] = useState(
-    parseInt(size || defaultPageSize || 25, 10)
+    parseInt(size || defaultPageSize || 5, 10)
   );
 
   const onChangePaginationParam = (paging = 1, pagingSize = 25) => {

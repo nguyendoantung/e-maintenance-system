@@ -28,7 +28,8 @@
     "@material-ui/styles": "^4.11.3",
     "web-vitals": "^2.1.4",
     "mui-modal-provider": "^1.4.1",
-    "query-string": "^7.0.0"
+    "query-string": "^7.0.0",
+    "react-table": "^7.6.3"
   },
   "scripts": {
     "start": "react-scripts start",
