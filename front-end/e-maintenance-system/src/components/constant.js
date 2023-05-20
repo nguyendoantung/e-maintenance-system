@@ -1,7 +1,7 @@
 const ManagerTab = {
-  STAFF: { label: "Staff", value: "staff" },
-  DEVICE: { label: "Device", value: "device" },
-  ORDER: { label: "Order", value: "order" },
+  STAFF: { label: "Nhân viên", value: "staff" },
+  DEVICE: { label: "Thiết bị", value: "device" },
+  ORDER: { label: "Đơn hàng", value: "order" },
 };
 
 export { ManagerTab };

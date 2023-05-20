@@ -115,6 +115,7 @@ export default ({
       {!isNotShowPage && (
         <TablePagination
           component="div"
+          labelRowsPerPage="Số bản ghi"
           rowsPerPageOptions={[25, 10, 5]}
           colSpan={3}
           count={total || 0}
