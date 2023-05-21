@@ -94,12 +94,16 @@ create table if not exists `order_history` (
     start_time datetime,
     complete_time datetime,
     note varchar(200),
+    note varchar(200),
     rate int,
     FOREIGN KEY (id) REFERENCES repair_order(id) on update cascade on delete cascade,
     FOREIGN KEY (customer_id) REFERENCES user(id) on update cascade on delete cascade,
     FOREIGN KEY (staff_id) REFERENCES shop_member(user_id)
 );
 
+alter table device
+add name varchar(1000);
 # create table new if neccessary - add in future
+
 
 

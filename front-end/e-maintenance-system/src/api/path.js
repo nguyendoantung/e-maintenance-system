@@ -7,8 +7,14 @@ const path = {
     profile: "/authenticate/profile",
   },
   admin: {
-    listStaff: ({ page, pageSize }) =>
-      `/admin/staff?page=${page}&pageSize=${pageSize}`,
+    staff: {
+      listStaff: ({ page, pageSize }) =>
+        `/admin/staff?page=${page}&pageSize=${pageSize}`,
+    },
+    device: {
+      listDevice: ({page, pageSize}) => 
+      `/admin/device?page=${page}&pageSize=${pageSize}`,
+    }
   },
 };
 

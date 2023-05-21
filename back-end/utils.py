@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
+
 load_dotenv()
 
 DB_HOST = os.getenv("DB_HOST")
@@ -11,7 +12,9 @@ DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
 
-db_url = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DATABASE_NAME}"
+db_url = (
+    f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DATABASE_NAME}?charset=utf8"
+)
 
 
 def create_session():
