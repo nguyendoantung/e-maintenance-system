@@ -9,12 +9,18 @@ const path = {
   admin: {
     staff: {
       listStaff: ({ page, pageSize }) =>
-        `/admin/staff?page=${page}&pageSize=${pageSize}`,
+        `/admin/staff/?page=${page}&pageSize=${pageSize}`,
     },
     device: {
-      listDevice: ({page, pageSize}) => 
-      `/admin/device?page=${page}&pageSize=${pageSize}`,
-    }
+      listDevice: ({ category, page, pageSize }) =>
+        // `/admin/device/?page=${page}&pageSize=${pageSize}`,
+        category === ""
+          ? `/admin/device/?page=${page}&pageSize=${pageSize}`
+          : `/admin/device/?page=${page}&pageSize=${pageSize}&category_id=${category}`,
+    },
+    category: {
+      listCategory: () => `/admin/category/`,
+    },
   },
 };
 

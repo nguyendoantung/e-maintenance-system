@@ -5,6 +5,7 @@ import LinkTab from "../../../components/Tab/LinkTab";
 import TabPanel from "../../../components/form_helper/TabPanel";
 import { ManagerTab } from "../../../components/constant";
 import StaffPage from "./staff/list/StaffPage";
+import DevicePage from "./device/list/DevicePage";
 
 const useStyles = () => ({
   root: {
@@ -47,7 +48,7 @@ const ManagerPage = () => {
         <StaffPage />
       </TabPanel>
       <TabPanel value={ManagerTab.DEVICE.value} index={tabName} pt={2}>
-        This is device manager page
+        <DevicePage />
       </TabPanel>
       <TabPanel value={ManagerTab.ORDER.value} index={tabName} pt={2}>
         This is order manager page

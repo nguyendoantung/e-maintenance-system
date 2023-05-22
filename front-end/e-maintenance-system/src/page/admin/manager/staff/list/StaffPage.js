@@ -8,7 +8,7 @@ import {
 } from "../../../../../components/context/PaginateContext";
 import SimpleTable from "../../../../../components/SimpleTable";
 import columns from "./columns";
-import { Card, Typography } from "@material-ui/core";
+import { Card, Box, Button, Typography } from "@material-ui/core";
 
 const StaffPage = () => {
   const { page, pageSize } = usePagination();
@@ -38,7 +38,14 @@ const StaffPage = () => {
     }
     return (
       <>
-        <Card>{table}</Card>
+        <Card>
+          <Box mb={2} pt={2} pr={2} display="flex" justifyContent="flex-end">
+            <Button variant="contained" color="primary">
+              Thêm nhân viên
+            </Button>
+          </Box>
+          {table}
+        </Card>
       </>
     );
   };

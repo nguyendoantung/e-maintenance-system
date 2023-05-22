@@ -13,12 +13,20 @@ class DeviceManager:
         self.session = create_session()
 
     def get_device(self, category_id: uuid.UUID, page=1, page_size=10):
-        devices = self.session.query(Device, Category.name.label("category_name")).join(
-            Category, Category.id == category_id
-        )
+        if category_id:
+            devices = (
+                self.session.query(Device, Category.name.label("category_name"))
+                .join(Category, Category.id == category_id)
+                .filter(Device.device_type == category_id)
+            )
+
+        else:
+            devices = self.session.query(
+                Device, Category.name.label("category_name")
+            ).join(Category, Category.id == Device.device_type)
 
         results = devices.limit(page_size).offset((page - 1) * page_size).all()
-        print(results)
+
         return {
             "device": [
                 ListDevice(

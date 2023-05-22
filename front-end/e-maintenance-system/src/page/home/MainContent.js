@@ -3,8 +3,6 @@ import preventive_maintenance from "../../image/preventive-maintenance.jpg";
 import {
   Card,
   CardContent,
-  CardMedia,
-  Paper,
   Typography,
   Grid,
 } from "@material-ui/core";

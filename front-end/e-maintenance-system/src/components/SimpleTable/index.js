@@ -105,7 +105,9 @@ export default ({
                   justifyContent="space-round"
                   alignContent="center"
                 >
-                  <Typography color="textSecondary">Nothing found</Typography>
+                  <Typography color="textSecondary">
+                    Không có dữ liệu
+                  </Typography>
                 </Box>
               </TableCell>
             </TableRow>
