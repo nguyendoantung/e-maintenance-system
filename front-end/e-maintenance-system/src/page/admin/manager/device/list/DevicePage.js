@@ -20,8 +20,10 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Modal,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import CreateDevicePage from "../../device/create/CreateDevicePage";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DevicePage = () => {
+  const [openCreate, setOpenCreate] = React.useState(false);
   const classes = useStyles();
   const { page, pageSize } = usePagination();
   const [chosenCategory, setChosenCategory] = React.useState("");
@@ -83,6 +86,12 @@ const DevicePage = () => {
   const clearFilterCategory = () => {
     setChosenCategory("");
   };
+  const handleOpenCreateModal = () => {
+    setOpenCreate(true);
+  };
+  const handleCloseCreateModal = () => {
+    setOpenCreate(false);
+  };
   const renderContent = () => {
     return (
       <>
@@ -108,9 +117,21 @@ const DevicePage = () => {
             <Button>
               <DeleteIcon onClick={clearFilterCategory} />
             </Button>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenCreateModal}
+            >
               Thêm thiết bị
             </Button>
+            <Modal
+              open={openCreate}
+              onClose={handleCloseCreateModal}
+              aria-labelledby="child-modal-title"
+              aria-describedby="child-modal-description"
+            >
+              <CreateDevicePage onClose={handleCloseCreateModal}/>
+            </Modal>
           </Box>
           {table}
         </Card>
