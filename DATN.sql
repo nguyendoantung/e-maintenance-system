@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS `E-maintenance-system`;
-DROP DATABASE `E-maintenance-system`;
+-- DROP DATABASE `E-maintenance-system`;
 use `E-maintenance-system`;
 
 # create table user 
@@ -93,7 +93,6 @@ create table if not exists `order_history` (
     price int,
     start_time datetime,
     complete_time datetime,
-    note varchar(200),
     note varchar(200),
     rate int,
     FOREIGN KEY (id) REFERENCES repair_order(id) on update cascade on delete cascade,
