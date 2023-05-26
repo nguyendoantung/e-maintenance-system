@@ -1,36 +1,36 @@
-import React from "react";
-import { useHistory } from "react-router";
-import { Divider, List, ListItem } from "@material-ui/core";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import React from 'react';
+import { useHistory } from 'react-router';
+import { Divider, List, ListItem } from '@material-ui/core';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MailIcon from '@material-ui/icons/Mail';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 const adminFeatures = [
   {
-    text: "Quản lý cửa hàng",
-    value: "ManagerShop",
-    icon: "",
+    text: 'Quản lý cửa hàng',
+    value: 'ManagerShop',
+    icon: '',
   },
 ];
 
 const userFeatures = [
-  { text: "Quản lý đơn đặt hàng", value: "UserOrder", icon: "" },
+  { text: 'Quản lý đơn đặt hàng', value: 'UserOrder', icon: '' },
   {
-    text: "Cập nhật thông tin",
-    value: "UpdateInfo",
-    icon: "",
+    text: 'Cập nhật thông tin',
+    value: 'UpdateInfo',
+    icon: '',
   },
   {
-    text: "Đổi mật khẩu",
-    value: "ChangePassword",
-    icon: "",
+    text: 'Đổi mật khẩu',
+    value: 'ChangePassword',
+    icon: '',
   },
   // {
-  //   text: "Đăng xuất",
-  //   value: "LogOut",
-  //   icon: "",
+  //   text: 'Đăng xuất',
+  //   value: 'LogOut',
+  //   icon: '',
   // },
 ];
 
@@ -40,8 +40,8 @@ const Features = (props) => {
 
   return (
     <div>
-      <KeyboardBackspaceIcon onClick={() => history.push("/")} />
-      {role.includes("admin") && (
+      <KeyboardBackspaceIcon onClick={() => history.push('/')} />
+      {role.includes('admin') && (
         <>
           <List>
             {adminFeatures.map(({ text, value }, index) => (
