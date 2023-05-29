@@ -13,7 +13,7 @@ blueprint = Blueprint("admin/staff", __name__, url_prefix="/admin/staff")
 
 @blueprint.route("/", methods=["GET"], endpoint="/get-staff")
 @jwt_required()
-@cross_origin()
+# @cross_origin()
 def get_staff():
     role = get_jwt()["sub"]["role"]
     if "admin" not in role:

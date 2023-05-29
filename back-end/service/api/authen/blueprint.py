@@ -20,7 +20,7 @@ blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 
 
 @blueprint.route("/token", methods=["POST"])
-@cross_origin()
+# @cross_origin()
 @validate(body=LoginModel)
 def create_token(body: LoginModel):
     # api receive user_name or email then check user
@@ -29,7 +29,7 @@ def create_token(body: LoginModel):
 
 
 @blueprint.route("/register", methods=["POST"])
-@cross_origin()
+# @cross_origin()
 @validate(body=RegisterAccount)
 def register(body: RegisterAccount):
     return Authenticate().register(body)
@@ -63,7 +63,7 @@ def logout():
 
 @blueprint.route("/profile", methods=["GET"])
 @jwt_required()
-@cross_origin()
+# @cross_origin()
 def my_profile():
     information = get_jwt()["sub"]
     user_name = information.get("user_name")

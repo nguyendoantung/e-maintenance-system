@@ -6,6 +6,8 @@ import path from '../../api/path';
 import Page404 from '../Page404';
 import ManagerPage from './manager';
 import UpdatePasswordPage from './manager/userService/changePassword/UpdatePasswordPage';
+import OrderManagerPage from './manager/userService';
+import UpdateInfoPage from './manager/userService/updateInfo/UpdateInfoPage';
 import App from '../../App';
 
 const RenderPage = (props) => {
@@ -21,9 +23,9 @@ const RenderPage = (props) => {
   if (page === 'ManagerShop') {
     return <ManagerPage />;
   } else if (page === 'UserOrder') {
-    return 'Manger order';
+    return <OrderManagerPage />;
   } else if (page === 'UpdateInfo') {
-    return 'Update info';
+    return <UpdateInfoPage />;
   } else if (page === 'ChangePassword') {
     return <UpdatePasswordPage />;
   } else if (page === 'LogOut') {

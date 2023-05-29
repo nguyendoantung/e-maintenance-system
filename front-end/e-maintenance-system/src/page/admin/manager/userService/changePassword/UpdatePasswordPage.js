@@ -1,14 +1,29 @@
 import React from 'react';
-import { AppBar, Box, Paper, Typography } from '@material-ui/core';
-
-const useStyles = () => ({
-  root: {
-    flexGrow: 1,
-  },
-});
+import { Typography } from '@material-ui/core';
+import UpdatePasswordForm from './UpdatePasswordForm';
+import rootApi from '../../../../../api/rootApi';
+import path from '../../../../../api/path';
+import { useMutation } from 'react-query';
+import { useParams } from 'react-router';
+// import ChangePassword from "../../../../../request/changePasword"
 
 const UpdatePasswordPage = () => {
-  // const classes = useStyles();
+  const { adminID } = useParams();
+  const { mutateAsync, isLoading } = useMutation(
+    ['change_password', adminID],
+    (formValues) => {
+      const { currentPassword, newPassword, repeatPassword } = formValues;
+      const body = {
+        current_password: currentPassword,
+        new_password: newPassword,
+        repeat_password: repeatPassword,
+      };
+      return rootApi.post(path.admin.userService.changePassword(), body);
+    }
+  );
+  const handleSubmit = (formValues) => {
+    mutateAsync(formValues).then((res) => console.log(res));
+  };
   return (
     <>
       <Typography
@@ -18,7 +33,11 @@ const UpdatePasswordPage = () => {
       >
         Cập nhật mật khẩu của bạn
       </Typography>
-      <Paper>This is your form</Paper>
+      <UpdatePasswordForm
+        onSubmit={handleSubmit}
+        busy={isLoading}
+        adminID={adminID}
+      />
     </>
   );
 };

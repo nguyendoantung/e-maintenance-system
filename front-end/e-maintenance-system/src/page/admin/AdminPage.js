@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { CssBaseline, Drawer } from "@material-ui/core";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Features from "./drawer";
-import RenderPage from "./RenderPage";
-import parseJwt from "../../utils/parseJwt";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { CssBaseline, Drawer } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Features from './drawer';
+import RenderPage from './RenderPage';
+import parseJwt from '../../utils/parseJwt';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex',
   },
   drawer: {
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminPage = (props) => {
-  const [page, setPage] = React.useState("UpdateInfo");
+  const [page, setPage] = React.useState('UserOrder');
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [token, setToken] = React.useState(localStorage.getItem("token"));
+  const [token, setToken] = React.useState(localStorage.getItem('token'));
   React.useEffect(() => {
-    setToken(localStorage.getItem("token"));
-  }, [localStorage.getItem("token")]);
-  const role = parseJwt(token)?.sub?.role || "";
-  const userId = parseJwt(token)?.sub?.id || "";
+    setToken(localStorage.getItem('token'));
+  }, [localStorage.getItem('token')]);
+  const role = parseJwt(token)?.sub?.role || '';
+  const userId = parseJwt(token)?.sub?.id || '';
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -59,7 +59,7 @@ const AdminPage = (props) => {
         <Drawer
           container={container}
           variant="temporary"
-          anchor={theme.direction === "rtl" ? "right" : "left"}
+          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={mobileOpen}
           onClose={handleDrawerToggle}
           classes={{
