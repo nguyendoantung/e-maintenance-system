@@ -12,7 +12,6 @@ blueprint = Blueprint("user", __name__, url_prefix="/user")
 
 @blueprint.route("/change_password", methods=["POST"], endpoint="/change-password")
 @jwt_required()
-# @cross_origin()
 @validate(body=ChangePasswordModel)
 def change_password(**kwargs):
     body = ChangePasswordModel(**request.get_json())
