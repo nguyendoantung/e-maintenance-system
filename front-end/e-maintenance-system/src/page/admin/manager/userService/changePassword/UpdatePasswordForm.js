@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
 const FORM_NAME = 'CHANGE_PASSWORD_FORM';
 
 function UpdatePasswordForm(props) {
-  const { handleSubmit, busy } = props;
+  const { handleSubmit, busy, clear } = props;
   const classes = useStyles();
   React.useEffect(() => {
     props.reset(FORM_NAME);
-  }, []);
+  }, [clear]);
 
   return (
     <>
@@ -107,9 +107,6 @@ const validateFields = (values) => {
 };
 
 const schema = Joi.object({
-  // currentPassword: Joi.string().required().label('Mật khẩu hiện tại'),
-  // newPassword: Joi.string().required().label('Mật khẩu mới'),
-  // repeatPassword: Joi.string().required().label('Xác nhận mật khẩu'),
   currentPassword: Joi.string().label('Mật khẩu hiện tại'),
   newPassword: Joi.string().label('Mật khẩu mới'),
   repeatPassword: Joi.string().label('Xác nhận mật khẩu'),
@@ -119,9 +116,6 @@ export default compose(
   reduxForm({
     form: FORM_NAME,
     validate: validateFields,
-    // validate: createValidator(schema),
-    // asyncValidate: validateFields,
-    // asyncBlurFields: [],
   }),
   connect(null, { reset, change })
 )(UpdatePasswordForm);

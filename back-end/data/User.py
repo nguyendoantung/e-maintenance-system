@@ -17,6 +17,7 @@ class User(Base):
     email = Column(String(100), nullable=True)
     phone = Column(String(20), nullable=True)
     password = Column(String(1000), nullable=False)
+    profile_link = Column(String(1000), nullable=True)
 
     def __repr__(self):
         return str(self.__dict__)

@@ -72,6 +72,10 @@ def my_profile():
     response_body = {
         "name": f"{user.FirstName} {user.LastName}",
         "about": user.email,
+        "user_name": user.user_name,
+        "email": user.email,
+        "phone": user.phone,
+        "profile_link": user.profile_link,
     }
 
     return response_body

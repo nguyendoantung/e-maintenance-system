@@ -1,14 +1,17 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import UpdatePasswordForm from './UpdatePasswordForm';
 import rootApi from '../../../../../api/rootApi';
 import path from '../../../../../api/path';
 import { useMutation } from 'react-query';
 import { useParams } from 'react-router';
+import { showSuccess, showError } from '../../../../../utils/notification';
 // import ChangePassword from "../../../../../request/changePasword"
 
 const UpdatePasswordPage = () => {
   const { adminID } = useParams();
+  const [clear, setClear] = React.useState(false)
   const { mutateAsync, isLoading } = useMutation(
     ['change_password', adminID],
     (formValues) => {
@@ -22,7 +25,14 @@ const UpdatePasswordPage = () => {
     }
   );
   const handleSubmit = (formValues) => {
-    mutateAsync(formValues).then((res) => console.log(res));
+    mutateAsync(formValues)
+      .then((res) => {
+        showSuccess({ message: res?.data?.data?.message || 'Thanh cong' });
+        setClear(true)
+      })
+      .catch((err) => {
+        showError({ message: err.response?.data?.message || 'That bai' });
+      });
   };
   return (
     <>
@@ -37,6 +47,7 @@ const UpdatePasswordPage = () => {
         onSubmit={handleSubmit}
         busy={isLoading}
         adminID={adminID}
+        clear={clear}
       />
     </>
   );
