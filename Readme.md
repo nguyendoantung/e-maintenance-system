@@ -5,7 +5,8 @@ Python: python 3.9.7
 yarn 1.22.19
 node 16.19.0
 
-1st
+1st: 
+    clone project
 
     run backend:
         cd back-end
@@ -15,6 +16,7 @@ node 16.19.0
         python index.py
 
     run front-end:
+        cd front-end/e-maintenance-system/
         yarn install --frozen-lockfile
         yarn start
 
