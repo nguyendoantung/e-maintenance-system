@@ -1,9 +1,11 @@
 from datetime import datetime
 
-from data.Base import Base
 from sqlalchemy import Column, DateTime, ForeignKey, String
-from sqlalchemy_utils import UUIDType
 from sqlalchemy.orm import relationship
+from sqlalchemy_utils import UUIDType
+
+from data.Base import Base
+
 
 class RepairOrder(Base):
     __tablename__ = "repair_order"
@@ -22,6 +24,13 @@ class RepairOrder(Base):
     create_date = Column(DateTime(), nullable=False, default=datetime.now)
     status = Column(String(200))
     note = Column(String(200))
+    full_name = Column(String(200))
+    phone = Column(String(20))
+    category = Column(
+        UUIDType()
+    )
+    location = Column(String(1000))
+    device_suggest = Column(String(1000))
 
     customer = relationship("User", primaryjoin="RepairOrder.customer_id == User.id")
     staff = relationship("ShopMember", primaryjoin="RepairOrder.staff_id == ShopMember.user_id")

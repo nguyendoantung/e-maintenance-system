@@ -23,6 +23,7 @@ const path = {
     },
     userService: {
       changePassword: () => `/user/change_password`,
+      createRepairOrder: () => `/user/repair_order`,
     },
   },
 };

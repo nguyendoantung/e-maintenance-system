@@ -102,6 +102,16 @@ create table if not exists `order_history` (
 
 alter table device
 add name varchar(1000);
+
+# alter table repair order - add cloumn status, full_name, phone, category, location, device_suggest
+ALTER TABLE repair_order
+ADD Column (
+full_name varchar(200),
+phone varchar(20),
+category binary(16),
+location varchar(1000),
+device_suggest varchar(1000)
+);
 # create table new if neccessary - add in future
 
 

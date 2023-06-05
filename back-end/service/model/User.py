@@ -1,4 +1,5 @@
 import re
+import uuid
 from typing import Optional
 
 from pydantic import BaseModel, root_validator, validator
@@ -9,23 +10,10 @@ class ChangePasswordModel(BaseModel):
     new_password: str
     repeat_password: str
 
-    # @validator("current_password", "new_password", "repeat_password")
-    # @root_validator()
-    # def validate_password(cls, values):
-        # if 
-        # print("-----------")
-        # # print(cls.__dict__)
-        # # print(cls.current_password)
-        # # print(cls.new_password)
-
-        # # print(cls.repeat_password)
-
-        # # print(values)
-        # # print(value)
-        # # print(kwargs)
-        # print("-----------")
-
-        # print(values.get("current_password"))
-        # print(values.new_password)
-        # print(values.repeat_password)
-        # pass
+class CreateRepairOrder(BaseModel):
+    full_name: str
+    phone: str
+    category: uuid.UUID
+    location: str
+    device_suggest: Optional[str]
+    note: Optional[str]

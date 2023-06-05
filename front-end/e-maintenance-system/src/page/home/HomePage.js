@@ -1,12 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Profile from "../../components/Profile";
-import { makeStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
-import Content from "./Content";
-import HomeIcon from "@material-ui/icons/Home";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import React from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import Profile from '../../components/Profile';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import Content from './Content';
+import HomeIcon from '@material-ui/icons/Home';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import { UilWrench } from '@iconscout/react-unicons';
+import CreateRepairOrderPage from '../admin/manager/userService/createRepairOrder/CreateRepairOrderPage';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -28,7 +31,7 @@ ElevationScroll.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: "-8px",
+    margin: '-8px',
     flexGrow: 1,
   },
   menuButton: {
@@ -40,11 +43,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomePage = (props) => {
-  const [token, setToken] = React.useState(localStorage.getItem("token"));
+  const history = useHistory();
+  const [token, setToken] = React.useState(localStorage.getItem('token'));
+  const [openRepair, setOpenRepair] = React.useState(false);
 
   React.useEffect(() => {
-    setToken(localStorage.getItem("token"));
-  }, [localStorage.getItem("token")]);
+    setToken(localStorage.getItem('token'));
+  }, [localStorage.getItem('token')]);
+
+  const handleClickRepairNow = () => {
+    if (!token) {
+      history.push('/login');
+    } else {
+      setOpenRepair(true);
+    }
+  };
 
   const classes = useStyles();
   return (
@@ -57,6 +70,15 @@ const HomePage = (props) => {
               <Typography variant="h6" className={classes.title}>
                 Welcome
               </Typography>
+              <Button color="inherit" onClick={handleClickRepairNow}>
+                <UilWrench />
+                Sửa chữa ngay
+              </Button>
+              <CreateRepairOrderPage
+                open={openRepair}
+                token={token}
+                setOpen={setOpenRepair}
+              />
               {!token ? (
                 <>
                   <Button color="inherit" component={Link} to="/login">
