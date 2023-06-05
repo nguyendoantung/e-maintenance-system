@@ -13,7 +13,7 @@ import createValidator from '../../../../../components/createValidator';
 const FORM_NAME = 'REPAIR_ORDER_CREATION_FORM';
 
 const CreateRepairOrderForm = (props) => {
-  const { handleSubmit, busy, open, setOpen } = props;
+  const { handleSubmit, busy, setOpen } = props;
 
   const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
   const categories = ld
