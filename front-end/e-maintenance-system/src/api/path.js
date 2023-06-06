@@ -24,6 +24,8 @@ const path = {
     userService: {
       changePassword: () => `/user/change_password`,
       createRepairOrder: () => `/user/repair_order`,
+      getRepairOrder: ({ page, pageSize }) =>
+        `/user/repair_order?page=${page}&pageSize=${pageSize}`,
     },
   },
 };

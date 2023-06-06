@@ -4,6 +4,7 @@ import { AppBar, Tabs, Box, Paper } from '@material-ui/core';
 import LinkTab from '../../../../components/Tab/LinkTab';
 import TabPanel from '../../../../components/form_helper/TabPanel';
 import { UserManagerTab } from '../../../../components/constant';
+import ListOrderPage from './manageOrder/list/OrderPage';
 
 const useStyles = () => ({
   root: {
@@ -41,7 +42,7 @@ const OrderManagerPage = () => {
         </Box>
       </Paper>
       <TabPanel value={UserManagerTab.LIST_ORDER.value} index={tabName} pt={2}>
-        List order page
+        <ListOrderPage />
       </TabPanel>
       <TabPanel
         value={UserManagerTab.HISTORY_ORDER.value}

@@ -7,6 +7,8 @@ from flask_pydantic import validate
 
 from service.managers.User import User
 from service.model.User import ChangePasswordModel, CreateRepairOrder
+from service.constant import PAGE_SIZE_DEFAULT, PAGE_SIZE_LIMIT
+from service.utils.parse_int import parse_int, parse_int_with_limit
 
 blueprint = Blueprint("user", __name__, url_prefix="/user")
 
@@ -22,8 +24,21 @@ def change_password(**kwargs):
 
 @blueprint.route("/repair_order", methods=["POST"], endpoint="/create-repair-order")
 @jwt_required()
+@validate(body=CreateRepairOrder)
 def create_repair_order(**kwargs):
     body = CreateRepairOrder(**request.get_json())
     information = get_jwt()["sub"]
     user_name = information.get("user_name")
     return User().create_repair_order(user_name, body)
+
+@blueprint.route("/repair_order", methods=["GET"], endpoint="/get-repair-order")
+@jwt_required()
+def get_user_repair_order():
+    params = request.args
+    page = parse_int(params.get("page"), 1)
+    page_size = parse_int_with_limit(
+        params.get("pageSize"), PAGE_SIZE_DEFAULT, PAGE_SIZE_LIMIT
+    )
+    information = get_jwt()["sub"]
+    user_name = information.get("user_name")
+    return User().get_user_repair_order(user_name, page, page_size)
