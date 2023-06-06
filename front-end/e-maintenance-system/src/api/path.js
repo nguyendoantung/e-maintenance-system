@@ -10,6 +10,8 @@ const path = {
     staff: {
       listStaff: ({ page, pageSize }) =>
         `/admin/staff/?page=${page}&pageSize=${pageSize}`,
+      listRepairOrder: ({ page, pageSize }) =>
+        `/admin/staff/get_order?page=${page}&pageSize=${pageSize}`,
     },
     device: {
       listDevice: ({ category, page, pageSize }) =>

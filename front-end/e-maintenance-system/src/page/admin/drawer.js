@@ -15,6 +15,14 @@ const adminFeatures = [
   },
 ];
 
+const staffFeatures = [
+  {
+    text: 'Danh sách đơn',
+    value: 'ManagerOrder',
+    icon: '',
+  },
+];
+
 const userFeatures = [
   { text: 'Quản lý đơn đặt hàng', value: 'UserOrder', icon: '' },
   {
@@ -45,6 +53,21 @@ const Features = (props) => {
         <>
           <List>
             {adminFeatures.map(({ text, value }, index) => (
+              <ListItem button key={text} onClick={() => setPage(value)}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </>
+      )}
+      {role.includes('staff') && (
+        <>
+          <List>
+            {staffFeatures.map(({ text, value }, index) => (
               <ListItem button key={text} onClick={() => setPage(value)}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}

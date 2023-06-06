@@ -36,9 +36,9 @@ const ListOrderPage = () => {
     [listOrders, page, pageSize]
   );
   const renderContent = () => {
-    if (listOrders.length === 0 && !isLoading) {
-      return <Typography>This empty here</Typography>;
-    }
+    // if (listOrders.length === 0 && !isLoading) {
+    //   return <Typography>This empty here</Typography>;
+    // }
     return (
       <>
         <Card>
