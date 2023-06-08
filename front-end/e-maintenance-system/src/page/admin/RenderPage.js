@@ -8,7 +8,7 @@ import ManagerPage from './manager';
 import UpdatePasswordPage from './manager/userService/changePassword/UpdatePasswordPage';
 import OrderManagerPage from './manager/userService';
 import UpdateInfoPage from './manager/userService/updateInfo/UpdateInfoPage';
-import ManagerOrderByStaffPage from './manager/staff/managerOrder/ManagerOrderByStaff';
+import ManagerOrderForStaffPage from './manager/staff/managerOrder/index';
 import App from '../../App';
 
 const RenderPage = (props) => {
@@ -30,7 +30,7 @@ const RenderPage = (props) => {
   } else if (page === 'ChangePassword') {
     return <UpdatePasswordPage />;
   } else if (page === 'ManagerOrder') {
-    return <ManagerOrderByStaffPage />;
+    return <ManagerOrderForStaffPage />;
   } else if (page === 'LogOut') {
     history.push('/');
     mutateAsync().then(() => {

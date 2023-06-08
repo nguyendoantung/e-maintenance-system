@@ -1,5 +1,5 @@
 import React from 'react';
-import OrderAction from './Actions';
+import OrderOfStaffAction from './Actions';
 
 const columns = () => {
   return [
@@ -28,13 +28,21 @@ const columns = () => {
       accessor: 'device',
     },
     {
-      Header: 'Ghi chú',
+      Header: 'Note',
       accessor: 'note',
+    },
+    {
+      Header: 'Thiết bị sử dụng',
+      accessor: 'used_device',
+    },
+    {
+      Header: 'Giá',
+      accessor: 'price',
     },
     {
       Header: 'Xử lý',
       accessor: (d) => {
-        return <OrderAction order={d} />;
+        return <OrderOfStaffAction order={d} />;
       },
     },
   ];

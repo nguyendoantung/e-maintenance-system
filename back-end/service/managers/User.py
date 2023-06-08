@@ -3,12 +3,11 @@ import uuid
 from http import HTTPStatus
 
 import pytz
-from sqlalchemy import desc
-
 from data import Device, OrderItem, RepairOrder
 from data import User as UserDB
-from service.ApiModel.ListOrder import ListOrder
+from service.ApiModel.ListOrder import ListOrder, ListOrderForUser
 from service.model.User import ChangePasswordModel, CreateRepairOrder
+from sqlalchemy import desc
 from utils import create_session
 
 
@@ -60,7 +59,7 @@ class User():
         orders.order_by(RepairOrder.create_date.desc()).limit(page_size).offset((page - 1) * page_size).all()
         res = []
         for order in orders:
-            a = ListOrder(
+            a = ListOrderForUser(
                 id=order.id,
                 full_name=order.full_name,
                 phone=order.phone,

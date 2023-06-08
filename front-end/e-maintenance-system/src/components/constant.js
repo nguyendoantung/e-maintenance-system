@@ -9,4 +9,9 @@ const UserManagerTab = {
   HISTORY_ORDER: { label: 'Lịch sử', value: 'history' },
 };
 
-export { ManagerTab , UserManagerTab};
+const StaffManagerTab = {
+  ACCEPT_ORDER: { label: 'Danh sách đơn', value: 'listOrder' },
+  MY_ORDER: { label: 'Đơn của tôi', value: 'myOrder' },
+};
+
+export { ManagerTab, UserManagerTab, StaffManagerTab };
