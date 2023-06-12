@@ -1,28 +1,32 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
+  ImageListItem,
+  ImageList,
   DialogActions,
   CircularProgress,
   Button,
-} from "@material-ui/core";
-import InputField from "../../../../../components/FormControls/InputField";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { reduxForm, Field, reset, Form, change } from "redux-form";
-import AsyncSelectField from "../../../../../components/FormControls/AsyncSelectField";
-import GetCategory from "../../../../../request/getCategory";
-import ld from "lodash";
+} from '@material-ui/core';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import InputField from '../../../../../components/FormControls/InputField';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { reduxForm, Field, reset, Form, change } from 'redux-form';
+import AsyncSelectField from '../../../../../components/FormControls/AsyncSelectField';
+import GetCategory from '../../../../../request/getCategory';
+import ld from 'lodash';
+import FormField from '../../../../../components/FormControls/FormField';
 
-export const CREATE_DEVICE_FORM = "create_device_form";
+export const CREATE_DEVICE_FORM = 'CREATE_DEVICE_FORM';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "auto",
-  bgcolor: "background.paper",
-  border: "0px solid #000",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 'auto',
+  bgcolor: 'background.paper',
+  border: '0px solid #000',
   boxShadow: 24,
   pt: 2,
   px: 4,
@@ -30,8 +34,8 @@ const style = {
 };
 
 const CreateDeviceForm = (props) => {
-  const { handleSubmit, busy, onCancel } = props;
-  const [images, setImages] = React.useState([]);
+  const { handleSubmit, busy, open, setOpen } = props;
+  const [listImages, setListImages] = React.useState([]);
   const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
   const categories = ld
     .chain(dataCategory?.data?.data ?? [])
@@ -41,69 +45,93 @@ const CreateDeviceForm = (props) => {
         label: name,
       };
     })
-    .orderBy("label")
+    .orderBy('label')
     .value();
 
   const onChangeImage = (e) => {
-    setImages([...URL.createObjectURL(e.target.files[0])]);
+    const temp = listImages;
+    temp.push(URL.createObjectURL(e.target.files[0]));
+    setListImages(temp);
   };
+  const removeChooseImage = (i) => {
+    const s = listImages.filter((item, index) => index !== i);
+    setListImages(s);
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Box sx={{ ...style, width: "auto" }}>
-          <h2>Thêm thiết bị</h2>
-          <Field
-            name="name"
-            label="Tên thiết bị"
-            labelMultiline
-            component={InputField}
-          />
-          <Field
-            name="category"
-            label="Loại"
-            labelMultiline
-            isLoading={isLoadingCategory}
-            component={AsyncSelectField}
-            options={categories}
-          />
-          <Field
-            name="price"
-            label="Giá"
-            type="number"
-            labelMultiline
-            component={InputField}
-          />
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            onChange={onChangeImage}
-          />
-          {/* <Field
-            name="image"
-            label="Ảnh mô tả"
-            type="file"
-            labelMultiline
-            multiple
-            accept="image/*"
-            // aria-label="object-input"
-            onChange={onChangeImage}
-            component="input"
-            // value={""}
-          /> */}
-          <DialogActions>
-            <Button onClick={onCancel}>Cancel</Button>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={busy}
-              color="primary"
-              endIcon={busy ? <CircularProgress size={20} /> : <span />}
-            >
-              Create
-            </Button>
-          </DialogActions>
-        </Box>
+        <Field
+          name="name"
+          label="Tên thiết bị"
+          labelMultiline
+          naked
+          component={InputField}
+        />
+        <Field
+          name="category"
+          label="Loại"
+          labelMultiline
+          isLoading={isLoadingCategory}
+          component={AsyncSelectField}
+          naked
+          options={categories}
+        />
+        <Field
+          name="price"
+          label="Giá"
+          type="number"
+          labelMultiline
+          naked
+          component={InputField}
+        />
+        <input
+          id="image"
+          name="Anh"
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={onChangeImage}
+        />
+        {/* <Field
+          component="input"
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={onChangeImage}
+          value={listImages}
+        /> */}
+        <ImageList sx={{ width: 50, height: 50 }} rowHeight={50}>
+          {listImages.map((image, index) => {
+            return (
+              <>
+                <ImageListItem key={image?.img}>
+                  <img
+                    src={image}
+                    style={{
+                      maxWidth: '100px',
+                      maxHeight: '100px',
+                    }}
+                  />
+                  ;
+                </ImageListItem>
+                <HighlightOffIcon onClick={() => removeChooseImage(index)} />
+              </>
+            );
+          })}
+        </ImageList>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={busy}
+            color="primary"
+            endIcon={busy ? <CircularProgress size={20} /> : <span />}
+          >
+            Create
+          </Button>
+        </DialogActions>
       </Form>
     </>
   );

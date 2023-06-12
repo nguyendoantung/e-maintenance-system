@@ -20,7 +20,6 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  Modal,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateDevicePage from '../../device/create/CreateDevicePage';
@@ -124,14 +123,10 @@ const DevicePage = () => {
             >
               Thêm thiết bị
             </Button>
-            <Modal
+            <CreateDevicePage
               open={openCreate}
-              onClose={handleCloseCreateModal}
-              aria-labelledby="child-modal-title"
-              aria-describedby="child-modal-description"
-            >
-              <CreateDevicePage onClose={handleCloseCreateModal} />
-            </Modal>
+              setOpen={setOpenCreate}
+            />
           </Box>
           {table}
         </Card>
