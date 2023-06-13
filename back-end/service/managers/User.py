@@ -54,11 +54,11 @@ class User():
         find_user: UserDB = self.session.query(UserDB).filter(UserDB.user_name == user_name).first()
         user_id = find_user.id
 
-        orders = self.session.query(RepairOrder).filter(RepairOrder.customer_id == user_id, RepairOrder.status != "Complete")
+        orders = self.session.query(RepairOrder).filter(RepairOrder.customer_id == user_id)
         total = orders.count()
-        orders.order_by(RepairOrder.create_date.desc()).limit(page_size).offset((page - 1) * page_size).all()
+        show_orders = orders.order_by(RepairOrder.create_date.desc()).limit(page_size).offset((page - 1) * page_size).all()
         res = []
-        for order in orders:
+        for order in show_orders:
             a = ListOrderForUser(
                 id=order.id,
                 full_name=order.full_name,

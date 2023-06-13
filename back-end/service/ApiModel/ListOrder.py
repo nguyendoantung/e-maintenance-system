@@ -35,6 +35,6 @@ class ListOrderOfStaff(BaseModel):
     status: str
     price: str
     location: str
-    note: str
-    device: str
+    note: Optional[str]
+    device: Optional[str]
     device_use: Optional[list[str]]

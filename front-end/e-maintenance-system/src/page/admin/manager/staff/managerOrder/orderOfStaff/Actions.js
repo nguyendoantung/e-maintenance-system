@@ -10,11 +10,21 @@ import {
 import { MoreVert } from '@material-ui/icons';
 import ConfirmDialog from '../../../../../../components/ConfirmDialog';
 import { showSuccess, showError } from '../../../../../../utils/notification';
+import CompleteOrder from '../../../../../../request/completeOrder';
 
 const OrderOfStaffAction = (props) => {
   const { order } = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const { mutateAsync: asyncCompleteOrder, isLoading: isLoadingCompletOrder } =
+    CompleteOrder({ orderID: order?.id });
+
+  const handleCompleteOrder = () => {
+    asyncCompleteOrder()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   const handleClick = (event) => setAnchorEl(event?.currentTarget);
 
@@ -40,7 +50,10 @@ const OrderOfStaffAction = (props) => {
           </ListItemSecondaryAction> */}
         </MenuItem>
         <MenuItem>
-          <ListItemText>Hoàn thành</ListItemText>
+          <ListItemText onClick={handleCompleteOrder}>Hoàn thành</ListItemText>
+          <ListItemSecondaryAction>
+            {isLoadingCompletOrder && <CircularProgress size={20} />}
+          </ListItemSecondaryAction>
         </MenuItem>
       </Menu>
     </>

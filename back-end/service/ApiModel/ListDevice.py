@@ -6,6 +6,6 @@ from pydantic import BaseModel
 class ListDevice(BaseModel):
     id: uuid.UUID
     category: str
-    price: int
+    price: str
     name: str
     image_link: str

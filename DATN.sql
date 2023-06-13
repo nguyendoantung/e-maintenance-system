@@ -112,6 +112,10 @@ category binary(16),
 location varchar(1000),
 device_suggest varchar(1000)
 );
+
+# add column unit for device table
+alter table device
+add unit varchar(100);
 # create table new if neccessary - add in future
 
 

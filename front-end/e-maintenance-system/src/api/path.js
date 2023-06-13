@@ -15,6 +15,7 @@ const path = {
       acceptOrder: ({ orderId }) => `/admin/staff/accept_order/${orderId}`,
       orderOfStaff: ({ adminID, page, pageSize }) =>
         `/admin/staff/get_order_of_staff/${adminID}?page=${page}&pageSize=${pageSize}`,
+      completeOrder: ({ orderID }) => `/admin/staff/complete_order/${orderID}`,
     },
     device: {
       listDevice: ({ category, page, pageSize }) =>

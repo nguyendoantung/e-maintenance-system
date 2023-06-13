@@ -63,3 +63,14 @@ def get_order_of_staff(staff_id):
             params.get("pageSize"), PAGE_SIZE_DEFAULT, PAGE_SIZE_LIMIT
         )
         return Admin().get_order_of_staff(staff_id=staff_id,page=page, page_size=page_size)
+
+
+@blueprint.route("/complete_order/<uuid(strict=False):order_id>", methods=["PUT"], endpoint="/complete_order")
+@jwt_required()
+def complete_order(order_id):
+    role = get_jwt()["sub"]["role"]
+    if "staff" not in role:
+        return {"msg": "Unauthorized!"}, HTTPStatus.UNAUTHORIZED
+    else:
+        staff_id = get_jwt()["sub"]["id"]
+        return Admin().complete_order(staff_id, order_id)

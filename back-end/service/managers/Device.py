@@ -33,7 +33,7 @@ class DeviceManager:
                     id=result.Device.id,
                     category=result.category_name,
                     name=result.Device.name,
-                    price=result.Device.price,
+                    price=f"{result.Device.price} VND/{result.Device.unit}",
                     image_link=result.Device.image_link,
                 ).dict(by_alias=True)
                 for result in results

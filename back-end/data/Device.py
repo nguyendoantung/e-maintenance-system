@@ -1,8 +1,7 @@
+from data.Base import Base
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import UUIDType
-
-from data.Base import Base
 
 
 class Device(Base):
@@ -19,7 +18,7 @@ class Device(Base):
         ForeignKey("shop.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False
     )
     image_link = Column(String(1000))
-
+    unit = Column(String(100))
     # type_device = relationship(
     #     "Category", primaryjoin="Device.device_type == Category.id"
     # )

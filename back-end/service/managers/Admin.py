@@ -64,7 +64,7 @@ class Admin:
         
     def get_order_of_staff(self, staff_id: uuid.UUID, page=1, page_size = 5):
         query = (
-            self.session.query(RepairOrder).filter(RepairOrder.staff_id == staff_id)
+            self.session.query(RepairOrder).filter(RepairOrder.staff_id == staff_id, RepairOrder.status != "Complete")
         )
         orders = query.limit(page_size).offset((page - 1) * page_size)
         total = query.count()
@@ -93,3 +93,12 @@ class Admin:
             "data": res,
             "total": total,
         }, HTTPStatus.OK
+    
+    def complete_order(self, staff_id, order_id):
+        order = self.session.query(RepairOrder).filter(RepairOrder.staff_id == staff_id, RepairOrder.id == order_id).first()
+        if not order:
+            return {}, HTTPStatus.BAD_REQUEST
+        else:
+            order.status = "Complete"
+            self.session.commit()
+            return {}, HTTPStatus.OK
