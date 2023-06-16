@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="", title="">
+    <head>
+        <title>
+            Cảm ơn bạn đã đặt đơn!
+        </title>
+        <style>
+            table,
+            td,
+            tr {
+                border: 1px solid;
+            }
+            tbody tr:nth-child(even)
+            {
+                background: #808080;
+            }
+        </style>
+    </head>
+    <body style="font-family: sans-serif">
+        <h3>Kính gửi khách hàng {{user_name}},</h3>
+
+        <h3>Đơn sửa chữa mã {{order_id}} của quý khách đã được đặt thành công với thông tin sau:</h3>
+        
+        <table style="width: 50%; margin-left: auto; margin-right: auto;">
+            <tr>
+                <td>Thời gian tạo</td>
+                <td>{{create_time}}</td>
+            </tr>
+            <tr>
+                <td>Loại sửa chữa</td>
+                <td>{{category}}</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ</td>
+                <td>{{location}}</td>
+            </tr>
+            <tr>
+                <td>Số điện thoại</td>
+                <td>{{phone}}</td>
+            </tr>
+            <tr>
+                <td>Thiết bị đề nghị</td>
+                <td>{{device_suggest}}</td>
+            </tr>
+            <tr>
+                <td>Ghi chú</td>
+                <td>{{note}}</td>
+            </tr>
+        </table>
+        <h3>Nhân viên của chúng tôi sẽ tới trong thời gian sớm nhất</h3>
+        <h3>Cảm ơn bạn đã tin tưởng chúng tôi!</h3>
+        <h3>Trân trọng!</h3>
+    </body>
+</html>

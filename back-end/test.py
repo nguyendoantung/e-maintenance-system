@@ -30,13 +30,19 @@
 
 
 # test s3
-import boto3
+# import boto3
 
-KEY = "24b76dd698f7aca543a3"
-SECRET_KEY = "DULZpUCrgSbmfrNwRk5OrlIOYBY4Qt8Bgol/Aohh"
-s3 = boto3.client("s3", aws_access_key_id=KEY, aws_secret_access_key=SECRET_KEY, endpoint_url='https://s3-stg09.fptcloud.net')
+# KEY = "24b76dd698f7aca543a3"
+# SECRET_KEY = "DULZpUCrgSbmfrNwRk5OrlIOYBY4Qt8Bgol/Aohh"
+# s3 = boto3.client("s3", aws_access_key_id=KEY, aws_secret_access_key=SECRET_KEY, endpoint_url='https://s3-stg09.fptcloud.net')
 
-# for bucket in s3.buckets.all():
-#     print(bucket.name)
+# # for bucket in s3.buckets.all():
+# #     print(bucket.name)
 
-s3.upload_file("./cam.jpg", "anhluamaucam-bucket", "test/cam.jpg", ExtraArgs={'ContentType':'image/jpg'})
+# s3.upload_file("./cam.jpg", "anhluamaucam-bucket", "test/cam.jpg", ExtraArgs={'ContentType':'image/jpg'})
+
+# s3.upload_file("./cam.jpg", "anhluamaucam-bucket", "test/cam.jpg", ExtraArgs={'ContentType':'image/jpg'})
+from service.utils.email.EmailController import SendEmailController
+
+SendEmailController().send_email("agsdgasdfg@gmail.com", {}, "test_email.html")
+print("success")
