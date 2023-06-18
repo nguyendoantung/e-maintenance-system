@@ -89,14 +89,22 @@ const MainContent = () => {
                     objectFit: "cover",
                 }}
             />
-            {/* <Grid container spacing={1}> */}
-            {/* <Grid item xs={12} sx={{ border: 0 }}> */}
+            <Typography
+                variant="h4"
+                style={{
+                    fontWeight: "500",
+                    padding: "2%",
+                    textAlign: "center",
+                }}
+            >
+                Làm việc hiệu quả và chuyên nghiệp
+            </Typography>
             <Grid
                 container
                 justifyContent="center"
-                // spacing={2}
                 style={{
                     paddingRight: "2%",
+                    paddingBottom: 100,
                 }}
             >
                 {repairTypes.map((repairType, index) => {
@@ -105,7 +113,6 @@ const MainContent = () => {
                             key={repairType?.text}
                             item
                             xs={3}
-                            // sx={{ border: 0 }}
                             style={{
                                 paddingLeft: "2%",
                             }}
@@ -187,8 +194,6 @@ const MainContent = () => {
                     );
                 })}
             </Grid>
-            {/* </Grid> */}
-            {/* </Grid> */}
 
             <Typography>
                 <div></div>
