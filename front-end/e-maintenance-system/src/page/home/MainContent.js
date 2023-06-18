@@ -9,6 +9,7 @@ import {
     CardActions,
     Button,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import KitchenIcon from "@material-ui/icons/Kitchen";
 import FridgeIcon from ".././../icon_image/fridge.png";
 import WasherIcon from ".././../icon_image/washer.png";
@@ -176,6 +177,7 @@ const MainContent = () => {
                                             paddingInline: "16%",
                                             paddingBlock: "4%",
                                         }}
+                                        // component={Link}
                                     >
                                         Đặt dịch vụ
                                     </Button>
