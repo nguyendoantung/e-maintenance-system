@@ -1,175 +1,199 @@
 import React from "react";
-import { useHistory } from "react-router";
+import preventive_maintenance from "../../image/preventive-maintenance.jpg";
+import {
+    Card,
+    CardContent,
+    Typography,
+    Grid,
+    Box,
+    CardActions,
+    Button,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Profile from "../../components/Profile";
-import { makeStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
-import { AppBar, Toolbar, Typography, Button, Box } from "@material-ui/core";
-import Content from "./Content";
-import HomeIcon from "@material-ui/icons/Home";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import { UilWrench } from "@iconscout/react-unicons";
-import CreateRepairOrderPage from "../admin/manager/userService/createRepairOrder/CreateRepairOrderPage";
-import Logo from "../../icon_image/logo.png";
+import KitchenIcon from "@material-ui/icons/Kitchen";
+import FridgeIcon from ".././../icon_image/fridge.png";
+import WasherIcon from ".././../icon_image/washer.png";
+import AirIcon from ".././../icon_image/air_conditioning.png";
+import ElectricIcon from ".././../icon_image/broken-cable.png";
 
-function ElevationScroll(props) {
-    const { children, window } = props;
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-        target: window ? window() : undefined,
-    });
+import PowerIcon from "@material-ui/icons/Power";
 
-    return React.cloneElement(children, {
-        elevation: trigger ? 4 : 0,
-    });
-}
-
-ElevationScroll.propTypes = {
-    children: PropTypes.element.isRequired,
-    window: PropTypes.func,
-};
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: "-8px",
-        flexGrow: 1,
+const repairTypes = [
+    {
+        text: "Sửa tủ lạnh",
+        icon: () => (
+            <img
+                src={FridgeIcon}
+                alt="icon fridge"
+                style={{
+                    maxWidth: "70px",
+                    height: "70px",
+                    objectFit: "cover",
+                }}
+            />
+        ),
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
+    {
+        text: "Sửa chữa máy giặt",
+        icon: () => (
+            <img
+                src={WasherIcon}
+                alt="icon washer"
+                style={{
+                    maxWidth: "70px",
+                    height: "70px",
+                    objectFit: "cover",
+                }}
+            />
+        ),
     },
-    title: {
-        flexGrow: 1,
+    {
+        text: "Sửa điều hòa",
+        icon: () => (
+            <img
+                src={AirIcon}
+                alt="icon air"
+                style={{
+                    maxWidth: "70px",
+                    height: "70px",
+                    objectFit: "cover",
+                }}
+            />
+        ),
     },
-}));
+    {
+        text: "Sửa điện",
+        icon: () => (
+            <img
+                src={ElectricIcon}
+                alt="icon power"
+                style={{
+                    maxWidth: "70px",
+                    height: "70px",
+                    objectFit: "cover",
+                }}
+            />
+        ),
+    },
+];
 
-const HomePage = (props) => {
-    const history = useHistory();
-    const [token, setToken] = React.useState(localStorage.getItem("token"));
-    const [openRepair, setOpenRepair] = React.useState(false);
-
-    React.useEffect(() => {
-        setToken(localStorage.getItem("token"));
-    }, [localStorage.getItem("token")]);
-
-    const handleClickRepairNow = () => {
-        if (!token) {
-            history.push("/login");
-        } else {
-            setOpenRepair(true);
-        }
-    };
-
-    const classes = useStyles();
+const HomePage = () => {
     return (
         <>
-            <ElevationScroll {...props}>
-                <AppBar position="fixed">
-                    <Toolbar
-                        style={{
-                            background: "white",
-                            flex: 12,
-                        }}
-                    >
-                        <>
-                            <Box display={"flex"} alignItems={"center"}>
-                                <img
-                                    src={Logo}
-                                    alt="icon logo"
-                                    style={{
-                                        maxWidth: "50px",
-                                        height: "50px",
-                                        objectFit: "cover",
-                                    }}
-                                />
-                                <Typography
-                                    variant="h6"
-                                    className={classes.title}
-                                    style={{
-                                        color: "#588157",
-                                    }}
-                                >
-                                    Dovi
-                                </Typography>
-                            </Box>
-
-                            <Box display="flex" flex={5} style={{}}>
-                                <Typography
-                                    className={classes.title}
-                                    style={{
-                                        color: "#588157",
-                                    }}
-                                >
-                                    Home
-                                </Typography>
-                                <Typography
-                                    className={classes.title}
-                                    style={{
-                                        color: "#588157",
-                                    }}
-                                >
-                                    About us
-                                </Typography>
-                                <Typography
-                                    className={classes.title}
-                                    style={{
-                                        color: "#588157",
-                                    }}
-                                >
-                                    Blog
-                                </Typography>
-                                <Typography
-                                    className={classes.title}
-                                    style={{
-                                        color: "#588157",
-                                    }}
-                                >
-                                    Contact
-                                </Typography>
-                            </Box>
-
-                            <Button
-                                color="inherit"
-                                onClick={handleClickRepairNow}
+            <img
+                src={preventive_maintenance}
+                alt="preventive and maintenance"
+                style={{
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    objectFit: "cover",
+                }}
+            />
+            <Typography
+                variant="h4"
+                style={{
+                    fontWeight: "500",
+                    padding: "2%",
+                    textAlign: "center",
+                }}
+            >
+                Làm việc hiệu quả và chuyên nghiệp
+            </Typography>
+            <Grid
+                container
+                justifyContent="center"
+                style={{
+                    paddingRight: "2%",
+                    paddingBottom: 100,
+                }}
+            >
+                {repairTypes.map((repairType, index) => {
+                    return (
+                        <Grid
+                            key={repairType?.text}
+                            item
+                            xs={3}
+                            style={{
+                                paddingLeft: "2%",
+                            }}
+                        >
+                            <Card
+                                variant="outlined"
                                 style={{
-                                    color: "#588157",
-                                    textTransform: "none",
-                                    boxShadow: "0px 0px 0px 0px",
+                                    border: "1px solid #ced4da",
+                                    padding: "8%",
                                 }}
                             >
-                                <UilWrench />
-                                Sửa chữa ngay
-                            </Button>
-                            <CreateRepairOrderPage
-                                open={openRepair}
-                                token={token}
-                                setOpen={setOpenRepair}
-                            />
-                            {!token ? (
-                                <>
-                                    <Button
-                                        variant="contained"
-                                        component={Link}
-                                        to="/login"
+                                <Box
+                                    component={"div"}
+                                    style={{
+                                        display: "inline-flex",
+                                        justifyContent: "space-between",
+                                        width: "100%",
+                                    }}
+                                >
+                                    <repairType.icon />
+
+                                    <Typography
                                         style={{
-                                            color: "#fff",
-                                            background: "#588157",
-                                            textTransform: "none",
-                                            boxShadow: "0px 0px 0px 0px",
+                                            fontFamily: "cursive",
+                                            fontSize: 22,
+                                            color: "#495057",
                                         }}
                                     >
-                                        Đăng nhập
+                                        0{index + 1}
+                                    </Typography>
+                                </Box>
+                                <CardContent
+                                    style={{
+                                        paddingInline: 0,
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h5"
+                                        style={{
+                                            color: "#495057",
+                                            fontWeight: "normal",
+                                            fontFamily: "sans-serif",
+                                            display: "-webkit-box",
+                                            overflow: "hidden",
+                                            WebkitBoxOrient: "vertical",
+                                            WebkitLineClamp: 1,
+                                        }}
+                                    >
+                                        {repairType?.text}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions
+                                    style={{
+                                        paddingInline: 0,
+                                        paddingBottom: "2%",
+                                    }}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        size="medium"
+                                        style={{
+                                            background: "#3a5a40",
+                                            color: "white",
+                                            fontWeight: "500",
+                                            fontSize: "110%",
+                                            boxShadow: "0px 0px 0px 0px",
+                                            borderRadius: "8px",
+                                            textTransform: "none",
+                                            paddingInline: "16%",
+                                            paddingBlock: "4%",
+                                        }}
+                                        // component={Link}
+                                    >
+                                        Đặt dịch vụ
                                     </Button>
-                                </>
-                            ) : (
-                                <Profile setToken={setToken} token={token} />
-                            )}
-                        </>
-                    </Toolbar>
-                </AppBar>
-            </ElevationScroll>
-            <Toolbar />
-            <Content />
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    );
+                })}
+            </Grid>
         </>
     );
 };
