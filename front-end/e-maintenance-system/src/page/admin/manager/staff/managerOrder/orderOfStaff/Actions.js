@@ -17,7 +17,7 @@ const OrderOfStaffAction = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const { mutateAsync: asyncCompleteOrder, isLoading: isLoadingCompletOrder } =
+  const { mutateAsync: asyncCompleteOrder, isLoading: isLoadingCompleteOrder } =
     CompleteOrder({ orderID: order?.id });
 
   const handleCompleteOrder = () => {
@@ -52,7 +52,7 @@ const OrderOfStaffAction = (props) => {
         <MenuItem>
           <ListItemText onClick={handleCompleteOrder}>Hoàn thành</ListItemText>
           <ListItemSecondaryAction>
-            {isLoadingCompletOrder && <CircularProgress size={20} />}
+            {isLoadingCompleteOrder && <CircularProgress size={20} />}
           </ListItemSecondaryAction>
         </MenuItem>
       </Menu>

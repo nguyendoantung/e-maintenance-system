@@ -12,6 +12,8 @@ const path = {
         `/admin/staff/?page=${page}&pageSize=${pageSize}`,
       listRepairOrder: ({ page, pageSize }) =>
         `/admin/staff/get_order?page=${page}&pageSize=${pageSize}`,
+      listOrderForAdmin: ({ page, pageSize }) =>
+        `/admin/staff/get_order_for_admin?page=${page}&pageSize=${pageSize}`,
       acceptOrder: ({ orderId }) => `/admin/staff/accept_order/${orderId}`,
       orderOfStaff: ({ adminID, page, pageSize }) =>
         `/admin/staff/get_order_of_staff/${adminID}?page=${page}&pageSize=${pageSize}`,

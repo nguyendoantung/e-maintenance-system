@@ -48,6 +48,8 @@ select *, heX(id) from shop;
 select *, HEX(`shop_id`), HEX(`user_id`), is_admin from shop_member;
 # cd826363-fbd8-11ed-adda-5811223f09d8
 
+select * from order_history;
+
 update device set unit = "Chiếc";
 delete from device where name like "%PVC%";
 select * from device;

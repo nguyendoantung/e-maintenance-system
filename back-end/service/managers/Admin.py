@@ -2,7 +2,7 @@ import uuid
 from http import HTTPStatus
 
 from data import Device, OrderItem, RepairOrder, User
-from service.ApiModel.ListOrder import ListOrder, ListOrderOfStaff
+from service.ApiModel.ListOrder import ListOrder, ListOrderOfStaff,ListOrderAdmin
 from service.ApiModel.ListStaff import Staff
 from service.utils.email.EmailController import SendEmailController
 from sqlalchemy import desc
@@ -132,3 +132,26 @@ class Admin:
             order.status = "Complete"
             self.session.commit()
             return {}, HTTPStatus.OK
+
+    def get_order_for_admin(self, page=1, page_size=10):
+        query = self.session.query(RepairOrder).filter(RepairOrder.staff_id.is_(None))
+        orders = query.limit(page_size).offset((page - 1) * page_size)
+        total = query.count()
+        res = []
+        for order in orders:
+            a = ListOrderAdmin(
+                id=order.id,
+                full_name=order.full_name,
+                phone=order.phone,
+                status=order.status,
+                create_date=order.create_date.strftime("%m/%d/%Y, %H:%M:%S"),
+                location=order.location,
+                device=order.device_suggest,
+                note=order.note,
+            )
+
+            staff = self.session.query(User).filter(User.id == order.staff_id).first()
+            if staff:
+                a.staff_name = f"{staff.FirstName} {staff.LastName}"
+            res.append(a.dict(by_alias=True))
+        return {"data": res, "total": total}, HTTPStatus.OK
