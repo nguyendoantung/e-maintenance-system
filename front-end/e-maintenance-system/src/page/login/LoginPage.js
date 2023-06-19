@@ -9,65 +9,71 @@ import path from "../../api/path";
 import makeRandom from "../../utils/RandomString";
 
 function getModalStyle() {
-  const top = 50;
-  const left = 50;
+    const top = 50;
+    const left = 50;
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
 }
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: "flex",
-    minWidth: 500,
-    minHeight: 300,
-    height: "flex",
-    backgroundColor: theme.palette.background.paper,
-    border: "0px solid #000",
-    borderRadius: "5px",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
+    paper: {
+        // position: "absolute",
+        width: "flex",
+        minWidth: 500,
+        minHeight: 300,
+        // height: "flex",
+        backgroundColor: theme.palette.background.paper,
+        border: "0px solid #000",
+        borderRadius: "5px",
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
 }));
 
 const LoginPage = () => {
-  const history = useHistory();
-  const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
-  const [randomToken] = React.useState(makeRandom(32));
-  const { mutateAsync, isLoading } = useMutation(
-    ["login", randomToken],
-    (formValues) => {
-      const { user, password } = formValues;
-      const body = { user_name: user, password };
-      return rootApi.post(path.auth.login, body);
-    }
-  );
+    const history = useHistory();
+    const classes = useStyles();
+    // const [modalStyle] = React.useState(getModalStyle);
+    const [randomToken] = React.useState(makeRandom(32));
+    const { mutateAsync, isLoading } = useMutation(
+        ["login", randomToken],
+        (formValues) => {
+            const { user, password } = formValues;
+            const body = { user_name: user, password };
+            return rootApi.post(path.auth.login, body);
+        }
+    );
 
-  const onSubmitForm = (formValues) => {
-    mutateAsync(formValues).then((res) => {
-      const { data } = res || {};
-      const { access_token: token } = data;
-      localStorage.setItem("token", token);
-      history.push("/");
-    });
-  };
-  const onBackToList = () => {
-    history.push("/");
-  };
+    const onSubmitForm = (formValues) => {
+        mutateAsync(formValues).then((res) => {
+            const { data } = res || {};
+            const { access_token: token } = data;
+            localStorage.setItem("token", token);
+            history.push("/");
+        });
+    };
+    const onBackToList = () => {
+        history.push("/");
+    };
 
-  return (
-    <Box m="auto" style={modalStyle} className={classes.paper}>
-      <LoginForm
-        onSubmit={onSubmitForm}
-        busy={isLoading}
-        onCancel={onBackToList}
-      />
-    </Box>
-  );
+    return (
+        <>
+            <Box
+                // m="auto"
+                //  style={modalStyle}
+                className={classes.paper}
+            >
+                <LoginForm
+                    onSubmit={onSubmitForm}
+                    busy={isLoading}
+                    onCancel={onBackToList}
+                />
+            </Box>
+        </>
+    );
 };
 export default LoginPage;

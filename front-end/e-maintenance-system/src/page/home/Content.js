@@ -1,13 +1,13 @@
 import React from "react";
 import Footer from "./Footer";
-import MainContent from "./MainContent";
+import MainContent from "./HomePage";
 
 const Content = () => {
-  return (
-    <>
-      <MainContent />
-      <Footer />
-      {/* <AppBar
+    return (
+        <>
+            <MainContent />
+            <Footer />
+            {/* <AppBar
         style={{
           top: "auto",
           bottom: 0,
@@ -15,8 +15,8 @@ const Content = () => {
       >
         <Footer />
       </AppBar> */}
-    </>
-  );
+        </>
+    );
 };
 
 export default Content;
