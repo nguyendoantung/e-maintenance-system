@@ -150,11 +150,11 @@ const MainContent = () => {
                                     }}
                                 >
                                     <Typography
+                                        variant="h5"
                                         style={{
                                             color: "#495057",
                                             fontWeight: "normal",
                                             fontFamily: "sans-serif",
-                                            fontSize: 24,
                                             display: "-webkit-box",
                                             overflow: "hidden",
                                             WebkitBoxOrient: "vertical",
@@ -174,7 +174,7 @@ const MainContent = () => {
                                         variant="filled"
                                         size="medium"
                                         style={{
-                                            background: "#339FD9",
+                                            background: "#3a5a40",
                                             color: "white",
                                             fontWeight: "500",
                                             fontSize: "110%",
