@@ -15,8 +15,10 @@ import {
     FormControlLabel,
     Grid,
     Grow,
+    Hidden,
     Link,
     Paper,
+    Slide,
     TextField,
     Typography,
 } from "@material-ui/core";
@@ -68,9 +70,11 @@ export default function RegisterPage() {
     return (
         <>
             <Grow
-                in={true}
-                style={{ transformOrigin: "right center" }}
-                {...{ timeout: 1000 }}
+                in={!step}
+                style={{
+                    transformOrigin: "right center",
+                    display: step ? "none" : "block",
+                }}
             >
                 <Grid
                     item
@@ -81,12 +85,12 @@ export default function RegisterPage() {
                     elevation={6}
                     square
                     style={{
-                        marginBlock: "4%",
+                        marginBlock: "2%",
                         borderRadius: 8,
                     }}
                 >
                     <Box
-                        my={8}
+                        my={4}
                         mx={4}
                         style={{
                             display: "flex",
@@ -94,9 +98,18 @@ export default function RegisterPage() {
                             alignItems: "flex-start",
                         }}
                     >
+                        <Typography
+                            variant="subtitle2"
+                            style={{
+                                fontWeight: "700",
+                                color: "#578056",
+                                paddingBottom: "2%",
+                            }}
+                        >
+                            Bước 1/2
+                        </Typography>
                         <Box>
                             <Typography
-                                component="h1"
                                 variant="h4"
                                 style={{
                                     fontWeight: "700",
@@ -106,10 +119,9 @@ export default function RegisterPage() {
                                 Tạo tài khoản mới
                             </Typography>
                             <Typography
-                                component="h1"
-                                variant="subtitle1"
+                                variant="h6"
                                 style={{
-                                    fontWeight: "400",
+                                    fontWeight: "500",
                                     color: "#578056",
                                 }}
                             >
@@ -117,10 +129,18 @@ export default function RegisterPage() {
                             </Typography>
                         </Box>
                         <Box display={"flex"}>
-                            <Typography>Đã có tài khoản? </Typography>
+                            <Typography variant="subtitle1">
+                                Đã có tài khoản?{" "}
+                            </Typography>
                             <Typography
+                                variant="subtitle1"
                                 component={LinkCP}
                                 to={LIST_ROUTE.LOGIN_PAGE}
+                                style={{
+                                    paddingLeft: "8px",
+                                    textDecoration: "none",
+                                    color: "#578056",
+                                }}
                             >
                                 Đăng nhập
                             </Typography>
@@ -158,8 +178,127 @@ export default function RegisterPage() {
                                 type="submit"
                                 variant="contained"
                                 className={classes.btnSubmit}
+                                onClick={() => setStep(true)}
                             >
                                 Tiếp theo
+                            </Button>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grow>
+            <Grow
+                in={step}
+                style={{
+                    transformOrigin: "right center",
+                    display: step ? "block" : "none",
+                }}
+                {...{ timeout: 1000 }}
+            >
+                <Grid
+                    item
+                    xs={12}
+                    sm={7}
+                    md={4}
+                    component={Paper}
+                    elevation={6}
+                    square
+                    style={{
+                        marginBlock: "2%",
+                        borderRadius: 8,
+                    }}
+                >
+                    <Box
+                        my={4}
+                        mx={4}
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                        }}
+                    >
+                        <Typography
+                            variant="subtitle2"
+                            style={{
+                                fontWeight: "700",
+                                color: "#578056",
+                                paddingBottom: "2%",
+                            }}
+                        >
+                            Bước 2/2
+                        </Typography>
+                        <Box>
+                            <Typography
+                                variant="h4"
+                                style={{
+                                    fontWeight: "700",
+                                    color: "#578056",
+                                }}
+                            >
+                                Tạo tài khoản mới
+                            </Typography>
+                            <Typography
+                                variant="h6"
+                                style={{
+                                    fontWeight: "500",
+                                    color: "#578056",
+                                }}
+                            >
+                                Đăng ký với email
+                            </Typography>
+                        </Box>
+                        <Box display={"flex"}>
+                            <Typography variant="subtitle1">
+                                Đã có tài khoản?{" "}
+                            </Typography>
+                            <Typography
+                                variant="subtitle1"
+                                component={LinkCP}
+                                to={LIST_ROUTE.LOGIN_PAGE}
+                                style={{
+                                    paddingLeft: "8px",
+                                    textDecoration: "none",
+                                    color: "#578056",
+                                }}
+                            >
+                                Đăng nhập
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="form"
+                            noValidate
+                            onSubmit={handleSubmit}
+                            className={classes.formContainer}
+                        >
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                className={classes.btnSubmit}
+                                onClick={() => setStep(false)}
+                            >
+                                Hoàn thành
                             </Button>
                         </Box>
                     </Box>
