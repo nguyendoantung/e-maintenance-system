@@ -49,8 +49,11 @@ const useStyles = makeStyles((theme) => ({
         // margin: "-8px",
         flexGrow: 1,
         zIndex: 1,
-        overflow: "hidden",
+        overflow: "auto",
         width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
     },
     title: {
         // flexGrow: 1,
