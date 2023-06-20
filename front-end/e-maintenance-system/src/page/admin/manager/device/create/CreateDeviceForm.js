@@ -34,8 +34,21 @@ const style = {
 };
 
 const CreateDeviceForm = (props) => {
-  const { handleSubmit, busy, open, setOpen } = props;
-  const [listImages, setListImages] = React.useState([]);
+  const {
+    handleSubmit,
+    busy,
+    open,
+    setOpen,
+    listImages,
+    setListImages,
+    listFiles,
+    setListFiles,
+  } = props;
+
+  React.useEffect(() => {
+    props.reset(CREATE_DEVICE_FORM);
+  }, []);
+
   const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
   const categories = ld
     .chain(dataCategory?.data?.data ?? [])
@@ -49,9 +62,12 @@ const CreateDeviceForm = (props) => {
     .value();
 
   const onChangeImage = (e) => {
-    const temp = listImages;
-    temp.push(URL.createObjectURL(e.target.files[0]));
-    setListImages(temp);
+    // const temp = listImages;
+    // const temp2 = listFiles;
+    // temp.push(URL.createObjectURL(e.target.files[0]));
+    // temp2.push(e.target.files[0]);
+    setListImages([URL.createObjectURL(e.target.files[0])]);
+    setListFiles([e.target.files[0]]);
   };
   const removeChooseImage = (i) => {
     const s = listImages.filter((item, index) => index !== i);
@@ -89,17 +105,18 @@ const CreateDeviceForm = (props) => {
           id="image"
           name="Anh"
           type="file"
-          multiple
+          // multiple
           accept="image/*"
           onChange={onChangeImage}
         />
         {/* <Field
-          component="input"
+          name="image"
+          component={renderField}
+          // component="input"
           type="file"
-          multiple
           accept="image/*"
           onChange={onChangeImage}
-          value={listImages}
+          // value={listImages}
         /> */}
         <ImageList sx={{ width: 50, height: 50 }} rowHeight={50}>
           {listImages.map((image, index) => {
@@ -140,6 +157,7 @@ const CreateDeviceForm = (props) => {
 export default compose(
   reduxForm({
     form: CREATE_DEVICE_FORM,
+    multipartForm: true,
     // validate: createValidator(schema),
   }),
   connect(null, { reset, change })

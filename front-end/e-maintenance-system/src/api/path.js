@@ -25,6 +25,8 @@ const path = {
         category === ''
           ? `/admin/device/?page=${page}&pageSize=${pageSize}`
           : `/admin/device/?page=${page}&pageSize=${pageSize}&category_id=${category}`,
+      createDevice: () => `/admin/device/`,
+      uploadDeviceImage: () => `/admin/device/device_image`
     },
     category: {
       listCategory: () => `/admin/category/`,
