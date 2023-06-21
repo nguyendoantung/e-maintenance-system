@@ -14,6 +14,7 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel,
+    FormHelperText,
     Grid,
     Grow,
     IconButton,
@@ -28,6 +29,8 @@ import {
 import { ReactComponent as LogoIcon } from "../../icon_image/logo.svg";
 import { LIST_ROUTE } from "../../routers/contants";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { useForm } from "react-hook-form";
+import { useLoginValidator } from "./Validators/LoginSchema";
 
 function getModalStyle() {
     const top = 50;
@@ -90,19 +93,28 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage() {
     const classes = useStyles();
     const [showPassword, setShowPassword] = React.useState();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm({
+        resolver: useLoginValidator(),
+    });
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get("email"),
-            password: data.get("password"),
-        });
-    };
+    const onSubmit = (data) => console.log(data);
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const data = new FormData(event.currentTarget);
+    //     console.log({
+    //         email: data.get("email"),
+    //         password: data.get("password"),
+    //     });
+    // };
     // const history = useHistory();
     // const [modalStyle] = React.useState(getModalStyle);
     // const [randomToken] = React.useState(makeRandom(32));
@@ -192,32 +204,26 @@ export default function LoginPage() {
                         <Box
                             component="form"
                             noValidate
-                            onSubmit={handleSubmit}
                             className={classes.formContainer}
+                            onSubmit={handleSubmit(onSubmit)}
                         >
                             <TextField
+                                {...register("userNameOrEmail")}
+                                error={!!errors.userNameOrEmail}
+                                helperText={errors.userNameOrEmail?.message}
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
+                                id="userNameOrEmail"
+                                label="Username or email"
+                                name="userNameOrEmail"
                                 autoComplete="email"
                                 autoFocus
+                                value={watch("userNameOrEmail")}
                             />
-                            {/* <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            /> */}
                             <FormControl
+                                error={!!errors.password}
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
@@ -227,6 +233,8 @@ export default function LoginPage() {
                                     Password
                                 </InputLabel>
                                 <OutlinedInput
+                                    {...register("password")}
+                                    error={!!errors.password}
                                     label="Password*"
                                     margin="normal"
                                     required
@@ -254,7 +262,11 @@ export default function LoginPage() {
                                             </IconButton>
                                         </InputAdornment>
                                     }
+                                    value={watch("password")}
                                 />
+                                <FormHelperText>
+                                    {errors.password?.message}
+                                </FormHelperText>
                             </FormControl>
                             <FormControlLabel
                                 control={

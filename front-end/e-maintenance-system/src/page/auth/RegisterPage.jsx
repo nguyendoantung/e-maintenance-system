@@ -21,9 +21,11 @@ import {
     Slide,
     TextField,
     Typography,
+    createTheme,
 } from "@material-ui/core";
 import { ReactComponent as LogoIcon } from "../../icon_image/logo.svg";
 import { LIST_ROUTE } from "../../routers/contants";
+import { DatePicker } from "@material-ui/pickers";
 const useStyles = makeStyles((theme) => ({
     paper: {
         // position: "absolute",
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         backgroundColor: "#578056",
     },
-    formContainer: { marginTop: theme.spacing(1) },
+    formContainer: { marginTop: theme.spacing(1), width: "100%" },
     btnSubmit: {
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(2),
@@ -55,10 +57,14 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto",
     },
     copyright: { marginTop: theme.spacing(5) },
+    checkboxAccept: {
+        fontSize: 13,
+    },
 }));
 export default function RegisterPage() {
     const classes = useStyles();
     const [step, setStep] = React.useState(false);
+    const now = new Date();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -275,22 +281,90 @@ export default function RegisterPage() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="username"
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
                                 autoFocus
                             />
+                            <Box
+                                style={{
+                                    display: "flex",
+                                    flex: 10,
+                                }}
+                            >
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    name="firstName"
+                                    label="First name"
+                                    type="text"
+                                    id="firstName"
+                                    autoComplete="first-name"
+                                    style={{
+                                        flex: 4.5,
+                                    }}
+                                />
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    name="lastName"
+                                    label="Last name"
+                                    type="text"
+                                    id="lastName"
+                                    autoComplete="last-name"
+                                    style={{
+                                        flex: 5,
+                                        marginLeft: "3%",
+                                    }}
+                                />
+                            </Box>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
+                                id="phone"
+                                label="Phone number"
+                                name="phone"
+                                autoComplete="phone"
+                                autoFocus
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                id="date"
+                                label="Birthday"
+                                type="date"
+                                defaultValue={now.getDate()}
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                fullWidth
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        value="remember"
+                                        style={{
+                                            color: "#386641",
+                                            borderColor: "#386641",
+                                            paddingInline: "2%",
+                                            paddingBlock: 0,
+                                        }}
+                                    />
+                                }
+                                label=" By clicking Create account, I agree that I have read and accepted the Terms of Use and Privacy Policy."
+                                style={{
+                                    alignItems: "flex-start",
+                                    marginBlock: "2%",
+                                }}
+                                classes={{
+                                    label: classes.checkboxAccept,
+                                }}
                             />
                             <Button
                                 type="submit"
