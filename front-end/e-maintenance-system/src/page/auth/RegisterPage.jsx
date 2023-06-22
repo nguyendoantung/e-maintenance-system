@@ -26,6 +26,8 @@ import {
 import { ReactComponent as LogoIcon } from "../../icon_image/logo.svg";
 import { LIST_ROUTE } from "../../routers/contants";
 import { DatePicker } from "@material-ui/pickers";
+import { useRegisterValidator } from "./Validators/RegisterSchema";
+import { useForm } from "react-hook-form";
 const useStyles = makeStyles((theme) => ({
     paper: {
         // position: "absolute",
@@ -64,15 +66,28 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const [step, setStep] = React.useState(false);
-    const now = new Date();
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get("email"),
-            password: data.get("password"),
-        });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        clearErrors,
+        formState: { errors },
+    } = useForm({
+        resolver: useRegisterValidator(),
+    });
+    const onSubmitStepOne = (data) => {
+        if (!errors.password && errors.email) {
+            setStep(true);
+        }
     };
+    const onSubmitStepTwo = (data) => console.log(data);
+    const onErr = (err) => {
+        if (!errors.password && !errors.email) {
+            setStep(true);
+            clearErrors(["firstName", "lastName", "username"]);
+        }
+    };
+    const now = new Date();
     return (
         <>
             <Grow
@@ -155,10 +170,13 @@ export default function RegisterPage() {
                         <Box
                             component="form"
                             noValidate
-                            onSubmit={handleSubmit}
+                            onSubmit={handleSubmit(onSubmitStepOne, onErr)}
                             className={classes.formContainer}
                         >
                             <TextField
+                                {...register("email")}
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -170,6 +188,9 @@ export default function RegisterPage() {
                                 autoFocus
                             />
                             <TextField
+                                {...register("password")}
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -184,7 +205,6 @@ export default function RegisterPage() {
                                 type="submit"
                                 variant="contained"
                                 className={classes.btnSubmit}
-                                onClick={() => setStep(true)}
                             >
                                 Tiếp theo
                             </Button>
@@ -273,10 +293,13 @@ export default function RegisterPage() {
                         <Box
                             component="form"
                             noValidate
-                            onSubmit={handleSubmit}
+                            onSubmit={handleSubmit(onSubmitStepTwo)}
                             className={classes.formContainer}
                         >
                             <TextField
+                                {...register("username")}
+                                error={!!errors.username}
+                                helperText={errors.username?.message}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -370,7 +393,6 @@ export default function RegisterPage() {
                                 type="submit"
                                 variant="contained"
                                 className={classes.btnSubmit}
-                                onClick={() => setStep(false)}
                             >
                                 Hoàn thành
                             </Button>
