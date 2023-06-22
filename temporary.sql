@@ -67,4 +67,10 @@ value
 (unhex(replace(uuid(),"-","")), "Ống nhựa PVC Phi 140", UNHEX("2AD7B18BFA3111EDADD55811223F09D8"), "98400", UNHEX("085C7B21FBDB11EDADDA5811223F09D8"), "https://s3-stg09.fptcloud.net/anhluamaucam-bucket/device/dien_nuoc/ong-nhua-PVC.jpg", "m"),
 (unhex(replace(uuid(),"-","")), "Ống nhựa PVC Phi 180", UNHEX("2AD7B18BFA3111EDADD55811223F09D8"), "160600", UNHEX("085C7B21FBDB11EDADDA5811223F09D8"), "https://s3-stg09.fptcloud.net/anhluamaucam-bucket/device/dien_nuoc/ong-nhua-PVC.jpg", "m");
 # SHOW FULL PROCESSLIST;
+
+delete from repair_order;
 # KILL 29;
+
+update user set profile_link = "https://s3-stg09.fptcloud.net/anhluamaucam-bucket/user/FB_IMG_1533186212716.jpg" where email = "fake1@gmail.com";
+update user set profile_link = "https://s3-stg09.fptcloud.net/anhluamaucam-bucket/user/FB_IMG_1533186215544.jpg" where email = "fake2@gmail.com";
+

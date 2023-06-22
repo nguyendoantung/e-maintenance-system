@@ -9,3 +9,11 @@ class ListDevice(BaseModel):
     price: str
     name: str
     image_link: str
+
+
+class CreateDevice(BaseModel):
+    name: str
+    price: str
+    category: uuid.UUID
+    image_url: str
+    unit: str

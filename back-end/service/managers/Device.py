@@ -1,8 +1,8 @@
 import uuid
 from http import HTTPStatus
 
-from data import Category, Device
-from service.ApiModel.ListDevice import ListDevice
+from data import Category, Device, ShopMember, User
+from service.ApiModel.ListDevice import CreateDevice, ListDevice
 from utils import create_session
 
 # from sqlalchemy import text
@@ -40,3 +40,22 @@ class DeviceManager:
             ],
             "total": devices.count(),
         }, HTTPStatus.OK
+
+    def add_device(self, admin_user: str, body: CreateDevice):
+        shop_member = (
+            self.session.query(ShopMember)
+            .join(User, ShopMember.user_id == User.id)
+            .filter(User.user_name == admin_user)
+        ).first()
+        device = Device(
+            id=uuid.uuid4(),
+            name=body.name,
+            device_type=body.category,
+            price=body.price,
+            unit=body.unit,
+            shop_id=shop_member.shop_id,
+            image_link=body.image_url,
+        )
+        self.session.add(device)
+        self.session.commit()
+        return {"message": "Tạo thiết bị thành công"}, HTTPStatus.OK

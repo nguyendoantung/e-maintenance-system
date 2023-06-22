@@ -7,6 +7,7 @@ import { Box, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CreateDevice from '../../../../../request/createDevice';
 import rootApi from '../../../../../api/rootApi';
 import path from '../../../../../api/path';
+import { showSuccess, showError } from '../../../../../utils/notification';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +47,14 @@ const CreateDevicePage = (props) => {
   const { mutateAsync, isLoading } = useMutation(
     ['create-device', adminID],
     (formValues) => {
-      const { name, price, category } = formValues;
+      const { name, price, category, url = '', unit } = formValues;
       const body = {
         name,
         price,
         category: category?.value,
         object_url: listImages,
+        image_url: url,
+        unit,
       };
 
       return rootApi.post(path.admin.device.createDevice(), body);
@@ -62,29 +65,35 @@ const CreateDevicePage = (props) => {
     // upload image to s3 first
     asyncUploadFiles(listFiles)
       .then((res) => {
-        // console.log(res);
+        const url = res?.data?.url;
+        return url;
       })
-      .catch((error) => {
-        // console.log(error);
-      });
-
-    mutateAsync(formValues)
-      .then((res) => {
-        // console.log(res);
+      .then((url) => {
+        formValues.url = url;
+        mutateAsync(formValues)
+          .then((res) => {
+            showSuccess({
+              message: res?.data?.data?.message || 'Tạo thiết bị thành công.',
+            });
+            setListFiles([]);
+            setListImages([]);
+            setOpen(false);
+          })
+          .catch((err) => {
+            showError({
+              message:
+                err.response?.data?.message ||
+                'Không thể tạo mới thiết bị, vui lòng thử lại sau.',
+            });
+          });
       })
-      .catch((error) => {
-        // console.log(error);
+      .catch((err) => {
+        showError({
+          message:
+            err.response?.data?.message ||
+            'Không thể upload file, vui lòng thử lại',
+        });
       });
-    // const { name, price, category } = formValues;
-    // const body = {
-    //   name,
-    //   price,
-    //   category: category?.value,
-    //   object_url: listImages,
-    // };
-    // console.log(listImages);
-    // console.log(formValues);
-    // console.log(listFiles);
   };
   return (
     <>

@@ -6,10 +6,12 @@ import boto3
 from flask import Blueprint, request, session
 from flask_cors import cross_origin
 from flask_jwt_extended import get_jwt, jwt_required
+from service.ApiModel.ListDevice import CreateDevice
 
 # from PIL import Image
 from service.constant import PAGE_SIZE_DEFAULT, PAGE_SIZE_LIMIT
 from service.managers.Device import DeviceManager
+from service.managers.S3Manager import S3Manager
 from service.utils.parse_int import parse_int, parse_int_with_limit
 from werkzeug.utils import secure_filename
 
@@ -37,57 +39,19 @@ def get_device():
 @blueprint.route("/device_image", methods=["POST"], endpoint="/create-device-image")
 @jwt_required()
 def create_device_image():
-    file = request.files.get("file")
-    UPLOAD_FOLDER = "/"
-    target = os.path.join(UPLOAD_FOLDER, "test")
-    if not os.path.isdir(target):
-        os.mkdir(target)
-    filename = secure_filename(file.filename)
-    destination = "/".join([target, filename])
-    file.save(destination)
-    session["uploadFilePath"] = destination
-    KEY = "24b76dd698f7aca543a3"
-    SECRET_KEY = "DULZpUCrgSbmfrNwRk5OrlIOYBY4Qt8Bgol/Aohh"
-    s3 = boto3.client(
-        "s3",
-        aws_access_key_id=KEY,
-        aws_secret_access_key=SECRET_KEY,
-        endpoint_url="https://s3-stg09.fptcloud.net",
-    )
-    img_id = uuid.uuid4()
-
-    s3.upload_file(
-        destination,
-        "anhluamaucam-bucket",
-        f"test/{str(img_id)}.jpg",
-        ExtraArgs={"ContentType": "image/jpg"},
-    )
-    return {"data": "hello"}
+    upload_file = request.files.get("file")
+    return S3Manager().upload_image(upload_file=upload_file, folder="device")
 
 
 @blueprint.route("/", methods=["POST"], endpoint="/create-device")
 @jwt_required()
 def create_device():
     body = request.get_json()
-    # print(body)
-    # print(request.files)
-    urls = body.get("object_url", [])
+    role = get_jwt()["sub"]["role"]
+    if "admin" not in role:
+        return {"msg": "Unauthorized!"}, HTTPStatus.UNAUTHORIZED
+    admin_user =  get_jwt()["sub"]["user_name"]
 
-    # print(body)
-    # KEY = "24b76dd698f7aca543a3"
-    # SECRET_KEY = "DULZpUCrgSbmfrNwRk5OrlIOYBY4Qt8Bgol/Aohh"
-    # s3 = boto3.client(
-    #     "s3",
-    #     aws_access_key_id=KEY,
-    #     aws_secret_access_key=SECRET_KEY,
-    #     endpoint_url="https://s3-stg09.fptcloud.net",
-    # )
-    # for url in urls:
-    #     img_id = uuid.uuid4()
-    #     s3.upload_file(
-    #         url,
-    #         "anhluamaucam-bucket",
-    #         f"test/{str(img_id)}.jpg",
-    #         ExtraArgs={"ContentType": "image/jpg"},
-    #     )
-    return {"data": "hello"}
+    device = CreateDevice(**body)
+
+    return DeviceManager().add_device(admin_user, device)
