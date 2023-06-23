@@ -21,9 +21,9 @@ export const useRegisterValidator = (step) => {
                 .string()
                 .required(errorMessages)
                 .matches(phoneRegExp, "Số điện thoại không hợp lệ"),
+            birthday: yup.string().required(errorMessages),
             confirmPolicy: yup
                 .boolean()
-                .required(errorMessages)
                 .oneOf([true], "Cần đồng ý với điều khoản của chúng tôi"),
         })
         .required();
