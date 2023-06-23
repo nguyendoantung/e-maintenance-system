@@ -13,6 +13,7 @@ import {
     Button,
     Checkbox,
     FormControlLabel,
+    FormHelperText,
     Grid,
     Grow,
     Hidden,
@@ -25,7 +26,6 @@ import {
 } from "@material-ui/core";
 import { ReactComponent as LogoIcon } from "../../icon_image/logo.svg";
 import { LIST_ROUTE } from "../../routers/contants";
-import { DatePicker } from "@material-ui/pickers";
 import { useRegisterValidator } from "./Validators/RegisterSchema";
 import { useForm } from "react-hook-form";
 const useStyles = makeStyles((theme) => ({
@@ -69,22 +69,41 @@ export default function RegisterPage() {
     const {
         register,
         handleSubmit,
-        watch,
         clearErrors,
         formState: { errors },
     } = useForm({
         resolver: useRegisterValidator(),
+        defaultValues: {
+            confirmPolicy: false,
+        },
     });
     const onSubmitStepOne = (data) => {
         if (!errors.password && errors.email) {
             setStep(true);
         }
     };
-    const onSubmitStepTwo = (data) => console.log(data);
+    const onSubmitStepTwo = (data) => {
+        const dataSubmit = {
+            email: data.email,
+            user_name: data.username,
+            password: data.password,
+            first_name: data.firstName,
+            last_name: data.lastName,
+            phone: data.phone,
+        };
+        console.log(dataSubmit);
+    };
     const onErr = (err) => {
-        if (!errors.password && !errors.email) {
+        if (!errors.password && !errors.email && !err.password && !err.email) {
             setStep(true);
-            clearErrors(["firstName", "lastName", "username"]);
+            clearErrors([
+                "firstName",
+                "lastName",
+                "username",
+                "birthday",
+                "phone",
+                "confirmPolicy",
+            ]);
         }
     };
     const now = new Date();
@@ -317,6 +336,9 @@ export default function RegisterPage() {
                                 }}
                             >
                                 <TextField
+                                    {...register("firstName")}
+                                    error={!!errors.firstName}
+                                    helperText={errors.firstName?.message}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -330,6 +352,9 @@ export default function RegisterPage() {
                                     }}
                                 />
                                 <TextField
+                                    {...register("lastName")}
+                                    error={!!errors.lastName}
+                                    helperText={errors.lastName?.message}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -345,6 +370,9 @@ export default function RegisterPage() {
                                 />
                             </Box>
                             <TextField
+                                {...register("phone")}
+                                error={!!errors.phone}
+                                helperText={errors.phone?.message}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -356,6 +384,9 @@ export default function RegisterPage() {
                                 autoFocus
                             />
                             <TextField
+                                {...register("birthday")}
+                                error={!!errors.birthday}
+                                helperText={errors.birthday?.message}
                                 variant="outlined"
                                 margin="normal"
                                 id="date"
@@ -371,7 +402,7 @@ export default function RegisterPage() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        value="remember"
+                                        {...register("confirmPolicy")}
                                         style={{
                                             color: "#386641",
                                             borderColor: "#386641",
@@ -389,6 +420,9 @@ export default function RegisterPage() {
                                     label: classes.checkboxAccept,
                                 }}
                             />
+                            <FormHelperText>
+                                {errors.confirmPolicy?.message}
+                            </FormHelperText>
                             <Button
                                 type="submit"
                                 variant="contained"
