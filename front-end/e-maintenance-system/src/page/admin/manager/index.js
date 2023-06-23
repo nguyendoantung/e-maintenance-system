@@ -1,11 +1,12 @@
-import React from "react";
-import { useLocation, useHistory } from "react-router-dom";
-import { AppBar, Tabs, Box, Paper } from "@material-ui/core";
-import LinkTab from "../../../components/Tab/LinkTab";
-import TabPanel from "../../../components/form_helper/TabPanel";
-import { ManagerTab } from "../../../components/constant";
-import StaffPage from "./staff/list/StaffPage";
-import DevicePage from "./device/list/DevicePage";
+import React from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
+import { AppBar, Tabs, Box, Paper } from '@material-ui/core';
+import LinkTab from '../../../components/Tab/LinkTab';
+import TabPanel from '../../../components/form_helper/TabPanel';
+import { ManagerTab } from '../../../components/constant';
+import StaffPage from './staff/list/StaffPage';
+import DevicePage from './device/list/DevicePage';
+import OrderPage from './order/OrderPage';
 
 const useStyles = () => ({
   root: {
@@ -51,7 +52,7 @@ const ManagerPage = () => {
         <DevicePage />
       </TabPanel>
       <TabPanel value={ManagerTab.ORDER.value} index={tabName} pt={2}>
-        This is order manager page
+        <OrderPage />
       </TabPanel>
     </>
   );

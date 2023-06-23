@@ -23,6 +23,16 @@ export const GetRepairOrderForStaff = ({ adminId, page, pageSize }) => {
   );
 };
 
+export const GetRepairOrderForAdmin = ({ adminId, page, pageSize }) => {
+  return useQuery(
+    ['get_repair_order_admin', adminId, page, pageSize],
+    () => rootApi.get(path.admin.staff.listOrderForAdmin({ page, pageSize })),
+    {
+      refetchInterval: 5000,
+    }
+  );
+};
+
 export const GetRepairOrderOfStaff = ({ adminID, page, pageSize }) => {
   return useQuery(
     ['get_repair_order_of_staff', adminID, page, pageSize],

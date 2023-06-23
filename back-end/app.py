@@ -15,6 +15,9 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config["JWT_SECRET_KEY"] = "tungnd173451"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
+app.config["UPLOAD_FOLDER"] = "/"
+app.secret_key = "tungnd44 secret key"
+
 jwt = JWTManager(app)
 
 app.register_blueprint(authen_blueprint)

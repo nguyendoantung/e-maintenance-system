@@ -88,17 +88,21 @@ ADD FOREIGN KEY (shop_id) REFERENCES shop(id) on update cascade on delete cascad
 # create table history
 create table if not exists `order_history` (
 	id binary(16) not null,
+    order_id binary(16) not null,
     customer_id binary(16) not null,
     staff_id binary(16) not null,
     price int,
-    start_time datetime,
-    complete_time datetime,
+    update_time datetime,
+    status varchar(100),
     note varchar(200),
     rate int,
-    FOREIGN KEY (id) REFERENCES repair_order(id) on update cascade on delete cascade,
+    FOREIGN KEY (order_id) REFERENCES repair_order(id) on update cascade on delete cascade,
     FOREIGN KEY (customer_id) REFERENCES user(id) on update cascade on delete cascade,
-    FOREIGN KEY (staff_id) REFERENCES shop_member(user_id)
+    FOREIGN KEY (staff_id) REFERENCES shop_member(user_id),
+    primary key (id)
 );
+
+drop table order_history;
 
 alter table device
 add name varchar(1000);

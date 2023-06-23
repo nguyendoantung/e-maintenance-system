@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import axios from "axios";
+import axios from 'axios';
 // import * as apiLogin from './auth'
 
 /**
@@ -11,7 +11,7 @@ export function getToken(tokenType) {
     const state = localStorage.getItem(tokenType);
     return state;
   } catch (e) {
-    return "none";
+    return 'none';
   }
 }
 
@@ -22,9 +22,9 @@ export function getToken(tokenType) {
 const defaultOptions = {
   baseURL: process.env.REACT_APP_URL_API,
   headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer ${getToken("token")}`,
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    Authorization: `Bearer ${getToken('token')}`,
   },
   timeout: 200000,
 };
@@ -36,8 +36,8 @@ const defaultOptions = {
 const rootApi = axios.create(defaultOptions);
 
 rootApi.interceptors.request.use(function (config) {
-  let token = localStorage.getItem("token");
-  config.headers["Authorization"] = "Bearer " + token;
+  let token = localStorage.getItem('token');
+  config.headers['Authorization'] = 'Bearer ' + token;
   return config;
 });
 

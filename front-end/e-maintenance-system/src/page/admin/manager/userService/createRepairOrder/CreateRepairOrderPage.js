@@ -60,7 +60,7 @@ const CreateRepairOrderPage = (props) => {
     <>
       <Dialog open={open} onClose={onCloseDialog} maxWidth="md" fullWidth>
         <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">
-          Đặt đơn sửa chữa
+          Thêm mới thiết bị
         </DialogTitle>
         <DialogContent>
           <Box>

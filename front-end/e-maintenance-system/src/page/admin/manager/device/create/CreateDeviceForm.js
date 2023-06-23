@@ -15,7 +15,8 @@ import { reduxForm, Field, reset, Form, change } from 'redux-form';
 import AsyncSelectField from '../../../../../components/FormControls/AsyncSelectField';
 import GetCategory from '../../../../../request/getCategory';
 import ld from 'lodash';
-import FormField from '../../../../../components/FormControls/FormField';
+import Joi from 'joi';
+import createValidator from '../../../../../components/createValidator';
 
 export const CREATE_DEVICE_FORM = 'CREATE_DEVICE_FORM';
 
@@ -34,8 +35,21 @@ const style = {
 };
 
 const CreateDeviceForm = (props) => {
-  const { handleSubmit, busy, open, setOpen } = props;
-  const [listImages, setListImages] = React.useState([]);
+  const {
+    handleSubmit,
+    busy,
+    open,
+    setOpen,
+    listImages,
+    setListImages,
+    listFiles,
+    setListFiles,
+  } = props;
+
+  React.useEffect(() => {
+    props.reset(CREATE_DEVICE_FORM);
+  }, []);
+
   const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
   const categories = ld
     .chain(dataCategory?.data?.data ?? [])
@@ -49,9 +63,12 @@ const CreateDeviceForm = (props) => {
     .value();
 
   const onChangeImage = (e) => {
-    const temp = listImages;
-    temp.push(URL.createObjectURL(e.target.files[0]));
-    setListImages(temp);
+    // const temp = listImages;
+    // const temp2 = listFiles;
+    // temp.push(URL.createObjectURL(e.target.files[0]));
+    // temp2.push(e.target.files[0]);
+    setListImages([URL.createObjectURL(e.target.files[0])]);
+    setListFiles([e.target.files[0]]);
   };
   const removeChooseImage = (i) => {
     const s = listImages.filter((item, index) => index !== i);
@@ -85,21 +102,30 @@ const CreateDeviceForm = (props) => {
           naked
           component={InputField}
         />
+        <Field
+          name="unit"
+          label="Đơn vị"
+          // type="number"
+          labelMultiline
+          naked
+          component={InputField}
+        />
         <input
           id="image"
           name="Anh"
           type="file"
-          multiple
+          // multiple
           accept="image/*"
           onChange={onChangeImage}
         />
         {/* <Field
-          component="input"
+          name="image"
+          component={renderField}
+          // component="input"
           type="file"
-          multiple
           accept="image/*"
           onChange={onChangeImage}
-          value={listImages}
+          // value={listImages}
         /> */}
         <ImageList sx={{ width: 50, height: 50 }} rowHeight={50}>
           {listImages.map((image, index) => {
@@ -121,7 +147,15 @@ const CreateDeviceForm = (props) => {
           })}
         </ImageList>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button
+            onClick={() => {
+              setListFiles([]);
+              setListImages([]);
+              setOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
           <Button
             type="submit"
             variant="contained"
@@ -137,10 +171,36 @@ const CreateDeviceForm = (props) => {
   );
 };
 
+const schema = Joi.object({
+  name: Joi.string().label('Tên thiết bị'),
+  category: Joi.any().label('Loại'),
+  price: Joi.string().label('Giá'),
+  unit: Joi.string().label('Đơn vị'),
+});
+
+const validateFields = (values) => {
+  const errors = {};
+  const formJoiValidate = createValidator(schema);
+  const { name, category, price, unit } = values;
+  if (!name) {
+    errors.name = 'Yêu cầu tên thiết bị';
+  } else if (!category) {
+    errors.category = 'Yêu cầu loại thiết bị';
+  } else if (!price) {
+    errors.price = 'Yêu cầu giá tiền';
+  } else if (!unit) {
+    errors.unit = 'Yêu cầu đơn vị';
+  }
+
+  if (!formJoiValidate(values)) return errors;
+  return Object.assign(formJoiValidate(values), errors);
+};
+
 export default compose(
   reduxForm({
     form: CREATE_DEVICE_FORM,
-    // validate: createValidator(schema),
+    multipartForm: true,
+    validate: validateFields,
   }),
   connect(null, { reset, change })
 )(CreateDeviceForm);

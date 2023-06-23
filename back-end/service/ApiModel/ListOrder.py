@@ -15,6 +15,7 @@ class ListOrder(BaseModel):
     device: Optional[str]
     note: Optional[str]
 
+
 class ListOrderForUser(BaseModel):
     id: uuid.UUID
     full_name: str
@@ -27,6 +28,7 @@ class ListOrderForUser(BaseModel):
     device: Optional[str]
     note: Optional[str]
 
+
 class ListOrderOfStaff(BaseModel):
     id: uuid.UUID
     full_name: str
@@ -38,3 +40,7 @@ class ListOrderOfStaff(BaseModel):
     note: Optional[str]
     device: Optional[str]
     device_use: Optional[list[str]]
+
+
+class ListOrderAdmin(ListOrder):
+    staff_name: Optional[str]
