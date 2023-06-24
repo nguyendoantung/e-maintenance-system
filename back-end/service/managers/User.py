@@ -6,6 +6,7 @@ import pytz
 from data import Category, Device, OrderItem, RepairOrder
 from data import User as UserDB
 from service.ApiModel.ListOrder import ListOrder, ListOrderForUser
+from service.constant import OrderStatus
 from service.model.User import ChangePasswordModel, CreateRepairOrder
 from service.utils.email.EmailController import SendEmailController
 from sqlalchemy import desc
@@ -40,7 +41,7 @@ class User:
             id=repair_order_id,
             customer_id=user_id,
             create_date=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
-            status="Created",
+            status=OrderStatus.START,
             note=body.note,
             full_name=body.full_name,
             phone=body.phone,

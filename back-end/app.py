@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from service.api.admin.category import blueprint as category_blueprint
 from service.api.admin.device.blueprint import blueprint as device_blueprint
+from service.api.admin.order.blueprint import blueprint as order_admin_blueprint
 from service.api.admin.staff.blueprint import blueprint as admin_blueprint
 from service.api.authen.blueprint import blueprint as authen_blueprint
 from service.api.order.blueprint import blueprint as order_blueprint
@@ -26,3 +27,4 @@ app.register_blueprint(order_blueprint)
 app.register_blueprint(device_blueprint)
 app.register_blueprint(category_blueprint)
 app.register_blueprint(user_blueprint)
+app.register_blueprint(order_admin_blueprint)

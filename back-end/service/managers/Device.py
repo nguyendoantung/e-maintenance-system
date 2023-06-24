@@ -42,7 +42,7 @@ class DeviceManager:
         }, HTTPStatus.OK
 
     def add_device(self, admin_user: str, body: CreateDevice):
-        shop_member = (
+        shop_member: ShopMember = (
             self.session.query(ShopMember)
             .join(User, ShopMember.user_id == User.id)
             .filter(User.user_name == admin_user)

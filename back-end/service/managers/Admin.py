@@ -2,10 +2,11 @@ import uuid
 from http import HTTPStatus
 
 from data import Device, OrderItem, RepairOrder, User
-from service.ApiModel.ListOrder import ListOrder, ListOrderOfStaff,ListOrderAdmin
+from service.ApiModel.ListOrder import ListOrder, ListOrderAdmin, ListOrderOfStaff
 from service.ApiModel.ListStaff import Staff
+from service.ApiModel.UpdateOrder import RejectOrder
+from service.constant import OrderStatus
 from service.utils.email.EmailController import SendEmailController
-from sqlalchemy import desc
 from utils import create_session
 
 
@@ -58,6 +59,7 @@ class Admin:
             return {"message": "Đơn đã có người thực thi"}, HTTPStatus.FORBIDDEN
         else:
             order.staff_id = staff_id
+            order.status = OrderStatus.ON_PROCESS
             user: User = (
                 self.session.query(User).filter(User.id == order.customer_id).first()
             )
@@ -155,3 +157,47 @@ class Admin:
                 a.staff_name = f"{staff.FirstName} {staff.LastName}"
             res.append(a.dict(by_alias=True))
         return {"data": res, "total": total}, HTTPStatus.OK
+
+    def reject_order(self, body: RejectOrder, order_id):
+        query = self.session.query(RepairOrder).filter(RepairOrder.id == order_id)
+
+        check_order_has_process = query.filter(
+            RepairOrder.staff_id.is_not(None)
+        ).first()
+        if check_order_has_process:
+            return {
+                "message": "Không thể hủy đơn đã có người thực thi!"
+            }, HTTPStatus.BAD_REQUEST
+
+        check_order_has_complete_or_reject = query.filter(
+            RepairOrder.status.in_([OrderStatus.COMPLETE, OrderStatus.REJECT])
+        ).first()
+        if check_order_has_complete_or_reject:
+            return {
+                "message": "Không thể từ chối đơn đã hoàn thành hoặc bị từ chối!"
+            }, HTTPStatus.BAD_REQUEST
+
+        order: RepairOrder = query.first()
+        if not order:
+            return {"message": "Không tìm được đơn tương ứng"}, HTTPStatus.BAD_REQUEST
+        customer_id = order.customer_id
+        user: User = self.session.query(User).filter(User.id == customer_id).first()
+        order.status = OrderStatus.REJECT
+        self.session.commit()
+
+        try:
+            SendEmailController().send_email(
+                receive_email=f"{user.email}",
+                subject="Đơn bị từ chối",
+                template_params={
+                    "user_name": f"{user.FirstName} {user.LastName}",
+                    "order_name": order.full_name,
+                    "order_id": str(order_id).upper().replace("-", ""),
+                    "reason": body.reason,
+                },
+                template_file_name="reject_order.html",
+            )
+        except Exception:
+            pass
+
+        return {"message": "Từ chối đơn thành công"}, HTTPStatus.OK
