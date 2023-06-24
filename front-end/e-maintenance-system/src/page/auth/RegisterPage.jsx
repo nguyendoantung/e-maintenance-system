@@ -28,13 +28,13 @@ import { ReactComponent as LogoIcon } from "../../icon_image/logo.svg";
 import { LIST_ROUTE } from "../../routers/contants";
 import { useRegisterValidator } from "./Validators/RegisterSchema";
 import { useForm } from "react-hook-form";
+import authencation from "../../request/authencation";
+import { showSuccess, showError } from "../../utils/notification";
 const useStyles = makeStyles((theme) => ({
     paper: {
-        // position: "absolute",
         width: "flex",
         minWidth: 500,
         minHeight: 300,
-        // height: "flex",
         backgroundColor: theme.palette.background.paper,
         border: "0px solid #000",
         borderRadius: "5px",
@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const [step, setStep] = React.useState(false);
+    const history = useHistory();
     const {
         register,
         handleSubmit,
@@ -82,6 +83,17 @@ export default function RegisterPage() {
             setStep(true);
         }
     };
+    const { mutate: sendRegister, isLoading } = useMutation({
+        mutationKey: ["register"],
+        mutationFn: (data) => authencation.register(data),
+        onSuccess: (res) => {
+            showSuccess({ message: "Đăng kí thành công" });
+            history.push("/");
+        },
+        onError: (res) => {
+            showSuccess({ message: "Đăng kí thất bại" });
+        },
+    });
     const onSubmitStepTwo = (data) => {
         const dataSubmit = {
             email: data.email,
@@ -91,7 +103,7 @@ export default function RegisterPage() {
             last_name: data.lastName,
             phone: data.phone,
         };
-        console.log(dataSubmit);
+        sendRegister(dataSubmit);
     };
     const onErr = (err) => {
         if (!errors.password && !errors.email && !err.password && !err.email) {

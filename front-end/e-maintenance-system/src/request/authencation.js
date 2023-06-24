@@ -1,6 +1,3 @@
-import rootApi from "../api/rootApi";
-import path from "../api/path";
-import { useMutation } from "react-query";
 import { axiosMethod } from "../api/rootApiHaveToken";
 import rootApiNoToken from "../api/rootApiNoToken";
 
@@ -53,7 +50,7 @@ class AuthenApi {
         last_name,
         phone,
     }) {
-        const url = `/api/services/app/Account/Register`;
+        const url = `/authenticate/register`;
         const data = {
             email,
             user_name,
