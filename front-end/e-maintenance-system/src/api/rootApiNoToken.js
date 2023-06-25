@@ -15,6 +15,7 @@ class rootApiNoToken {
                 if (!baseURL) {
                     baseURL = process.env.REACT_APP_URL_API;
                 }
+                headers["ngrok-skip-browser-warning"] = true;
 
                 return { ...config, headers: headers, baseURL: baseURL };
             },
