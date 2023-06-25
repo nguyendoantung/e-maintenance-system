@@ -8,47 +8,50 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import parseJwt from '../utils/parseJwt';
 
 function Profile({ setToken, token }) {
-  const history = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const { data } = useQuery(
-    ['get data', token],
-    () => rootApi.get(path.auth.profile),
-    {
-      refetchInterval: 5000,
-      onError(err) {
-        if (err?.request?.status === 401) {
-          setToken(null);
-          localStorage.clear();
+    const history = useHistory();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const { data } = useQuery(
+        ["get data", token],
+        () =>
+            rootApiHaveToken.request({
+                url: path.auth.profile,
+            }),
+        {
+            refetchInterval: 5000,
+            onError(err) {
+                if (err?.request?.status === 401) {
+                    setToken(null);
+                    localStorage.clear();
+                }
+            },
         }
-      },
-    }
-  );
+    );
 
-  const { mutateAsync } = useMutation(['logout', token], () => {
-    return rootApi.post(path.auth.logout);
-  });
-
-  const [profileData, setProfileData] = React.useState({});
-  React.useEffect(() => {
-    setProfileData(data?.data);
-  }, [data, token]);
-
-  const userId = parseJwt(token)?.sub?.id || '';
-
-  const logout = () => {
-    mutateAsync().then(() => {
-      setToken(null);
-      localStorage.clear();
+    const { mutateAsync } = useMutation(["logout", token], () => {
+        return rootApi.post(path.auth.logout);
     });
-  };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const [profileData, setProfileData] = React.useState({});
+    React.useEffect(() => {
+        setProfileData(data?.data);
+    }, [data, token]);
+
+    const userId = parseJwt(token)?.sub?.id || "";
+
+    const logout = () => {
+        mutateAsync().then(() => {
+            setToken(null);
+            localStorage.clear();
+        });
+    };
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
   return (
     <>
