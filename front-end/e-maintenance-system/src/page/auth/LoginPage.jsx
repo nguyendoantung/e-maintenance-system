@@ -31,6 +31,7 @@ import { LIST_ROUTE } from "../../routers/contants";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { useForm } from "react-hook-form";
 import { useLoginValidator } from "./Validators/LoginSchema";
+import { showError, showSuccess } from "../../utils/notification";
 
 function getModalStyle() {
     const top = 50;
@@ -106,7 +107,29 @@ export default function LoginPage() {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const onSubmit = (data) => console.log(data);
+
+    const [randomToken] = React.useState(makeRandom(32));
+    const { mutateAsync, isLoading } = useMutation(
+        ["login", randomToken],
+        (formValues) => {
+            const { userNameOrEmail, password } = formValues;
+            const body = { user_name: userNameOrEmail, password };
+            return rootApi.post(path.auth.login, body);
+        }
+    );
+
+    const onSubmit = (data) => {
+        mutateAsync(data).then((res) => {
+            const { data } = res || {};
+            const { access_token: token } = data;
+            localStorage.setItem("token", token);
+            showSuccess({message: "Đăng nhập thành công!"});
+            /* eslint-disable no-restricted-globals */  
+            history.push(LIST_ROUTE.HOME_PAGE);
+        }).catch((error) => {
+            showError({message: error?.response?.data?.message || "Đăng nhập thất bại!"})
+        })
+    };
     // const handleSubmit = (event) => {
     //     event.preventDefault();
     //     const data = new FormData(event.currentTarget);
@@ -117,15 +140,8 @@ export default function LoginPage() {
     // };
     // const history = useHistory();
     // const [modalStyle] = React.useState(getModalStyle);
-    // const [randomToken] = React.useState(makeRandom(32));
-    // const { mutateAsync, isLoading } = useMutation(
-    //     ["login", randomToken],
-    //     (formValues) => {
-    //         const { user, password } = formValues;
-    //         const body = { user_name: user, password };
-    //         return rootApi.post(path.auth.login, body);
-    //     }
-    // );
+    
+    
 
     // const onSubmitForm = (formValues) => {
     //     mutateAsync(formValues).then((res) => {
@@ -268,7 +284,7 @@ export default function LoginPage() {
                                     {errors.password?.message}
                                 </FormHelperText>
                             </FormControl>
-                            <FormControlLabel
+                            {/* <FormControlLabel
                                 control={
                                     <Checkbox
                                         value="remember"
@@ -279,7 +295,7 @@ export default function LoginPage() {
                                     />
                                 }
                                 label="Remember me"
-                            />
+                            /> */}
                             <Button
                                 type="submit"
                                 fullWidth
