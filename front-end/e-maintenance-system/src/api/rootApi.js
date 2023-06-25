@@ -25,6 +25,7 @@ const defaultOptions = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     Authorization: `Bearer ${getToken('token')}`,
+    'ngrok-skip-browser-warning': true,
   },
   timeout: 200000,
 };

@@ -11,26 +11,27 @@ import {
   Typography,
   CircularProgress,
 } from '@material-ui/core';
-import InputField from '../../../../components/FormControls/InputField';
+// import InputField from '../../../../components/FormControls/InputField';
+import AsyncSelectComponent from '../../../../components/FormControls/AsyncSelectField';
 import Joi from 'joi';
 import createValidator from '../../../../components/createValidator';
 
-export const REJECT_FORM = 'REJECT_FORM';
+export const ASSIGN_ORDER_FORM = 'REJECT_FORM';
 
-const RejectOrderForm = (props) => {
+const AssignOrderForm = (props) => {
   const { order, handleSubmit, onCancel, busy } = props;
   return (
     <>
       <Dialog onClose={onCancel} open>
         <Form onSubmit={handleSubmit}>
-          <DialogTitle>Xác nhận từ chối</DialogTitle>
+          <DialogTitle>Giao việc</DialogTitle>
           <DialogContent>
             <Typography>
-              Đơn <strong>{order?.full_name}</strong> sẽ bị từ chối, việc từ
-              chối đồng nghĩa với việc đơn sẽ không thể được thực thi được nữa.
+              Chọn một nhân viên, người sẽ chịu trách nhiệm thực thi đơn{' '}
+              <strong>{order?.full_name}</strong>
             </Typography>
-            <Typography>Vui lòng điền lý do từ chối đơn:</Typography>
-            <Field name="reason" component={InputField} naked dense />
+            {/* <Typography>Vui lòng điền lý do từ chối đơn:</Typography> */}
+            <Field name="staff" component={AsyncSelectComponent} naked dense />
             <DialogActions>
               <Button onClick={onCancel}>Hủy</Button>
               <Button
@@ -54,9 +55,9 @@ const validateField = (values) => {
   let errors = {};
   const formJoiValidate = createValidator(schema);
 
-  const { reason } = values;
-  if (!reason) {
-    errors.reason = 'Can co ly do';
+  const { staff } = values;
+  if (!staff) {
+    errors.staff = 'Can co ly do';
   }
 
   if (!formJoiValidate(values)) return errors;
@@ -64,13 +65,13 @@ const validateField = (values) => {
 };
 
 const schema = Joi.object({
-  reason: Joi.string(),
+  staff: Joi.any(),
 });
 
 export default compose(
   reduxForm({
-    form: REJECT_FORM,
+    form: ASSIGN_ORDER_FORM,
     validate: validateField,
   }),
   connect(null, { reset, change })
-)(RejectOrderForm);
+)(AssignOrderForm);

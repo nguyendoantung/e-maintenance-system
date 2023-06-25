@@ -33,6 +33,7 @@ const path = {
     },
     order: {
       rejectOrder: ({ orderId }) => `/admin/order/reject/${orderId}`,
+      assignOrder: ({ orderId }) => `/admin/order/assign/${orderId}`,
     },
     userService: {
       changePassword: () => `/user/change_password`,

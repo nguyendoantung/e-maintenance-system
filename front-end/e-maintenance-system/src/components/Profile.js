@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { useQuery, useMutation } from 'react-query';
 import rootApi from '../api/rootApi';
 import path from '../api/path';
-import { Avatar, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Avatar, Button, Typography, Menu, MenuItem } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import parseJwt from '../utils/parseJwt';
 
@@ -51,50 +51,28 @@ function Profile({ setToken, token }) {
   };
 
   return (
-    // <>
-    //   <Avatar src={profileData?.profile_link}/>
-    // </>
-    <div className="Profile">
-      {profileData && (
-        <>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-            }}
-          >
-            <Typography
-              style={{
-                textSize: '16px',
-              }}
-            >
-              {profileData.name}
-            </Typography>
-            <ArrowDropDownIcon
-              style={{
-                fontSize: '1rem',
-              }}
-              onClick={handleClick}
-            />
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}
-            >
-              <MenuItem onClick={() => history.push(`${userId}/admin`)}>
-                Quản lý
-              </MenuItem>
-              <MenuItem onClick={logout}>Đăng xuất</MenuItem>
-            </Menu>
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <Button onClick={handleClick}>
+        <Avatar src={profileData?.profile_link} />
+        <Typography variant="h7" style={{ color: 'black', margin: '5px' }}>
+          {profileData?.name}
+        </Typography>
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={() => history.push(`${userId}/admin`)}>
+          Quản lý
+        </MenuItem>
+        <MenuItem onClick={logout}>Đăng xuất</MenuItem>
+      </Menu>
+    </>
   );
 }
 

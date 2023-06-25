@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
     copyright: { marginTop: theme.spacing(5) },
 }));
 export default function LoginPage() {
+    const history = useHistory()
     const classes = useStyles();
     const [showPassword, setShowPassword] = React.useState();
     const {
