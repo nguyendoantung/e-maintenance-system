@@ -7,6 +7,8 @@ import { LIST_ROUTE } from './contants';
 import UserRoute from '../components/routes/UserRoute';
 import RegisterPage from '../page/auth/RegisterPage';
 import AuthRoute from '../components/routes/AuthRoute';
+import Contact from '../page/contact/contact';
+import Service from '../page/service/service';
 
 const Routers = () => {
   return (
@@ -20,6 +22,8 @@ const Routers = () => {
             component={RegisterPage}
           />
           <UserRoute exact path={LIST_ROUTE.HOME_PAGE} component={HomePage} />
+          <UserRoute exact path={LIST_ROUTE.CONTACT} component={Contact} />
+          <UserRoute exact path={LIST_ROUTE.SERVICE} component={Service} />
           {/* <UserRoute
                         exact
                         path={LIST_ROUTE.ADMIN_PAGE}

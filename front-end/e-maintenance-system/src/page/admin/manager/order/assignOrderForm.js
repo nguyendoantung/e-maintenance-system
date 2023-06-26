@@ -12,14 +12,30 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 // import InputField from '../../../../components/FormControls/InputField';
+import ld from 'lodash';
 import AsyncSelectComponent from '../../../../components/FormControls/AsyncSelectField';
 import Joi from 'joi';
 import createValidator from '../../../../components/createValidator';
+import GetStaff from '../../../../request/getStaff';
 
-export const ASSIGN_ORDER_FORM = 'REJECT_FORM';
+export const ASSIGN_ORDER_FORM = 'ASSIGN_FORM';
 
 const AssignOrderForm = (props) => {
   const { order, handleSubmit, onCancel, busy } = props;
+
+  const { data, isLoading } = GetStaff({ page: 1, pageSize: 1000 });
+
+  const staffs = ld
+    .chain(data?.data?.user ?? [])
+    .map(({ id, user_name }) => {
+      return {
+        value: id,
+        label: user_name,
+      };
+    })
+    .orderBy('label')
+    .value();
+
   return (
     <>
       <Dialog onClose={onCancel} open>
@@ -28,10 +44,16 @@ const AssignOrderForm = (props) => {
           <DialogContent>
             <Typography>
               Chọn một nhân viên, người sẽ chịu trách nhiệm thực thi đơn{' '}
-              <strong>{order?.full_name}</strong>
+              <strong>{order?.full_name}</strong>:
             </Typography>
-            {/* <Typography>Vui lòng điền lý do từ chối đơn:</Typography> */}
-            <Field name="staff" component={AsyncSelectComponent} naked dense />
+            <Field
+              name="staff"
+              component={AsyncSelectComponent}
+              isLoading={isLoading}
+              options={staffs}
+              naked
+              dense
+            />
             <DialogActions>
               <Button onClick={onCancel}>Hủy</Button>
               <Button
@@ -57,7 +79,7 @@ const validateField = (values) => {
 
   const { staff } = values;
   if (!staff) {
-    errors.staff = 'Can co ly do';
+    errors.staff = 'Cần có nhân viên!';
   }
 
   if (!formJoiValidate(values)) return errors;

@@ -31,10 +31,11 @@ const OrderAction = (props) => {
     });
 
   const { mutateAsync: asyncAssign, isLoading: isLoadingAssign } = useMutation(
-    ['assgin-order', orderId],
+    ['assign-order', orderId],
     (formValues) => {
-      const { reason } = formValues;
-      const body = { reason };
+      console.log(formValues);
+      const { staff } = formValues;
+      const body = { staff: staff?.value };
       return rootApi.put(path.admin.order.assignOrder({ orderId }), body);
     }
   );
@@ -43,6 +44,19 @@ const OrderAction = (props) => {
     asyncRejectOrder(formValues)
       .then((res) => {
         setOpenReject(false);
+        setAnchorEl(null);
+        showSuccess({ message: res?.data?.message || 'Success' });
+      })
+      .catch((errors) => {
+        showError({ message: errors?.response?.data?.message || 'Fail' });
+      });
+  };
+
+  const handleAssignOrder = (formValues) => {
+    asyncAssign(formValues)
+      .then((res) => {
+        setOpenAssign(false);
+        setAnchorEl(null);
         showSuccess({ message: res?.data?.message || 'Success' });
       })
       .catch((errors) => {
@@ -87,8 +101,18 @@ const OrderAction = (props) => {
           onClick={() => setOpenAssign(true)}
         >
           <ListItemText>Giao việc</ListItemText>
+          <ListItemSecondaryAction>
+            {isLoadingAssign && <CircularProgress size={20} />}
+          </ListItemSecondaryAction>
         </MenuItem>
-        {openAssign && <AssignOrderForm order={order} />}
+        {openAssign && (
+          <AssignOrderForm
+            onSubmit={handleAssignOrder}
+            onCancel={() => setOpenAssign(false)}
+            busy={isLoadingAssign}
+            order={order}
+          />
+        )}
       </Menu>
     </>
   );

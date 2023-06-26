@@ -112,19 +112,23 @@ const Layout = (props) => {
   const classes = useStyles();
   const appBarRoute = [
     {
-      name: 'Home',
+      name: 'Trang chủ',
       route: LIST_ROUTE.HOME_PAGE,
     },
+    // {
+    //   name: 'Về chúng tôi',
+    //   route: LIST_ROUTE.ABOUT_US,
+    // },
+    // {
+    //   name: 'Blog cá nhân',
+    //   route: LIST_ROUTE.BLOG,
+    // },
     {
-      name: 'About us',
-      route: LIST_ROUTE.ABOUT_US,
+      name: 'Dịch vụ',
+      route: LIST_ROUTE.SERVICE,
     },
     {
-      name: 'Blog',
-      route: LIST_ROUTE.BLOG,
-    },
-    {
-      name: 'Contact',
+      name: 'Liên hệ',
       route: LIST_ROUTE.CONTACT,
     },
   ];
