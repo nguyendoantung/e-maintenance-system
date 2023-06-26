@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 from data import User
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 from flask_cors import cross_origin
 from flask_jwt_extended import (
     create_access_token,
@@ -20,7 +20,6 @@ blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
 
 
 @blueprint.route("/token", methods=["POST"])
-
 @validate(body=LoginModel)
 def create_token(body: LoginModel):
     # api receive user_name or email then check user
@@ -29,7 +28,6 @@ def create_token(body: LoginModel):
 
 
 @blueprint.route("/register", methods=["POST"])
-
 @validate(body=RegisterAccount)
 def register(body: RegisterAccount):
     return Authenticate().register(body)
@@ -63,7 +61,6 @@ def logout():
 
 @blueprint.route("/profile", methods=["GET"])
 @jwt_required()
-
 def my_profile():
     information = get_jwt()["sub"]
     user_name = information.get("user_name")

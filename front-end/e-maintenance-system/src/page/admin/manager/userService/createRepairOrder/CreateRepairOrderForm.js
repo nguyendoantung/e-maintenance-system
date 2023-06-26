@@ -29,7 +29,7 @@ const CreateRepairOrderForm = (props) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Field name="name" label="Họ và tên" component={InputField} />
+        <Field name="name" label="Tên đơn" component={InputField} />
         <Field name="phone" label="Số điện thoại" component={InputField} />
         <Field
           component={AsyncSelectComponent}
@@ -63,7 +63,7 @@ const CreateRepairOrderForm = (props) => {
 };
 
 const schema = Joi.object({
-  name: Joi.string().label('Họ và tên'),
+  name: Joi.string().label('Tên đơn'),
   phone: Joi.string().label('Số điện thoại'),
   category: Joi.any().label('Loại sửa chữa'),
   location: Joi.string().label('Địa chỉ'),
@@ -76,7 +76,7 @@ const validateFields = (values) => {
   const formJoiValidate = createValidator(schema);
   const { name, phone, category, location } = values;
   if (!name) {
-    errors.name = 'Vui lòng điền họ và tên!';
+    errors.name = 'Vui lòng điền tên đơn!';
   } else if (!phone) {
     errors.phone = 'Vui lòng điền số điện thoại liên lạc!';
   } else if (!category) {

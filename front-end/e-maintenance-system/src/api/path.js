@@ -26,10 +26,14 @@ const path = {
           ? `/admin/device/?page=${page}&pageSize=${pageSize}`
           : `/admin/device/?page=${page}&pageSize=${pageSize}&category_id=${category}`,
       createDevice: () => `/admin/device/`,
-      uploadDeviceImage: () => `/admin/device/device_image`
+      uploadDeviceImage: () => `/admin/device/device_image`,
     },
     category: {
       listCategory: () => `/admin/category/`,
+    },
+    order: {
+      rejectOrder: ({ orderId }) => `/admin/order/reject/${orderId}`,
+      assignOrder: ({ orderId }) => `/admin/order/assign/${orderId}`,
     },
     userService: {
       changePassword: () => `/user/change_password`,

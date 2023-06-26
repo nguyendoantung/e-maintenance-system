@@ -121,6 +121,3 @@ device_suggest varchar(1000)
 alter table device
 add unit varchar(100);
 # create table new if neccessary - add in future
-
-
-

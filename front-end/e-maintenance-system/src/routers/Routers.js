@@ -28,7 +28,12 @@ const Routers = () => {
                         path={LIST_ROUTE.HOME_PAGE}
                         component={HomePage}
                     />
-                    <UserRoute
+                    {/* <UserRoute
+                        exact
+                        path={LIST_ROUTE.ADMIN_PAGE}
+                        component={AdminPage}
+                    /> */}
+                    <Route
                         exact
                         path={LIST_ROUTE.ADMIN_PAGE}
                         component={AdminPage}

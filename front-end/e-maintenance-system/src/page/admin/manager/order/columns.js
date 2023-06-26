@@ -4,7 +4,7 @@ import OrderAction from './Actions';
 const columns = () => {
   return [
     {
-      Header: 'Người tạo',
+      Header: 'Tên đơn',
       accessor: 'full_name',
     },
     {
