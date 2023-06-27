@@ -4,8 +4,6 @@ const initialState = {
     currentUser: undefined,
     isAuth: false,
     accessToken: "",
-    encryptedAccessToken: "",
-    fcmToken: "",
 
     isPendingGetMe: false,
     isPendingLogin: false,
@@ -26,7 +24,6 @@ const authSlice = createSlice({
             state.isError = false;
             state.isAuth = true;
             state.accessToken = action.payload.accessToken;
-            state.encryptedAccessToken = action.payload.encryptedAccessToken;
         },
 
         loginFailed: (state) => {
@@ -34,10 +31,6 @@ const authSlice = createSlice({
             state.isError = true;
             state.isAuth = false;
             state.currentUser = undefined;
-        },
-
-        setFcmToken: (state, action) => {
-            state.fcmToken = action.payload;
         },
 
         getMe: (state) => {
@@ -60,8 +53,6 @@ const authSlice = createSlice({
             state.isAuth = false;
             state.currentUser = undefined;
             state.accessToken = "";
-            state.accessToken = "";
-            state.fcmToken = "";
         },
     },
 });

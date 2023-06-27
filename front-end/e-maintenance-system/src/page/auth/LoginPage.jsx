@@ -33,6 +33,8 @@ import { useForm } from "react-hook-form";
 import { useLoginValidator } from "./Validators/LoginSchema";
 import { showError, showSuccess } from "../../utils/notification";
 import rootApiNoToken from "../../api/rootApiNoToken";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/slices/auth.slice";
 
 function getModalStyle() {
     const top = 50;
@@ -95,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginPage() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = React.useState();
     const {
         register,
@@ -126,6 +129,7 @@ export default function LoginPage() {
             console.log(res);
             const { access_token: token } = res;
             localStorage.setItem("token", token);
+            dispatch(authActions.loginSuccess({ accessToken: token }));
             showSuccess({ message: "Đăng nhập thành công!" });
             history.push(LIST_ROUTE.HOME_PAGE);
         },
