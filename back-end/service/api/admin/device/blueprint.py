@@ -19,7 +19,7 @@ blueprint = Blueprint("admin/device", __name__, url_prefix="/admin/device")
 
 
 @blueprint.route("/", methods=["GET"], endpoint="/get-device")
-@jwt_required()
+# @jwt_required()
 def get_device():
     # role = get_jwt()["sub"]["role"]
     # if "admin" not in role:
