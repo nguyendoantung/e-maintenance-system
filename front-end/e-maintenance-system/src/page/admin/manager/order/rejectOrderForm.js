@@ -56,7 +56,7 @@ const validateField = (values) => {
 
   const { reason } = values;
   if (!reason) {
-    errors.reason = 'Can co ly do';
+    errors.reason = 'Cần có lý do hủy đơn!';
   }
 
   if (!formJoiValidate(values)) return errors;
