@@ -202,6 +202,7 @@ const HomePage = () => {
           maxWidth: '100%',
           maxHeight: '100%',
           objectFit: 'cover',
+          width: '100%',
         }}
       />
       <Typography

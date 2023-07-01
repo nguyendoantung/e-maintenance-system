@@ -201,3 +201,53 @@ class Admin:
             pass
 
         return {"message": "Từ chối đơn thành công"}, HTTPStatus.OK
+
+    def assign_order(self, order_id, staff_id):
+        order: RepairOrder = (
+            self.session.query(RepairOrder).filter(RepairOrder.id == order_id).first()
+        )
+
+        if order.staff_id:
+            return {
+                "message": "Đơn đã có người thực thi, không thể giao cho người khác!"
+            }, HTTPStatus.BAD_REQUEST
+        else:
+            order.staff_id = staff_id
+            order.status = OrderStatus.ON_PROCESS
+            self.session.commit()
+
+            staff: User = self.session.query(User).filter(User.id == staff_id).first()
+            customer: User = (
+                self.session.query(User).filter(User.id == order.customer_id).first()
+            )
+
+            try:
+                SendEmailController().send_email(
+                    receive_email=customer.email,
+                    subject="Đơn được chấp thuận",
+                    template_params={
+                        "user_name": f"{customer.FirstName} {customer.LastName}",
+                        "order_id": str(order_id).upper(),
+                        "staff_profile_link": staff.profile_link,
+                        "staff_name": f"{staff.FirstName} {staff.LastName}",
+                        "staff_phone": staff.phone,
+                    },
+                    template_file_name="accept_order.html",
+                )
+            except Exception:
+                pass
+
+            try:
+                SendEmailController().send_email(
+                    receive_email=customer.email,
+                    subject="Đơn được giao",
+                    template_params={
+                        "order_id": str(order_id).upper(),
+                        "staff_name": f"{staff.FirstName} {staff.LastName}",
+                    },
+                    template_file_name="assign_order.html",
+                )
+            except Exception:
+                pass
+
+            return {"message": "Giao việc thành công!"}, HTTPStatus.OK
