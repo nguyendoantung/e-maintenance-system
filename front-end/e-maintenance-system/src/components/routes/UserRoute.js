@@ -10,7 +10,6 @@ import { LIST_ROUTE } from "../../routers/contants";
 export default function UserRoute({ children, ...props }) {
     const dispatch = useDispatch();
     const history = useHistory();
-    const isAuth = useSelector(selectIsAuth);
     const { data } = useQuery({
         queryKey: ["getMe"],
         queryFn: () => authencation.getMe(),

@@ -8,14 +8,14 @@ const useStyles = makeStyles((theme) => ({
     root: {
         // flexGrow: 1,
         border: "0",
-        backgroundColor: "#3f51b5",
+        backgroundColor: "#588157",
         top: "auto",
         bottom: 0,
     },
     paper: {
         height: 200,
         width: 400,
-        backgroundColor: "#3f51b5",
+        backgroundColor: "#588157",
         color: "white",
     },
     control: {
