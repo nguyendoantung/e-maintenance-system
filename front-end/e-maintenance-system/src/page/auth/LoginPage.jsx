@@ -32,6 +32,9 @@ import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { useForm } from "react-hook-form";
 import { useLoginValidator } from "./Validators/LoginSchema";
 import { showError, showSuccess } from "../../utils/notification";
+import rootApiNoToken from "../../api/rootApiNoToken";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/slices/auth.slice";
 
 function getModalStyle() {
     const top = 50;
@@ -92,8 +95,9 @@ const useStyles = makeStyles((theme) => ({
     copyright: { marginTop: theme.spacing(5) },
 }));
 export default function LoginPage() {
-    const history = useHistory()
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = React.useState();
     const {
         register,
@@ -110,51 +114,36 @@ export default function LoginPage() {
     };
 
     const [randomToken] = React.useState(makeRandom(32));
-    const { mutateAsync, isLoading } = useMutation(
-        ["login", randomToken],
-        (formValues) => {
+    const { mutate: loginUser, isLoading } = useMutation({
+        mutationKey: ["login", randomToken],
+        mutationFn: (formValues) => {
             const { userNameOrEmail, password } = formValues;
             const body = { user_name: userNameOrEmail, password };
-            return rootApi.post(path.auth.login, body);
-        }
-    );
+            return rootApiNoToken.request({
+                url: path.auth.login,
+                data: body,
+                method: "POST",
+            });
+        },
+        onSuccess: (res) => {
+            console.log(res);
+            const { access_token: token } = res;
+            localStorage.setItem("token", token);
+            dispatch(authActions.loginSuccess({ accessToken: token }));
+            showSuccess({ message: "Đăng nhập thành công!" });
+            history.push(LIST_ROUTE.HOME_PAGE);
+        },
+        onError: (error) => {
+            showError({
+                message:
+                    error?.response?.data?.message || "Đăng nhập thất bại!",
+            });
+        },
+    });
 
     const onSubmit = (data) => {
-        mutateAsync(data).then((res) => {
-            const { data } = res || {};
-            const { access_token: token } = data;
-            localStorage.setItem("token", token);
-            showSuccess({message: "Đăng nhập thành công!"});
-            /* eslint-disable no-restricted-globals */  
-            history.push(LIST_ROUTE.HOME_PAGE);
-        }).catch((error) => {
-            showError({message: error?.response?.data?.message || "Đăng nhập thất bại!"})
-        })
+        loginUser(data);
     };
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     console.log({
-    //         email: data.get("email"),
-    //         password: data.get("password"),
-    //     });
-    // };
-    // const history = useHistory();
-    // const [modalStyle] = React.useState(getModalStyle);
-    
-    
-
-    // const onSubmitForm = (formValues) => {
-    //     mutateAsync(formValues).then((res) => {
-    //         const { data } = res || {};
-    //         const { access_token: token } = data;
-    //         localStorage.setItem("token", token);
-    //         history.push("/");
-    //     });
-    // };
-    // const onBackToList = () => {
-    //     history.push("/");
-    // };
     return (
         <>
             <Grow

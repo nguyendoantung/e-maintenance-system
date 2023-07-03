@@ -1,4 +1,4 @@
-import { axiosMethod } from "../api/rootApiHaveToken";
+import rootApiHaveToken, { axiosMethod } from "../api/rootApiHaveToken";
 import rootApiNoToken from "../api/rootApiNoToken";
 
 class AuthenApi {
@@ -68,6 +68,15 @@ class AuthenApi {
         });
 
         return response.data;
+    }
+    async getMe(params) {
+        const url = "authenticate/profile";
+        const response = await rootApiHaveToken.request({
+            url,
+            method: "GET",
+            timeout: 10000,
+        });
+        return response;
     }
 }
 

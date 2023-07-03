@@ -28,6 +28,7 @@ class rootApiHaveToken {
 
                 if (accessToken) {
                     headers.Authorization = `Bearer ${accessToken}`;
+                    headers["ngrok-skip-browser-warning"] = true;
                 }
 
                 if (!baseURL) {
