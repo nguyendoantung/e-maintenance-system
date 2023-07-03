@@ -1,17 +1,17 @@
 import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 
-// import configureStore from './redux/store';
+import configureStore from './redux/store';
 import Routers from "./routers/Routers";
 
 import { Provider } from "react-redux";
-import { store, persistor } from "./redux/store/store";
+// import { store, persistor } from "./redux/store/store";
 import { CssBaseline } from "@material-ui/core";
 import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { PersistGate } from "redux-persist/integration/react";
 
-// const store = configureStore();
+const store = configureStore();
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -31,13 +31,13 @@ function App() {
     return (
         <>
             <Provider store={store}>
-                <PersistGate persistor={persistor}>
+                {/* <PersistGate persistor={persistor}> */}
                     <QueryClientProvider client={queryClient}>
                         <ReactNotifications />
                         <CssBaseline />
                         <Routers />
                     </QueryClientProvider>
-                </PersistGate>
+                {/* </PersistGate> */}
             </Provider>
         </>
     );
