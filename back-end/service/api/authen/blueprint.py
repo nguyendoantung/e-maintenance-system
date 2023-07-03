@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta, timezone
+from http import HTTPStatus
 
 from data import User
 from flask import Blueprint, jsonify
@@ -17,6 +18,12 @@ from service.model.Authenticate import LoginModel, RegisterAccount
 from utils import create_session
 
 blueprint = Blueprint("authenticate", __name__, url_prefix="/authenticate")
+
+
+@blueprint.route("/", methods=["GET"], endpoint="/test")
+def create_token():
+    # api receive user_name or email then check user
+    return {"data": "Welcome to my backend!"}, HTTPStatus.OK
 
 
 @blueprint.route("/token", methods=["POST"])

@@ -37,5 +37,6 @@ def assign_order(order_id):
     # admin_id = get_jwt()["sub"]["id"]
     # body = RejectOrder(**request.get_json())
     # return Admin().reject_order(body, order_id)
-    print(request.get_json())
-    return {}
+    # print(request.get_json())
+    staff_id = request.get_json().get("staff", "")
+    return Admin().assign_order(order_id, staff_id)

@@ -232,12 +232,13 @@ const HomePage = () => {
                     sx={{
                         backgroundImage: `url('${banner_img}')`,
                         width: "100%",
+                        paddingLeft: '15vw',
                         objectFit: "cover",
                         height: "100%",
                         backgroundSize: "100%",
-                        // display: "flex",
+                        display: "flex",
                         justifyContent: "center",
-                        // flexDirection: "column",
+                        flexDirection: "column",
                     }}
                 >
                     <Typography
@@ -258,6 +259,7 @@ const HomePage = () => {
                     >
                         DỊCH VỤ SỬA CHỮA
                     </Typography>
+                    <Box>
                     <Button
                         variant="contained"
                         size="medium"
@@ -276,6 +278,7 @@ const HomePage = () => {
                     >
                         Khám phá ngay
                     </Button>
+                    </Box>
                 </Box>
             </div>
             <Box
