@@ -1,6 +1,7 @@
 Testing
 venv
 node_modules
+docker-compose.yml
 .env
 __pychache__
 *.pyc

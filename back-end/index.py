@@ -12,5 +12,5 @@ env["FLASK_DEBUG"] = "development"
 BACK_END_HOST = os.getenv("BACK_END_HOST")
 
 
-if __name__ == '__main__':
-    app.run(port=3451, debug=True)
+if __name__ == "__main__":
+    app.run(port=3451, debug=True, host="0.0.0.0")
