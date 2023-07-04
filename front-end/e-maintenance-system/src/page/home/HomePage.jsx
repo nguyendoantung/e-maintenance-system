@@ -35,6 +35,8 @@ import ld from "lodash";
 
 import PowerIcon from "@material-ui/icons/Power";
 import { makeStyles } from "@material-ui/core/styles";
+import BannerAd from "./components/BannerAd";
+import BannerProcess from "./components/BannerProcess";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -225,40 +227,65 @@ const HomePage = () => {
                 style={{
                     width: "100%",
                     height: "50vh",
-                    justifyContent: "space-around",
+                    position: "relative",
+                    // justifyContent: "space-around",
                 }}
             >
                 <Box
                     sx={{
                         backgroundImage: `url('${banner_img}')`,
                         width: "100%",
-                        paddingLeft: "15vw",
-                        objectFit: "cover",
                         height: "100%",
-                        backgroundSize: "100%",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                    }}
+                />
+                <Box
+                    style={{
+                        paddingLeft: "15vw",
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "column",
-                        backgroundPosition: "center",
+                        zIndex: 2,
+                        backgroundColor: "rgba(0,0,0, 0.4)",
+                        position: "absolute",
+                        left: "0px",
+                        top: "0px",
+                        right: "0px",
+                        bottom: "0px",
                     }}
                 >
                     <Typography
                         style={{
-                            fontSize: 24,
-                            color: "white",
-                            fontWeight: "700",
+                            fontSize: 30,
+                            color: "#fff",
+                            fontWeight: "bold",
                         }}
                     >
                         TÌM KIẾM
                     </Typography>
                     <Typography
                         style={{
-                            fontSize: 24,
-                            color: "white",
-                            fontWeight: "700",
+                            fontSize: 30,
+                            color: "#fff",
+                            fontWeight: "bold",
                         }}
                     >
                         DỊCH VỤ SỬA CHỮA
+                    </Typography>
+
+                    <Typography
+                        style={{
+                            fontSize: 17,
+                            color: "white",
+                            fontWeight: "500",
+                            maxWidth: "27vw",
+                            paddingBlock: "10px",
+                        }}
+                    >
+                        Chúng tôi giải quyết nhanh chóng, hiệu quả, mang lại
+                        trải nghiệm tốt nhất cho người dùng
                     </Typography>
                     <Box>
                         <Button
@@ -269,7 +296,6 @@ const HomePage = () => {
                                 color: "white",
                                 fontWeight: "500",
                                 fontSize: 16,
-                                // boxShadow: "0px 0px 0px 0px",
                                 borderRadius: "6px",
                                 textTransform: "none",
                                 paddingInline: "2%",
@@ -287,7 +313,7 @@ const HomePage = () => {
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "space-around",
-                    backgroundColor: "white",
+                    backgroundColor: "#e9ecef",
                     paddingBlock: "20px",
                 }}
             >
@@ -331,23 +357,35 @@ const HomePage = () => {
                     );
                 })}
             </Box>
-
             <Typography
                 variant="h4"
                 style={{
                     fontWeight: "500",
-                    padding: "2%",
+                    paddingTop: "2%",
                     textAlign: "center",
+                    color: "#588157",
                 }}
             >
                 Làm việc hiệu quả và chuyên nghiệp
+            </Typography>
+            <Typography
+                style={{
+                    fontWeight: "400",
+                    paddingBottom: "1%",
+                    textAlign: "center",
+                    color: "#000",
+                    fontSize: 18,
+                }}
+            >
+                Looking for hvac website templates? Ac-Repair is best hvac
+                repair wordpress theme
             </Typography>
             <Grid
                 container
                 justifyContent="center"
                 style={{
-                    paddingRight: "2%",
-                    // paddingBottom: 100,
+                    paddingRight: "10%",
+                    paddingLeft: "9%",
                 }}
             >
                 {repairTypes.map((repairType, index) => {
@@ -363,8 +401,9 @@ const HomePage = () => {
                             <Card
                                 variant="outlined"
                                 style={{
-                                    border: "1px solid #ced4da",
-                                    padding: "8%",
+                                    border: "1.5px solid #ced4da",
+                                    padding: "4%",
+                                    borderRadius: 8,
                                 }}
                             >
                                 <Box
@@ -424,8 +463,8 @@ const HomePage = () => {
                                             boxShadow: "0px 0px 0px 0px",
                                             borderRadius: "8px",
                                             textTransform: "none",
-                                            paddingInline: "16%",
-                                            paddingBlock: "4%",
+                                            paddingInline: "12%",
+                                            paddingBlock: "2%",
                                         }}
                                         // component={Link}
                                     >
@@ -437,18 +476,20 @@ const HomePage = () => {
                     );
                 })}
             </Grid>
+            <BannerAd />
+            <BannerProcess />
+
             <Typography
                 variant="h6"
                 style={{
                     fontWeight: "500",
-                    padding: "2%",
+                    // padding: "2%",
                     textAlign: "center",
                 }}
                 onClick={() => history.push("/service")}
             >
                 Chi tiết về dịch vụ của chúng tôi
             </Typography>
-            {/* <Typography>Danh sách thiết bị</Typography> */}
 
             <Typography
                 variant="h4"

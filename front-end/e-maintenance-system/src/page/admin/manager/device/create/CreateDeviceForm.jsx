@@ -11,6 +11,7 @@ import {
     Input,
     Typography,
     MenuItem,
+    FormHelperText,
 } from "@material-ui/core";
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -72,6 +73,8 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
             <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
                 <TextField
                     {...register("name")}
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
                     variant="outlined"
                     name="name"
                     id="name"
@@ -84,6 +87,8 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                 />
                 <TextField
                     {...register("category")}
+                    error={!!errors.category}
+                    helperText={errors.category?.message}
                     variant="outlined"
                     name="category"
                     id="category"
@@ -103,6 +108,8 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                 </TextField>
                 <TextField
                     {...register("price")}
+                    error={!!errors.price}
+                    helperText={errors.price?.message}
                     variant="outlined"
                     name="price"
                     id="price"
@@ -116,6 +123,8 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                 />
                 <TextField
                     {...register("unit")}
+                    error={!!errors.unit}
+                    helperText={errors.unit?.message}
                     variant="outlined"
                     name="unit"
                     id="unit"
@@ -153,6 +162,11 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                         data={watch("imageDevice") ?? []}
                         removeImage={removeChooseImage}
                     />
+                )}
+                {errors.imageDevice && (
+                    <FormHelperText>
+                        {errors.imageDevice?.message}
+                    </FormHelperText>
                 )}
                 <DialogActions>
                     <Button

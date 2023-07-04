@@ -11,34 +11,32 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#588157",
         top: "auto",
         bottom: 0,
+        paddingTop: "2%",
     },
     paper: {
         height: 200,
-        width: 400,
         backgroundColor: "#588157",
         color: "white",
-    },
-    control: {
-        padding: theme.spacing(2),
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
     },
 }));
 
 const Footer = () => {
     const classes = useStyles();
     return (
-        <Grid container className={classes.root} spacing={3}>
-            <Grid item xs={12} sx={{ border: 0 }}>
-                <Grid container justifyContent="center" spacing={6}>
-                    <Grid key={1} item sx={{ border: 0 }}>
-                        <Paper className={classes.paper} elevation={0}>
-                            <AboutUs />
-                        </Paper>
-                    </Grid>
-                    <Grid key={2} item>
-                        <Paper className={classes.paper} elevation={0}>
-                            <Contact />
-                        </Paper>
-                    </Grid>
+        <Grid container className={classes.root}>
+            <Grid container justifyContent="space-around" xs={12}>
+                <Grid key={1} item sx={{ border: 0 }} xs={6}>
+                    <Paper className={classes.paper} elevation={0}>
+                        <AboutUs />
+                    </Paper>
+                </Grid>
+                <Grid key={2} item xs={6}>
+                    <Paper className={classes.paper} elevation={0}>
+                        <Contact />
+                    </Paper>
                 </Grid>
             </Grid>
         </Grid>
