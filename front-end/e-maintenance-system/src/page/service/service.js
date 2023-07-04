@@ -4,6 +4,7 @@ import { Avatar, Typography, Divider, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import believeMe from '../../image/believe_me.jpeg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import QA from '../fixed/qa';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,14 +142,17 @@ const RenderFeat = (props) => {
     );
   } else if (feat === 'Hỏi đáp') {
     return (
-      <Typography
-        style={{
-          textAlign: 'center',
-        }}
-        variant="h4"
-      >
-        Các vấn đề thường gặp
-      </Typography>
+      <>
+        <Typography
+          style={{
+            textAlign: 'center',
+          }}
+          variant="h4"
+        >
+          Các vấn đề thường gặp
+        </Typography>
+        <QA />
+      </>
     );
   } else return <div>Not support!</div>;
 };

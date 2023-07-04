@@ -13,7 +13,7 @@ from service.api.user.blueprint import blueprint as user_blueprint
 
 app = Flask(__name__)
 
-cors = CORS(app)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 app.config["JWT_SECRET_KEY"] = "tungnd173451"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 app.config["UPLOAD_FOLDER"] = "/"
