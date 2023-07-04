@@ -18,7 +18,7 @@ export default function UserRoute({ children, ...props }) {
         },
         onError: () => {
             dispatch(authActions.getMeFailed());
-            history.push(LIST_ROUTE.LOGIN_PAGE);
+            history.push(LIST_ROUTE.HOME_PAGE);
         },
     });
     return (

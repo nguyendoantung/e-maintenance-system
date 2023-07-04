@@ -232,13 +232,14 @@ const HomePage = () => {
                     sx={{
                         backgroundImage: `url('${banner_img}')`,
                         width: "100%",
-                        paddingLeft: '15vw',
+                        paddingLeft: "15vw",
                         objectFit: "cover",
                         height: "100%",
                         backgroundSize: "100%",
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "column",
+                        backgroundPosition: "center",
                     }}
                 >
                     <Typography
@@ -260,24 +261,24 @@ const HomePage = () => {
                         DỊCH VỤ SỬA CHỮA
                     </Typography>
                     <Box>
-                    <Button
-                        variant="contained"
-                        size="medium"
-                        style={{
-                            background: "#3a5a40",
-                            color: "white",
-                            fontWeight: "500",
-                            fontSize: 16,
-                            // boxShadow: "0px 0px 0px 0px",
-                            borderRadius: "6px",
-                            textTransform: "none",
-                            paddingInline: "2%",
-                            paddingBlock: "1%",
-                        }}
-                        // component={Link}
-                    >
-                        Khám phá ngay
-                    </Button>
+                        <Button
+                            variant="contained"
+                            size="medium"
+                            style={{
+                                background: "#3a5a40",
+                                color: "white",
+                                fontWeight: "500",
+                                fontSize: 16,
+                                // boxShadow: "0px 0px 0px 0px",
+                                borderRadius: "6px",
+                                textTransform: "none",
+                                paddingInline: "2%",
+                                paddingBlock: "1%",
+                            }}
+                            // component={Link}
+                        >
+                            Khám phá ngay
+                        </Button>
                     </Box>
                 </Box>
             </div>
