@@ -80,10 +80,6 @@ export default function BannerAd() {
                     to manage your site without coding knowledge. It is ideal
                     for businesses that specialize in Computer Repair, Mobile
                     Repair, Desktop, and Laptop Repair, SmartPhones Repair, etc.
-                    Restore includes lots of features of premium Visual Composer
-                    Drag n Drops page builder and with our custom Visual
-                    Composer Addon to create different blocks just by clicking
-                    on the mouse.
                     {"\n\n"} Restore includes lots of features of premium Visual
                     Composer Drag n Drops page builder and with our custom
                     Visual Composer Addon to create different blocks just by

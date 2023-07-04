@@ -38,7 +38,6 @@ const CreateRepairOrderForm = (props) => {
         watch,
         reset,
         formState: { errors },
-        setValue,
     } = useForm({
         resolver: useCreateOrderValidator(),
     });
