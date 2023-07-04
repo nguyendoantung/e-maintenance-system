@@ -1,98 +1,176 @@
-import React from 'react';
-import { reduxForm, Field, reset, Form, change } from 'redux-form';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import InputField from '../../../../../components/FormControls/InputField';
-import AsyncSelectComponent from '../../../../../components/FormControls/AsyncSelectField';
-import { Button, DialogActions, CircularProgress } from '@material-ui/core';
-import ld from 'lodash';
-import Joi from 'joi';
-import GetCategory from '../../../../../request/getCategory';
-import createValidator from '../../../../../components/createValidator';
+import React from "react";
+import { reduxForm, Field, reset, Form, change } from "redux-form";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import InputField from "../../../../../components/FormControls/InputField";
+import AsyncSelectComponent from "../../../../../components/FormControls/AsyncSelectField";
+import {
+    Button,
+    DialogActions,
+    CircularProgress,
+    Box,
+    TextField,
+    makeStyles,
+    MenuItem,
+    Typography,
+} from "@material-ui/core";
+import ld from "lodash";
+import Joi from "joi";
+import GetCategory from "../../../../../request/getCategory";
+import createValidator from "../../../../../components/createValidator";
+import { useCreateOrderValidator } from "./CreateOrderSchema";
+import { useForm } from "react-hook-form";
 
-const FORM_NAME = 'REPAIR_ORDER_CREATION_FORM';
+const FORM_NAME = "REPAIR_ORDER_CREATION_FORM";
 
+const useStyles = makeStyles((theme) => ({
+    inputText: {
+        marginTop: "2%",
+    },
+}));
 const CreateRepairOrderForm = (props) => {
-  const { handleSubmit, busy, setOpen } = props;
+    const { onSubmit, setOpen } = props;
+    const classes = useStyles();
 
-  const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
-  const categories = ld
-    .chain(dataCategory?.data?.data ?? [])
-    .map(({ id, name }) => {
-      return {
-        value: id,
-        label: name,
-      };
-    })
-    .orderBy('label')
-    .value();
-  return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Field name="name" label="Tên đơn" component={InputField} />
-        <Field name="phone" label="Số điện thoại" component={InputField} />
-        <Field
-          component={AsyncSelectComponent}
-          name="category"
-          label="Loại sửa chữa"
-          options={categories}
-          loading={isLoadingCategory}
-        />
-        <Field name="location" label="Địa chỉ" component={InputField} />
-        <Field
-          name="device"
-          label="Thiết bị cần sửa chữa"
-          component={InputField}
-        />
-        <Field name="note" label="Ghi chú" component={InputField} />
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            endIcon={busy ? <CircularProgress size={20} /> : <span />}
-            disabled={busy}
-          >
-            Đặt
-          </Button>
-        </DialogActions>
-      </Form>
-    </>
-  );
+    const {
+        register,
+        handleSubmit,
+        watch,
+        reset,
+        formState: { errors },
+        setValue,
+    } = useForm({
+        resolver: useCreateOrderValidator(),
+    });
+
+    const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
+    const categories = ld
+        .chain(dataCategory?.data?.data ?? [])
+        .map(({ id, name }) => {
+            return {
+                value: id,
+                label: name,
+            };
+        })
+        .orderBy("label")
+        .value();
+    return (
+        <>
+            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                    {...register("name")}
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
+                    variant="outlined"
+                    name="name"
+                    id="name"
+                    label="Tên đơn"
+                    required
+                    fullWidth
+                    value={watch("name")}
+                    autoFocus
+                    className={classes.inputText}
+                />
+                <TextField
+                    {...register("phone")}
+                    error={!!errors.phone}
+                    helperText={errors.phone?.message}
+                    variant="outlined"
+                    name="phone"
+                    id="phone"
+                    label="Số điện thoại"
+                    required
+                    fullWidth
+                    value={watch("phone")}
+                    autoFocus
+                    className={classes.inputText}
+                />
+                <TextField
+                    {...register("category")}
+                    error={!!errors.category}
+                    helperText={errors.category?.message}
+                    variant="outlined"
+                    name="category"
+                    id="category"
+                    label="Loại sửa chữa"
+                    required
+                    fullWidth
+                    value={watch("category")}
+                    autoFocus
+                    select
+                    className={classes.inputText}
+                >
+                    {categories.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+
+                    {isLoadingCategory && (
+                        <MenuItem>
+                            <Typography>Loading</Typography>
+                        </MenuItem>
+                    )}
+                </TextField>
+                <TextField
+                    {...register("location")}
+                    error={!!errors.location}
+                    helperText={errors.location?.message}
+                    variant="outlined"
+                    name="location"
+                    id="location"
+                    label="Địa chỉ"
+                    required
+                    fullWidth
+                    value={watch("location")}
+                    autoFocus
+                    className={classes.inputText}
+                />
+                <TextField
+                    {...register("device")}
+                    error={!!errors.device}
+                    helperText={errors.device?.message}
+                    variant="outlined"
+                    name="device"
+                    id="device"
+                    label="Thiết bị cần sửa chữa"
+                    required
+                    fullWidth
+                    value={watch("device")}
+                    autoFocus
+                    className={classes.inputText}
+                />
+                <TextField
+                    {...register("note")}
+                    error={!!errors.note}
+                    helperText={errors.note?.message}
+                    variant="outlined"
+                    name="note"
+                    id="note"
+                    label="Ghi chú"
+                    required
+                    fullWidth
+                    value={watch("note")}
+                    autoFocus
+                    className={classes.inputText}
+                />
+
+                <DialogActions>
+                    <Button
+                        onClick={() => {
+                            setOpen(false);
+                            reset();
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button type="submit" color="primary" variant="contained">
+                        Đặt
+                    </Button>
+                </DialogActions>
+            </Box>
+        </>
+    );
 };
 
-const schema = Joi.object({
-  name: Joi.string().label('Tên đơn'),
-  phone: Joi.string().label('Số điện thoại'),
-  category: Joi.any().label('Loại sửa chữa'),
-  location: Joi.string().label('Địa chỉ'),
-  note: Joi.string().label('Ghi chú'),
-  device: Joi.string().label('Thiết bị cần sửa chữa'),
-});
-
-const validateFields = (values) => {
-  const errors = {};
-  const formJoiValidate = createValidator(schema);
-  const { name, phone, category, location } = values;
-  if (!name) {
-    errors.name = 'Vui lòng điền tên đơn!';
-  } else if (!phone) {
-    errors.phone = 'Vui lòng điền số điện thoại liên lạc!';
-  } else if (!category) {
-    errors.category = 'Vui lòng chọn loại sửa chữa!';
-  } else if (!location) {
-    errors.location = 'Vui lòng điền địa chỉ!';
-  }
-
-  if (!formJoiValidate(values)) return errors;
-  return Object.assign(formJoiValidate(values), errors);
-};
-
-export default compose(
-  reduxForm({
-    form: FORM_NAME,
-    validate: validateFields,
-  }),
-  connect(null, { reset, change })
-)(CreateRepairOrderForm);
+export default CreateRepairOrderForm;

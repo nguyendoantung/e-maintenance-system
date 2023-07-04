@@ -6,7 +6,6 @@ import Contact from "./Contact";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // flexGrow: 1,
         border: "0",
         backgroundColor: "#588157",
         top: "auto",

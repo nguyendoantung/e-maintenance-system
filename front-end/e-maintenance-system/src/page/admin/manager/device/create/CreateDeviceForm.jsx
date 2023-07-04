@@ -68,9 +68,16 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
         );
         setValue("imageDevice", s);
     };
+    const onError = (err) => {
+        console.log(err, watch("imageDevice"));
+    };
     return (
         <>
-            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+            <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit(onSubmit, onError)}
+            >
                 <TextField
                     {...register("name")}
                     error={!!errors.name}
