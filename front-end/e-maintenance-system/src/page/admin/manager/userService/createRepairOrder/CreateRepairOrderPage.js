@@ -48,7 +48,9 @@ const CreateRepairOrderPage = (props) => {
         }
     );
     const onCloseDialog = () => {
-        setOpen(false);
+        if (!isLoading) {
+            setOpen(false);
+        }
     };
     const handleSubmit = (formValues) => {
         mutateAsync(formValues)
@@ -78,7 +80,7 @@ const CreateRepairOrderPage = (props) => {
                         <CreateRepairOrderForm
                             token={token}
                             onSubmit={handleSubmit}
-                            // busy={isLoading}
+                            busy={isLoading}
                             open={open}
                             setOpen={setOpen}
                         />

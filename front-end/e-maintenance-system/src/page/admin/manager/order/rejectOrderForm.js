@@ -1,7 +1,4 @@
 import React from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { reduxForm, Field, reset, Form, change } from "redux-form";
 import {
     Button,
     Dialog,
@@ -14,9 +11,6 @@ import {
     makeStyles,
     TextField,
 } from "@material-ui/core";
-import InputField from "../../../../components/FormControls/InputField";
-import Joi from "joi";
-import createValidator from "../../../../components/createValidator";
 import { useForm } from "react-hook-form";
 import { useRejectOrderValidator } from "./validators/RejectOrderFormSchema";
 
@@ -28,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const RejectOrderForm = (props) => {
-    const { order, onSubmit, onCancel } = props;
+    const { order, onSubmit, onCancel, busy } = props;
     const classes = useStyles();
     const {
         register,
@@ -73,6 +67,7 @@ const RejectOrderForm = (props) => {
                         />
                         <DialogActions>
                             <Button
+                                disabled={busy}
                                 onClick={() => {
                                     onCancel();
                                     reset();
@@ -84,6 +79,8 @@ const RejectOrderForm = (props) => {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
+                                disabled={busy}
+                                endIcon={busy ? <CircularProgress /> : <span />}
                             >
                                 Xác nhận
                             </Button>
@@ -95,27 +92,4 @@ const RejectOrderForm = (props) => {
     );
 };
 
-const validateField = (values) => {
-    let errors = {};
-    const formJoiValidate = createValidator(schema);
-
-    const { reason } = values;
-    if (!reason) {
-        errors.reason = "Cần có lý do hủy đơn!";
-    }
-
-    if (!formJoiValidate(values)) return errors;
-    return Object.assign(formJoiValidate(values), errors);
-};
-
-const schema = Joi.object({
-    reason: Joi.string(),
-});
-
-export default compose(
-    reduxForm({
-        form: REJECT_FORM,
-        validate: validateField,
-    }),
-    connect(null, { reset, change })
-)(RejectOrderForm);
+export default RejectOrderForm;

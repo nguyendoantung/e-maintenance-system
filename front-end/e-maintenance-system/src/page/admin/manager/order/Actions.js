@@ -96,7 +96,11 @@ const OrderAction = (props) => {
                         onSubmit={(data) => {
                             handleRejectOrder(data);
                         }}
-                        onCancel={() => setOpenReject(false)}
+                        onCancel={() => {
+                            if (!isLoadingRejectOrder) {
+                                setOpenReject(false);
+                            }
+                        }}
                         busy={isLoadingRejectOrder}
                         order={order}
                     />
@@ -115,7 +119,11 @@ const OrderAction = (props) => {
                         onSubmit={(data) => {
                             handleAssignOrder(data);
                         }}
-                        onCancel={() => setOpenAssign(false)}
+                        onCancel={() => {
+                            if (!isLoadingAssign) {
+                                setOpenAssign(false);
+                            }
+                        }}
                         busy={isLoadingAssign}
                         order={order}
                     />

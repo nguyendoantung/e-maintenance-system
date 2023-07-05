@@ -95,7 +95,11 @@ const CreateDevicePage = (props) => {
         <>
             <Dialog
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={() => {
+                    if (!isLoading) {
+                        setOpen(false);
+                    }
+                }}
                 maxWidth="md"
                 fullWidth
             >
@@ -113,6 +117,7 @@ const CreateDevicePage = (props) => {
                             }}
                             open={open}
                             setOpen={setOpen}
+                            busy={isLoading}
                         />
                     </Box>
                 </DialogContent>

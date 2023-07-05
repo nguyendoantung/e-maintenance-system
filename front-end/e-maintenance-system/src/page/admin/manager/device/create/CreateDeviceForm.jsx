@@ -1,26 +1,17 @@
 import React from "react";
 import {
     Box,
-    ImageListItem,
-    ImageList,
     DialogActions,
     CircularProgress,
     Button,
     TextField,
     makeStyles,
-    Input,
     Typography,
     MenuItem,
     FormHelperText,
 } from "@material-ui/core";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { reduxForm, Field, reset, Form, change } from "redux-form";
-import AsyncSelectField from "../../../../../components/FormControls/AsyncSelectField";
 import GetCategory from "../../../../../request/getCategory";
 import ld from "lodash";
-import Joi from "joi";
-import createValidator from "../../../../../components/createValidator";
 import { useCreateDeviceValidator } from "./CreateDeviceFormSchema";
 import { useForm } from "react-hook-form";
 import ListImage from "./components/ListImage";
@@ -33,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
+const CreateDeviceForm = ({ onSubmit, open, setOpen, busy }) => {
     const classes = useStyles();
     const {
         register,
@@ -48,7 +39,7 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
 
     React.useEffect(() => {
         reset();
-    }, []);
+    }, [reset]);
 
     const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
     const categories = ld
@@ -112,6 +103,11 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                             {option.label}
                         </MenuItem>
                     ))}
+                    {isLoadingCategory && (
+                        <MenuItem>
+                            <CircularProgress />
+                        </MenuItem>
+                    )}
                 </TextField>
                 <TextField
                     {...register("price")}
@@ -177,6 +173,7 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                 )}
                 <DialogActions>
                     <Button
+                        disabled={busy}
                         onClick={() => {
                             setOpen(false);
                             reset();
@@ -184,7 +181,13 @@ const CreateDeviceForm = ({ onSubmit, open, setOpen }) => {
                     >
                         Cancel
                     </Button>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={busy}
+                        endIcon={busy ? <CircularProgress /> : <span />}
+                    >
                         Create
                     </Button>
                 </DialogActions>

@@ -1,9 +1,4 @@
 import React from "react";
-import { reduxForm, Field, reset, Form, change } from "redux-form";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import InputField from "../../../../../components/FormControls/InputField";
-import AsyncSelectComponent from "../../../../../components/FormControls/AsyncSelectField";
 import {
     Button,
     DialogActions,
@@ -15,13 +10,9 @@ import {
     Typography,
 } from "@material-ui/core";
 import ld from "lodash";
-import Joi from "joi";
 import GetCategory from "../../../../../request/getCategory";
-import createValidator from "../../../../../components/createValidator";
 import { useCreateOrderValidator } from "./CreateOrderSchema";
 import { useForm } from "react-hook-form";
-
-const FORM_NAME = "REPAIR_ORDER_CREATION_FORM";
 
 const useStyles = makeStyles((theme) => ({
     inputText: {
@@ -29,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const CreateRepairOrderForm = (props) => {
-    const { onSubmit, setOpen } = props;
+    const { onSubmit, setOpen, busy } = props;
     const classes = useStyles();
 
     const {
@@ -156,6 +147,7 @@ const CreateRepairOrderForm = (props) => {
 
                 <DialogActions>
                     <Button
+                        disabled={busy}
                         onClick={() => {
                             setOpen(false);
                             reset();
@@ -163,7 +155,13 @@ const CreateRepairOrderForm = (props) => {
                     >
                         Cancel
                     </Button>
-                    <Button type="submit" color="primary" variant="contained">
+                    <Button
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        disabled={busy}
+                        endIcon={busy ? <CircularProgress /> : <span />}
+                    >
                         Đặt
                     </Button>
                 </DialogActions>

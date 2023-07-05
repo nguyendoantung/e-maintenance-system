@@ -12,7 +12,6 @@ import {
     MenuItem,
     Box,
 } from "@material-ui/core";
-// import InputField from '../../../../components/FormControls/InputField';
 import ld from "lodash";
 import GetStaff from "../../../../request/getStaff";
 import { useForm } from "react-hook-form";
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const AssignOrderForm = (props) => {
-    const { order, onSubmit, onCancel } = props;
+    const { order, onSubmit, onCancel, busy } = props;
     const classes = useStyles();
     const {
         register,
@@ -33,7 +32,6 @@ const AssignOrderForm = (props) => {
         watch,
         reset,
         formState: { errors },
-        setValue,
     } = useForm({
         resolver: useAssignOrderValidator(),
     });
@@ -99,6 +97,7 @@ const AssignOrderForm = (props) => {
                         </TextField>
                         <DialogActions>
                             <Button
+                                disabled={busy}
                                 onClick={() => {
                                     onCancel();
                                     reset();
@@ -110,6 +109,8 @@ const AssignOrderForm = (props) => {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
+                                disabled={busy}
+                                endIcon={busy ? <CircularProgress /> : <span />}
                             >
                                 Xác nhận
                             </Button>
