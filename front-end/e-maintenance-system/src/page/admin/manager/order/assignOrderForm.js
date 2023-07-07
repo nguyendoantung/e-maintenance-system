@@ -1,99 +1,125 @@
-import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { reduxForm, Field, reset, Form, change } from 'redux-form';
+import React from "react";
 import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  CircularProgress,
-} from '@material-ui/core';
-// import InputField from '../../../../components/FormControls/InputField';
-import ld from 'lodash';
-import AsyncSelectComponent from '../../../../components/FormControls/AsyncSelectField';
-import Joi from 'joi';
-import createValidator from '../../../../components/createValidator';
-import GetStaff from '../../../../request/getStaff';
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Typography,
+    CircularProgress,
+    makeStyles,
+    TextField,
+    MenuItem,
+    Box,
+} from "@material-ui/core";
+import ld from "lodash";
+import GetStaff from "../../../../request/getStaff";
+import { useForm } from "react-hook-form";
+import { useAssignOrderValidator } from "./validators/AssignOrderSchema";
 
-export const ASSIGN_ORDER_FORM = 'ASSIGN_FORM';
-
+export const ASSIGN_ORDER_FORM = "ASSIGN_FORM";
+const useStyles = makeStyles((theme) => ({
+    inputText: {
+        marginTop: "2%",
+    },
+}));
 const AssignOrderForm = (props) => {
-  const { order, handleSubmit, onCancel, busy } = props;
+    const { order, onSubmit, onCancel, busy } = props;
+    const classes = useStyles();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: useAssignOrderValidator(),
+    });
 
-  const { data, isLoading } = GetStaff({ page: 1, pageSize: 1000 });
+    const { data, isLoading } = GetStaff({ page: 1, pageSize: 1000 });
 
-  const staffs = ld
-    .chain(data?.data?.user ?? [])
-    .map(({ id, user_name }) => {
-      return {
-        value: id,
-        label: user_name,
-      };
-    })
-    .orderBy('label')
-    .value();
+    const staffs = ld
+        .chain(data?.data?.user ?? [])
+        .map(({ id, user_name }) => {
+            return {
+                value: id,
+                label: user_name,
+            };
+        })
+        .orderBy("label")
+        .value();
+    const onError = (err) => {
+        console.log(err);
+    };
+    return (
+        <>
+            <Dialog onClose={onCancel} open>
+                <Box
+                    component="form"
+                    noValidate
+                    onSubmit={handleSubmit(onSubmit, onError)}
+                >
+                    <DialogTitle>Giao việc</DialogTitle>
+                    <DialogContent>
+                        <Typography>
+                            Chọn một nhân viên, người sẽ chịu trách nhiệm thực
+                            thi đơn <strong>{order?.full_name}</strong>:
+                        </Typography>
+                        <TextField
+                            {...register("staff")}
+                            error={!!errors.staff}
+                            helperText={errors.staff?.message}
+                            variant="outlined"
+                            name="staff"
+                            id="staff"
+                            label="Nhân viên"
+                            required
+                            fullWidth
+                            value={watch("staff")}
+                            autoFocus
+                            select
+                            className={classes.inputText}
+                        >
+                            {staffs.map((option) => (
+                                <MenuItem
+                                    key={option.value}
+                                    value={option.value}
+                                >
+                                    {option.label}
+                                </MenuItem>
+                            ))}
 
-  return (
-    <>
-      <Dialog onClose={onCancel} open>
-        <Form onSubmit={handleSubmit}>
-          <DialogTitle>Giao việc</DialogTitle>
-          <DialogContent>
-            <Typography>
-              Chọn một nhân viên, người sẽ chịu trách nhiệm thực thi đơn{' '}
-              <strong>{order?.full_name}</strong>:
-            </Typography>
-            <Field
-              name="staff"
-              component={AsyncSelectComponent}
-              isLoading={isLoading}
-              options={staffs}
-              naked
-              dense
-            />
-            <DialogActions>
-              <Button onClick={onCancel}>Hủy</Button>
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={busy}
-                endIcon={busy ? <CircularProgress size={20} /> : <span />}
-                color="primary"
-              >
-                Xác nhận
-              </Button>
-            </DialogActions>
-          </DialogContent>
-        </Form>
-      </Dialog>
-    </>
-  );
+                            {isLoading && (
+                                <MenuItem>
+                                    <Typography>Loading</Typography>
+                                </MenuItem>
+                            )}
+                        </TextField>
+                        <DialogActions>
+                            <Button
+                                disabled={busy}
+                                onClick={() => {
+                                    onCancel();
+                                    reset();
+                                }}
+                            >
+                                Hủy
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                disabled={busy}
+                                endIcon={busy ? <CircularProgress /> : <span />}
+                            >
+                                Xác nhận
+                            </Button>
+                        </DialogActions>
+                    </DialogContent>
+                </Box>
+            </Dialog>
+        </>
+    );
 };
 
-const validateField = (values) => {
-  let errors = {};
-  const formJoiValidate = createValidator(schema);
-
-  const { staff } = values;
-  if (!staff) {
-    errors.staff = 'Cần có nhân viên!';
-  }
-
-  if (!formJoiValidate(values)) return errors;
-  return Object.assign(formJoiValidate(values), errors);
-};
-
-const schema = Joi.object({
-  staff: Joi.any(),
-});
-
-export default compose(
-  reduxForm({
-    form: ASSIGN_ORDER_FORM,
-    validate: validateField,
-  }),
-  connect(null, { reset, change })
-)(AssignOrderForm);
+export default AssignOrderForm;

@@ -1,37 +1,45 @@
 import React from "react";
 import {
-    Button,
+    Box,
     DialogActions,
     CircularProgress,
-    Box,
+    Button,
     TextField,
     makeStyles,
-    MenuItem,
     Typography,
+    MenuItem,
+    FormHelperText,
 } from "@material-ui/core";
-import ld from "lodash";
 import GetCategory from "../../../../../request/getCategory";
-import { useCreateOrderValidator } from "./CreateOrderSchema";
+import ld from "lodash";
+import { useCreateDeviceValidator } from "./CreateDeviceFormSchema";
 import { useForm } from "react-hook-form";
+import ListImage from "./components/ListImage";
+
+export const CREATE_DEVICE_FORM = "CREATE_DEVICE_FORM";
 
 const useStyles = makeStyles((theme) => ({
     inputText: {
         marginTop: "2%",
     },
 }));
-const CreateRepairOrderForm = (props) => {
-    const { onSubmit, setOpen, busy } = props;
-    const classes = useStyles();
 
+const CreateDeviceForm = ({ onSubmit, open, setOpen, busy }) => {
+    const classes = useStyles();
     const {
         register,
         handleSubmit,
         watch,
         reset,
         formState: { errors },
+        setValue,
     } = useForm({
-        resolver: useCreateOrderValidator(),
+        resolver: useCreateDeviceValidator(),
     });
+
+    React.useEffect(() => {
+        reset();
+    }, [reset]);
 
     const { data: dataCategory, isLoading: isLoadingCategory } = GetCategory();
     const categories = ld
@@ -44,9 +52,23 @@ const CreateRepairOrderForm = (props) => {
         })
         .orderBy("label")
         .value();
+
+    const removeChooseImage = (i) => {
+        const s = [...watch("imageDevice")].filter(
+            (item, index) => index !== i
+        );
+        setValue("imageDevice", s);
+    };
+    const onError = (err) => {
+        console.log(err, watch("imageDevice"));
+    };
     return (
         <>
-            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+            <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit(onSubmit, onError)}
+            >
                 <TextField
                     {...register("name")}
                     error={!!errors.name}
@@ -54,24 +76,10 @@ const CreateRepairOrderForm = (props) => {
                     variant="outlined"
                     name="name"
                     id="name"
-                    label="Tên đơn"
+                    label="Tên thiết bị"
                     required
                     fullWidth
                     value={watch("name")}
-                    autoFocus
-                    className={classes.inputText}
-                />
-                <TextField
-                    {...register("phone")}
-                    error={!!errors.phone}
-                    helperText={errors.phone?.message}
-                    variant="outlined"
-                    name="phone"
-                    id="phone"
-                    label="Số điện thoại"
-                    required
-                    fullWidth
-                    value={watch("phone")}
                     autoFocus
                     className={classes.inputText}
                 />
@@ -82,7 +90,7 @@ const CreateRepairOrderForm = (props) => {
                     variant="outlined"
                     name="category"
                     id="category"
-                    label="Loại sửa chữa"
+                    label="Loại"
                     required
                     fullWidth
                     value={watch("category")}
@@ -95,56 +103,74 @@ const CreateRepairOrderForm = (props) => {
                             {option.label}
                         </MenuItem>
                     ))}
-
                     {isLoadingCategory && (
                         <MenuItem>
-                            <Typography>Loading</Typography>
+                            <CircularProgress />
                         </MenuItem>
                     )}
                 </TextField>
                 <TextField
-                    {...register("location")}
-                    error={!!errors.location}
-                    helperText={errors.location?.message}
+                    {...register("price")}
+                    error={!!errors.price}
+                    helperText={errors.price?.message}
                     variant="outlined"
-                    name="location"
-                    id="location"
-                    label="Địa chỉ"
+                    name="price"
+                    id="price"
+                    label="Giá"
                     required
                     fullWidth
-                    value={watch("location")}
+                    value={watch("price")}
                     autoFocus
+                    type="number"
                     className={classes.inputText}
                 />
                 <TextField
-                    {...register("device")}
-                    error={!!errors.device}
-                    helperText={errors.device?.message}
+                    {...register("unit")}
+                    error={!!errors.unit}
+                    helperText={errors.unit?.message}
                     variant="outlined"
-                    name="device"
-                    id="device"
-                    label="Thiết bị cần sửa chữa"
+                    name="unit"
+                    id="unit"
+                    label="Đơn vị"
                     required
                     fullWidth
-                    value={watch("device")}
-                    autoFocus
-                    className={classes.inputText}
-                />
-                <TextField
-                    {...register("note")}
-                    error={!!errors.note}
-                    helperText={errors.note?.message}
-                    variant="outlined"
-                    name="note"
-                    id="note"
-                    label="Ghi chú"
-                    required
-                    fullWidth
-                    value={watch("note")}
+                    value={watch("unit")}
                     autoFocus
                     className={classes.inputText}
                 />
 
+                <Button
+                    variant="contained"
+                    component="label"
+                    className={classes.inputText}
+                >
+                    Upload File
+                    <input
+                        type="file"
+                        hidden
+                        accept="image/*"
+                        {...register("imageDevice")}
+                        id="imageDevice"
+                        name="imageDevice"
+                    />
+                </Button>
+                {watch("imageDevice") &&
+                    [...watch("imageDevice")]?.map((item, index) => {
+                        return (
+                            <Typography key={index}>{item?.name}</Typography>
+                        );
+                    })}
+                {watch("imageDevice")?.length > 0 && (
+                    <ListImage
+                        data={watch("imageDevice") ?? []}
+                        removeImage={removeChooseImage}
+                    />
+                )}
+                {errors.imageDevice && (
+                    <FormHelperText>
+                        {errors.imageDevice?.message}
+                    </FormHelperText>
+                )}
                 <DialogActions>
                     <Button
                         disabled={busy}
@@ -157,12 +183,12 @@ const CreateRepairOrderForm = (props) => {
                     </Button>
                     <Button
                         type="submit"
-                        color="primary"
                         variant="contained"
+                        color="primary"
                         disabled={busy}
                         endIcon={busy ? <CircularProgress /> : <span />}
                     >
-                        Đặt
+                        Create
                     </Button>
                 </DialogActions>
             </Box>
@@ -170,4 +196,4 @@ const CreateRepairOrderForm = (props) => {
     );
 };
 
-export default CreateRepairOrderForm;
+export default CreateDeviceForm;

@@ -12,9 +12,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
     auth: authReducer,
 });
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             thunk: false,

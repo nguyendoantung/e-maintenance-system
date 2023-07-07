@@ -13,33 +13,39 @@ const Contact = () => {
                 Liên hệ
             </Typography>
             <Box>
-                <IconInfor placement="top">
-                    <LocationOnIcon fontSize="small" htmlColor="#fff" />
-                </IconInfor>
-                <Typography variant="button">Ngách 376/22B .....</Typography>
-            </Box>
-            <Box>
-                <IconInfor placement="top">
-                    <CallIcon fontSize="small" htmlColor="#fff" />
-                </IconInfor>
-                <Typography variant="button">0398825368</Typography>
-            </Box>
-            <Box>
-                <IconInfor placement="top">
-                    <EmailOutlinedIcon fontSize="small" htmlColor="#fff" />
-                </IconInfor>
-                <Typography variant="button">
-                    tung.nd173451@sis.hust.edu.vn
-                </Typography>
-            </Box>
-            <Box>
-                <IconInfor placement="top">
-                    <QueryBuilderOutlinedIcon
-                        fontSize="small"
-                        htmlColor="#fff"
-                    />
-                </IconInfor>
-                <Typography variant="button">T2 - CN 7h30 - 21h00</Typography>
+                <Box>
+                    <IconInfor placement="top">
+                        <LocationOnIcon fontSize="small" htmlColor="#fff" />
+                    </IconInfor>
+                    <Typography variant="button">
+                        Ngách 376/22B .....
+                    </Typography>
+                </Box>
+                <Box>
+                    <IconInfor placement="top">
+                        <CallIcon fontSize="small" htmlColor="#fff" />
+                    </IconInfor>
+                    <Typography variant="button">0398825368</Typography>
+                </Box>
+                <Box>
+                    <IconInfor placement="top">
+                        <EmailOutlinedIcon fontSize="small" htmlColor="#fff" />
+                    </IconInfor>
+                    <Typography variant="button">
+                        tung.nd173451@sis.hust.edu.vn
+                    </Typography>
+                </Box>
+                <Box>
+                    <IconInfor placement="top">
+                        <QueryBuilderOutlinedIcon
+                            fontSize="small"
+                            htmlColor="#fff"
+                        />
+                    </IconInfor>
+                    <Typography variant="button">
+                        T2 - CN 7h30 - 21h00
+                    </Typography>
+                </Box>
             </Box>
         </>
     );

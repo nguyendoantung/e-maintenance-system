@@ -1,121 +1,114 @@
-import React from 'react';
-import { reduxForm, Field, reset, Form, change } from 'redux-form';
-import { Button, CircularProgress } from '@material-ui/core';
-import InputField from '../../../../../components/FormControls/InputField';
-import createValidator from '../../../../../components/createValidator';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import Joi from 'joi';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Box, Button, CircularProgress, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { useForm } from "react-hook-form";
+import { useUpdatePassValidator } from "./UpdatePasswordSchema";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
+    root: {
+        flexGrow: 1,
+    },
+    button: {
+        margin: theme.spacing(1),
+    },
+    inputText: {
+        marginBottom: "2%",
+    },
 }));
 
-const FORM_NAME = 'CHANGE_PASSWORD_FORM';
-
 function UpdatePasswordForm(props) {
-  const { handleSubmit, busy, clear } = props;
-  const classes = useStyles();
-  React.useEffect(() => {
-    props.reset(FORM_NAME);
-  }, [clear]);
+    const { onSubmit, clear, busy } = props;
+    const classes = useStyles();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        reset,
+        formState: { errors },
+    } = useForm({
+        resolver: useUpdatePassValidator(),
+    });
+    React.useEffect(() => {
+        reset();
+    }, [clear, reset]);
 
-  return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Field
-          name="currentPassword"
-          type="password"
-          component={InputField}
-          labelMultiline
-          label="Mật khẩu hiện tại"
-          placeholder="Mật khẩu hiện tại"
-        />
-        <Field
-          name="newPassword"
-          type="password"
-          component={InputField}
-          labelMultiline
-          label="Mật khẩu mới"
-          placeholder="Mật khẩu mới"
-        />
-        <Field
-          name="repeatPassword"
-          type="password"
-          component={InputField}
-          labelMultiline
-          label="Xác nhận mật khẩu"
-          placeholder="Xác nhận mật khẩu"
-        />
-        <Button
-          className={classes.button}
-          color="primary"
-          variant="contained"
-          onClick={() => props.reset(FORM_NAME)}
-        >
-          Reset
-        </Button>
-        <Button
-          type="submit"
-          color="primary"
-          variant="contained"
-          style={{
-            textAlign: 'center',
-          }}
-          className={classes.button}
-          endIcon={busy ? <CircularProgress size={20} /> : <span />}
-          disabled={busy}
-        >
-          Cập nhật mật khẩu
-        </Button>
-      </Form>
-    </>
-  );
+    return (
+        <>
+            <Box
+                component={"form"}
+                noValidate
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <TextField
+                    {...register("currentPassword")}
+                    error={!!errors.currentPassword}
+                    helperText={errors.currentPassword?.message}
+                    variant="outlined"
+                    name="currentPassword"
+                    id="currentPassword"
+                    label="Mật khẩu hiện tại"
+                    required
+                    fullWidth
+                    value={watch("currentPassword")}
+                    autoFocus
+                    className={classes.inputText}
+                    type="password"
+                />
+                <TextField
+                    {...register("newPassword")}
+                    error={!!errors.newPassword}
+                    helperText={errors.newPassword?.message}
+                    variant="outlined"
+                    name="newPassword"
+                    id="newPassword"
+                    label="Mật khẩu mới"
+                    required
+                    fullWidth
+                    value={watch("newPassword")}
+                    autoFocus
+                    className={classes.inputText}
+                    type="password"
+                />
+                <TextField
+                    {...register("repeatPassword")}
+                    error={!!errors.repeatPassword}
+                    helperText={errors.repeatPassword?.message}
+                    variant="outlined"
+                    name="repeatPassword"
+                    id="repeatPassword"
+                    label="Xác nhận mật khẩu"
+                    required
+                    fullWidth
+                    value={watch("repeatPassword")}
+                    autoFocus
+                    className={classes.inputText}
+                    type="password"
+                />
+                <Button
+                    disabled={busy}
+                    className={classes.button}
+                    color="primary"
+                    variant="contained"
+                    onClick={() => reset()}
+                >
+                    Reset
+                </Button>
+                <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    style={{
+                        textAlign: "center",
+                    }}
+                    className={classes.button}
+                    disabled={busy}
+                    endIcon={busy ? <CircularProgress /> : <span />}
+                >
+                    Cập nhật mật khẩu
+                </Button>
+            </Box>
+        </>
+    );
 }
 
-const validateFields = (values) => {
-  let errors = {};
-  const formJoiValidate = createValidator(schema);
-  const { currentPassword, newPassword, repeatPassword } = values;
-  if (!currentPassword || !newPassword || !repeatPassword) {
-    if (!currentPassword) {
-      errors.currentPassword = 'Mật khẩu hiện tại không được trống';
-    }
-    if (!newPassword) {
-      errors.newPassword = 'Mật khẩu mới không được trống';
-    }
-    if (!repeatPassword) {
-      errors.repeatPassword = 'Xác nhận mật khẩu không được trống';
-    }
-  } else {
-    if (currentPassword === newPassword) {
-      errors.newPassword = 'Mật khẩu mới không được trùng mật khẩu cũ';
-    }
-    if (repeatPassword !== newPassword) {
-      errors.repeatPassword = 'Hai mật khẩu không khớp nhau';
-    }
-  }
-
-  if (!formJoiValidate(values)) return errors;
-  return Object.assign(formJoiValidate(values), errors);
-};
-
-const schema = Joi.object({
-  currentPassword: Joi.string().label('Mật khẩu hiện tại'),
-  newPassword: Joi.string().label('Mật khẩu mới'),
-  repeatPassword: Joi.string().label('Xác nhận mật khẩu'),
-}).options({ allowUnknown: true });
-
-export default compose(
-  reduxForm({
-    form: FORM_NAME,
-    validate: validateFields,
-  }),
-  connect(null, { reset, change })
-)(UpdatePasswordForm);
+export default UpdatePasswordForm;
