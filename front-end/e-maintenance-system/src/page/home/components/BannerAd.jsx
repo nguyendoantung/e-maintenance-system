@@ -53,18 +53,19 @@ export default function BannerAd() {
                             fontWeight: "700",
                         }}
                     >
-                        20
+                        20+
                     </Typography>
                     <Typography
                         variant="h4"
                         style={{
+                            fontFamily: 'Time New Roman',
                             color: "#333",
                             fontWeight: "500",
                             maxWidth: "100%",
                             padding: "1.5%",
                         }}
                     >
-                        YEARS OF EXPERIENCE IN DIGITAL DEVICE REPAIR SERVICES
+                        NHÂN VIÊN LUÔN LUÔN TRONG TRẠNG THÁI SẴN SÀNG
                     </Typography>
                 </Box>
                 <Typography
@@ -75,15 +76,13 @@ export default function BannerAd() {
                         maxWidth: "100%",
                     }}
                 >
-                    Restore WordPress Theme built with Bootstrap and Powerful
-                    Redux option framework which has tons of admin panel options
-                    to manage your site without coding knowledge. It is ideal
-                    for businesses that specialize in Computer Repair, Mobile
-                    Repair, Desktop, and Laptop Repair, SmartPhones Repair, etc.
-                    {"\n\n"} Restore includes lots of features of premium Visual
-                    Composer Drag n Drops page builder and with our custom
-                    Visual Composer Addon to create different blocks just by
-                    clicking on the mouse
+                    <>
+                    <div>Với lực lượng nhân viên đông đảo, giàu kinh nghiệm, luôn túc trực
+                    24h/7 ngày, sẵn sàng cho mọi nhu cầu sữa chữa của bạn.
+                    {"\n\n"} Không còn lo lắng khi gặp tình trạng hỏng hóc, chúng tôi
+                    luôn luôn bên bạn, là chỗ dựa tin cậy cho sự cuộc sống của bạn.</div>
+                    <div>Nhanh chóng - Dễ dàng - Tiện lợi!</div>
+                    </>
                 </Typography>
                 <Typography
                     variant="h5"

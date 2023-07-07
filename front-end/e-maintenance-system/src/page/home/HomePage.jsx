@@ -368,7 +368,7 @@ const HomePage = () => {
             >
                 Làm việc hiệu quả và chuyên nghiệp
             </Typography>
-            <Typography
+            {/* <Typography
                 style={{
                     fontWeight: "400",
                     paddingBottom: "1%",
@@ -379,7 +379,7 @@ const HomePage = () => {
             >
                 Looking for hvac website templates? Ac-Repair is best hvac
                 repair wordpress theme
-            </Typography>
+            </Typography> */}
             <Grid
                 container
                 justifyContent="center"

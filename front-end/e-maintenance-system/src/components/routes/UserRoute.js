@@ -16,9 +16,13 @@ export default function UserRoute({ children, ...props }) {
         onSuccess: () => {
             dispatch(authActions.getMeSuccess());
         },
-        onError: () => {
+        onError: (err) => {
+            // console.log(err?.response?.data?.msg)
             dispatch(authActions.getMeFailed());
-            history.push(LIST_ROUTE.HOME_PAGE);
+            if (err?.response?.data?.msg != "Missing Authorization Header") {
+                history.push(LIST_ROUTE.HOME_PAGE);
+            }
+            // history.push(LIST_ROUTE.HOME_PAGE);
         },
     });
     return (

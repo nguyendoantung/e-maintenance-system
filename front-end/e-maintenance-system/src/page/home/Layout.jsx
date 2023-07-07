@@ -176,9 +176,12 @@ const Layout = (props) => {
                     <Typography
                       key={index}
                       variant="subtitle1"
-                      className={[classes.routeTitle]}
-                      component={Link}
-                      to={item.route ?? '/'}
+                      className={classes.routeTitle}
+                      // component={Link}
+                      // to={item.route ?? '/'}
+                      onClick={() => {
+                        history.push(item.route);
+                      }}
                       style={{
                         color:
                           location?.pathname === item.route
