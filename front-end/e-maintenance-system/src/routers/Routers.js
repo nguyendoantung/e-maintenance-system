@@ -10,6 +10,7 @@ import AuthRoute from "../components/routes/AuthRoute";
 import Contact from "../page/contact/contact";
 import Service from "../page/service/service";
 import GuestRoute from "../components/routes/GuestRoute";
+import ListPrice from "../page/fixed/price"
 
 const Routers = () => {
     return (
@@ -30,6 +31,11 @@ const Routers = () => {
                         exact
                         path={LIST_ROUTE.HOME_PAGE}
                         component={HomePage}
+                    />
+                    <GuestRoute
+                        exact
+                        path={"/bao-gia"}
+                        component={ListPrice}
                     />
                     <UserRoute
                         exact

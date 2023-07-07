@@ -9,7 +9,7 @@ load_dotenv()
 env = os.environ
 env["FLASK_APP"] = "index"
 env["FLASK_DEBUG"] = "development"
-BACK_END_HOST = os.getenv("BACK_END_HOST")
+# BACK_END_HOST = os.getenv("BACK_END_HOST")
 
 
 if __name__ == "__main__":
