@@ -41,6 +41,24 @@ class DeviceManager:
             "total": devices.count(),
         }, HTTPStatus.OK
 
+    def get_all_device(self):
+        devices = self.session.query(Device, Category.name.label("category_name")).join(
+            Category, Category.id == Device.device_type
+        )
+        return {
+            "device": [
+                ListDevice(
+                    id=result.Device.id,
+                    category=result.category_name,
+                    name=result.Device.name,
+                    price=f"{result.Device.price} VND/{result.Device.unit}",
+                    image_link=result.Device.image_link,
+                ).dict(by_alias=True)
+                for result in devices
+            ],
+            "total": devices.count(),
+        }, HTTPStatus.OK
+
     def add_device(self, admin_user: str, body: CreateDevice):
         shop_member: ShopMember = (
             self.session.query(ShopMember)

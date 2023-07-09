@@ -6,5 +6,6 @@ export const LIST_ROUTE = {
     BLOG: "/blog",
     CONTACT: "/contact",
     ABOUT_US: "/about",
-    SERVICE: "/service"
+    SERVICE: "/service",
+    CREATE_ORDER: '/order-create',
 };

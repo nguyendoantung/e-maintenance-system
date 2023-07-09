@@ -5,6 +5,7 @@ from flask_cors import cross_origin
 from flask_jwt_extended import get_jwt, jwt_required
 from service.constant import PAGE_SIZE_DEFAULT, PAGE_SIZE_LIMIT
 from service.managers.Admin import Admin
+from service.managers.Order import OrderManager
 from service.utils.parse_int import parse_int, parse_int_with_limit
 
 blueprint = Blueprint("admin/staff", __name__, url_prefix="/admin/staff")
@@ -74,6 +75,15 @@ def get_order_of_staff(staff_id):
         return Admin().get_order_of_staff(
             staff_id=staff_id, page=page, page_size=page_size
         )
+
+
+# @blueprint.route("/add-device-order/<uuid(strict=False):order_id>", methods=["PUT"], endpoint="/add-device-for-order")
+# @jwt_required()
+# def add_device_for_order(order_id):
+#     role = get_jwt()["sub"]["role"]
+#     if "staff" not in role:
+#         return {"msg": "Unauthorized!"}, HTTPStatus.UNAUTHORIZED
+#     else:
 
 
 @blueprint.route(

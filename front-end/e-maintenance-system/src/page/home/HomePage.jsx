@@ -26,6 +26,7 @@ import WasherIcon from ".././../icon_image/washer.png";
 import AirIcon from ".././../icon_image/air_conditioning.png";
 import ElectricIcon from ".././../icon_image/broken-cable.png";
 import TimeIcon from "../../icon_image/clock.png";
+import PlumbingIcon from "../../icon_image/plumbing.png"
 import SupportIcon from "../../icon_image/support.png";
 import ServiceIcon from "../../icon_image/service.png";
 
@@ -181,6 +182,20 @@ const repairTypes = [
             <img
                 src={ElectricIcon}
                 alt="icon power"
+                style={{
+                    maxWidth: "70px",
+                    height: "70px",
+                    objectFit: "cover",
+                }}
+            />
+        ),
+    },
+    {
+        text: "Sửa chữa nước",
+        icon: () => (
+            <img
+                src={PlumbingIcon}
+                alt="icon plumbing"
                 style={{
                     maxWidth: "70px",
                     height: "70px",
@@ -383,17 +398,17 @@ const HomePage = () => {
             <Grid
                 container
                 justifyContent="center"
-                style={{
-                    paddingRight: "10%",
-                    paddingLeft: "9%",
-                }}
+                // style={{
+                //     paddingRight: "10%",
+                //     paddingLeft: "9%",
+                // }}
             >
                 {repairTypes.map((repairType, index) => {
                     return (
                         <Grid
                             key={repairType?.text}
                             item
-                            xs={3}
+                            xs={2}
                             style={{
                                 paddingLeft: "2%",
                             }}
