@@ -42,3 +42,15 @@ def get_user_repair_order():
     information = get_jwt()["sub"]
     user_name = information.get("user_name")
     return User().get_user_repair_order(user_name, page, page_size)
+
+@blueprint.route("/all_repair_order", methods=["GET"], endpoint="/get-all-repair-order")
+@jwt_required()
+def get_all_of_user_repair_order():
+    params = request.args
+    page = parse_int(params.get("page"), 1)
+    page_size = parse_int_with_limit(
+        params.get("pageSize"), PAGE_SIZE_DEFAULT, PAGE_SIZE_LIMIT
+    )
+    information = get_jwt()["sub"]
+    user_name = information.get("user_name")
+    return User().get_all_of_user_repair_order(user_name, page, page_size)

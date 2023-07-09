@@ -11,6 +11,7 @@ import Contact from "../page/contact/contact";
 import Service from "../page/service/service";
 import GuestRoute from "../components/routes/GuestRoute";
 import ListPrice from "../page/fixed/price"
+import CreateRepairOrderPageUser from "../page/create_repair/CreateRepairPage"
 
 const Routers = () => {
     return (
@@ -71,6 +72,11 @@ const Routers = () => {
                         exact
                         path={LIST_ROUTE.ADMIN_PAGE}
                         component={AdminPage}
+                    />
+                    <UserRoute
+                        exact
+                        path={LIST_ROUTE.CREATE_ORDER}
+                        component={CreateRepairOrderPageUser}
                     />
                     <UserRoute component={Page404} exact />
                 </Switch>

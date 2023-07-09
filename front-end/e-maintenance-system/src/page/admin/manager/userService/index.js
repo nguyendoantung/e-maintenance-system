@@ -5,6 +5,7 @@ import LinkTab from '../../../../components/Tab/LinkTab';
 import TabPanel from '../../../../components/form_helper/TabPanel';
 import { UserManagerTab } from '../../../../components/constant';
 import ListOrderPage from './manageOrder/list/OrderPage';
+import HistoryOrderPage from '../userService/historyOrder/list/HistoryOrderPage';
 
 const useStyles = () => ({
   root: {
@@ -49,7 +50,7 @@ const OrderManagerPage = () => {
         index={tabName}
         pt={2}
       >
-        History order page
+        <HistoryOrderPage />
       </TabPanel>
     </>
   );

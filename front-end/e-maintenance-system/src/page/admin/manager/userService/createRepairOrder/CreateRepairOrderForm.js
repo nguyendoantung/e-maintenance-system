@@ -138,7 +138,7 @@ const CreateRepairOrderForm = (props) => {
                     name="note"
                     id="note"
                     label="Ghi chú"
-                    required
+                    // required
                     fullWidth
                     value={watch("note")}
                     autoFocus

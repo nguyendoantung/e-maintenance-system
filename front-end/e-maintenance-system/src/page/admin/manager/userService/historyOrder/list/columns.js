@@ -7,10 +7,6 @@ const columns = () => {
       accessor: 'full_name',
     },
     {
-      Header: 'Liên hệ',
-      accessor: 'phone',
-    },
-    {
       Header: 'Ngày tạo',
       accessor: 'create_date',
     },
@@ -25,14 +21,6 @@ const columns = () => {
     {
       Header: 'Giá',
       accessor: 'price',
-    },
-    {
-      Header: 'Địa chỉ',
-      accessor: 'location',
-    },
-    {
-      Header: 'Thiết bị',
-      accessor: 'device',
     },
   ];
 };

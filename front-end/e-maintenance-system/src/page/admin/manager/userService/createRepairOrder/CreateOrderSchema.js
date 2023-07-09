@@ -14,7 +14,7 @@ export const useCreateOrderValidator = () => {
             category: yup.string().required(errorMessages),
             location: yup.string().required(errorMessages),
             device: yup.string().required(errorMessages),
-            note: yup.string().required(errorMessages),
+            note: yup.string(),
         })
         .required();
 

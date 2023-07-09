@@ -46,6 +46,7 @@ function Profile({ setToken, token }) {
         mutateAsync().then(() => {
             setToken(null);
             localStorage.clear();
+            history.push("/")
         });
     };
 

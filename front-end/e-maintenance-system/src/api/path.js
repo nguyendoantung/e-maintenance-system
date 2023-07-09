@@ -40,6 +40,8 @@ const path = {
       createRepairOrder: () => `/user/repair_order`,
       getRepairOrder: ({ page, pageSize }) =>
         `/user/repair_order?page=${page}&pageSize=${pageSize}`,
+      getAllRepairOrder: ({ page, pageSize }) =>
+        `/user/all_repair_order?page=${page}&pageSize=${pageSize}`,
     },
   },
 };

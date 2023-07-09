@@ -12,8 +12,10 @@ class RegexPattern:
 
 
 class OrderStatus:
-    START = "Started"
+    START = "Created"
     REJECT = "Rejected"
-    PENDING = "Pending"
+    # PENDING = "Pending"
     ON_PROCESS = "Working"
     COMPLETE = "Completed"
+    ACTIVE_ORDER_STATUS = [START, ON_PROCESS]
+    END_ORDER_STATUS = [REJECT, COMPLETE]

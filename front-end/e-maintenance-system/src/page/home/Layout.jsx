@@ -108,7 +108,8 @@ const Layout = (props) => {
     if (!token) {
       history.push('/login');
     } else {
-      alert('nhảy sang trang đặt');
+      // alert('nhảy sang trang đặt');
+      history.push(LIST_ROUTE.CREATE_ORDER)
       // setOpenRepair(true);
     }
   };

@@ -56,13 +56,13 @@ const CreateRepairOrderPage = (props) => {
         mutateAsync(formValues)
             .then((res) => {
                 showSuccess({
-                    message: res?.data?.data?.message || "Success!",
+                    message: res?.data?.data?.message || "Tạo đơn thành công!",
                 });
                 setOpen(false);
             })
             .catch((err) => {
                 showError({
-                    message: err.response?.data?.message || "That bai!",
+                    message: err.response?.data?.message || "Thất bại!",
                 });
             });
     };
