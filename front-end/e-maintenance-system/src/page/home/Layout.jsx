@@ -13,6 +13,9 @@ import {
   Hidden,
   Drawer,
   IconButton,
+  MenuItem,
+  Menu,
+  MenuList,
 } from '@material-ui/core';
 import Content from './Content';
 import HomeIcon from '@material-ui/icons/Home';
@@ -25,6 +28,7 @@ import DrawerHome from './components/DrawerHome';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom';
 import { LIST_ROUTE } from '../../routers/contants';
+import ButtonHover from './components/ButtonHover';
 const drawerWidth = 240;
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -114,22 +118,18 @@ const Layout = (props) => {
     {
       name: 'Trang chủ',
       route: LIST_ROUTE.HOME_PAGE,
+      type: 'normal',
     },
-    // {
-    //   name: 'Về chúng tôi',
-    //   route: LIST_ROUTE.ABOUT_US,
-    // },
-    // {
-    //   name: 'Blog cá nhân',
-    //   route: LIST_ROUTE.BLOG,
-    // },
     {
       name: 'Dịch vụ',
       route: LIST_ROUTE.SERVICE,
+      type: 'select',
+      option: ['/detailService', '/prices', '/qna'],
     },
     {
       name: 'Liên hệ',
       route: LIST_ROUTE.CONTACT,
+      type: 'normal',
     },
   ];
 
@@ -169,19 +169,17 @@ const Layout = (props) => {
                   // backgroundColor: "red",
                   flex: 1,
                   justifyContent: 'flex-end',
+                  alignItems: 'baseline',
                 }}
               >
                 {appBarRoute.map((item, index) => {
-                  return (
+                  return item.type === 'normal' ? (
                     <Typography
                       key={index}
                       variant="subtitle1"
-                      className={classes.routeTitle}
-                      // component={Link}
-                      // to={item.route ?? '/'}
-                      onClick={() => {
-                        history.push(item.route);
-                      }}
+                      className={[classes.routeTitle]}
+                      component={Link}
+                      to={item.route ?? '/'}
                       style={{
                         color:
                           location?.pathname === item.route
@@ -193,6 +191,44 @@ const Layout = (props) => {
                     >
                       {item.name}
                     </Typography>
+                  ) : (
+                    <ButtonHover
+                      selected={location?.pathname === item.route}
+                      classContainer={classes.routeTitle}
+                      title={item.name}
+                      children={(propsChildren) => {
+                        return (
+                          <MenuList
+                            id="menu-service"
+                            onMouseLeave={propsChildren.handleClose}
+                            autoFocusItem={propsChildren.open}
+                            onKeyDown={propsChildren.handleListKeyDown}
+                          >
+                            <MenuItem
+                              onClick={propsChildren.handleClose}
+                              component={Link}
+                              to={item.route + item.option[0] ?? '/'}
+                            >
+                              Chi tiết dịch vụ
+                            </MenuItem>
+                            <MenuItem
+                              onClick={propsChildren.handleClose}
+                              component={Link}
+                              to={item.route + item.option[1] ?? '/'}
+                            >
+                              Báo giá
+                            </MenuItem>
+                            <MenuItem
+                              onClick={propsChildren.handleClose}
+                              component={Link}
+                              to={item.route + item.option[2] ?? '/'}
+                            >
+                              Hỏi đáp
+                            </MenuItem>
+                          </MenuList>
+                        );
+                      }}
+                    />
                   );
                 })}
               </Box>
