@@ -73,7 +73,7 @@ const CreateRepairOrderPage = (props) => {
                     className={classes.dialogTitle}
                     id="simple-dialog-title"
                 >
-                    Thêm mới thiết bị
+                    Tạo đơn mới
                 </DialogTitle>
                 <DialogContent>
                     <Box>

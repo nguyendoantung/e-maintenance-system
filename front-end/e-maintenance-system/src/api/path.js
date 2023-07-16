@@ -42,6 +42,7 @@ const path = {
         `/user/repair_order?page=${page}&pageSize=${pageSize}`,
       getAllRepairOrder: ({ page, pageSize }) =>
         `/user/all_repair_order?page=${page}&pageSize=${pageSize}`,
+      getHistoryOneOrder: ({ orderId }) => `/user/${orderId}/history`,
     },
   },
 };

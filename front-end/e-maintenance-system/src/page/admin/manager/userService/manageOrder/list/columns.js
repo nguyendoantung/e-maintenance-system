@@ -1,10 +1,13 @@
 import React from 'react';
+import DialogHistory from '../../historyOrder/list/DialogHistory';
 
 const columns = () => {
   return [
     {
       Header: 'Tên đơn',
-      accessor: 'full_name',
+      accessor: (row) => {
+        return <DialogHistory order={row} />;
+      },
     },
     {
       Header: 'Liên hệ',
