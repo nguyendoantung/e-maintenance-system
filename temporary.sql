@@ -27,6 +27,9 @@ values
 
 select *, hex(id) from user;
 select *, hex(id) from repair_order;
+
+update repair_order set repair_order.status ="Completed" where repair_order.status = "Complete";
+
 select *, hex(id) from user;
 select *, hex(id) from category;
 select *, hex(id) from device;

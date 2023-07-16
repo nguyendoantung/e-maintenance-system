@@ -89,16 +89,9 @@ ADD FOREIGN KEY (shop_id) REFERENCES shop(id) on update cascade on delete cascad
 create table if not exists `order_history` (
 	id binary(16) not null,
     order_id binary(16) not null,
-    customer_id binary(16) not null,
-    staff_id binary(16) not null,
-    price int,
     update_time datetime,
-    status varchar(100),
-    note varchar(200),
-    rate int,
+    action varchar(2000),
     FOREIGN KEY (order_id) REFERENCES repair_order(id) on update cascade on delete cascade,
-    FOREIGN KEY (customer_id) REFERENCES user(id) on update cascade on delete cascade,
-    FOREIGN KEY (staff_id) REFERENCES shop_member(user_id),
     primary key (id)
 );
 
@@ -122,4 +115,15 @@ alter table device
 add unit varchar(100);
 # create table new if neccessary - add in future
 
-# create table 
+# alter table default price for each service
+
+# create table subservie price 
+create table if not exists `subservice_price` (
+	id binary(16) not null,
+	category_id binary(16) not null,
+    name varchar(1000) not null,
+    price varchar(1000) not null,
+    FOREIGN KEY (category_id) REFERENCES category(id), 
+    primary key (id)
+);
+# create table qa

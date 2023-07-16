@@ -14,26 +14,18 @@ class OrderHistory(Base):
         ForeignKey("repair_order.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
     )
-    customer_id = Column(
-        ForeignKey("user.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False
-    )
-    staff_id = Column(
-        ForeignKey("shop_member.user_id", ondelete="CASCADE", onupdate="CASCADE"),
-        nullable=False,
-    )
-    price = Column(Integer(), nullable=False, default=0)
-    start_time = Column(DateTime(), nullable=False, default=datetime.now)
-    complete_time = Column(DateTime(), nullable=False, default=datetime.now)
-    note = Column(String(200))
-    rate = Column(Integer(), default=1)
+
+    update_time = Column(DateTime(), nullable=False, default=datetime.now)
+
+    action = Column(String(2000))
 
     order = relationship(
         "RepairOrder", primaryjoin="OrderHistory.order_id == RepairOrder.id"
     )
-    customer = relationship("User", primaryjoin="OrderHistory.customer_id == User.id")
-    staff = relationship(
-        "ShopMember", primaryjoin="OrderHistory.staff_id == ShopMember.user_id"
-    )
+    # customer = relationship("User", primaryjoin="OrderHistory.customer_id == User.id")
+    # staff = relationship(
+    #     "ShopMember", primaryjoin="OrderHistory.staff_id == ShopMember.user_id"
+    # )
 
     def __repr__(self):
         return str(self.__dict__)

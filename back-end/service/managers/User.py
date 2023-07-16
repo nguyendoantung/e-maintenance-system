@@ -3,7 +3,7 @@ import uuid
 from http import HTTPStatus
 
 import pytz
-from data import Category, Device, OrderItem, RepairOrder
+from data import Category, Device, OrderHistory, OrderItem, RepairOrder
 from data import User as UserDB
 from service.ApiModel.ListOrder import ListOrder, ListOrderForUser
 from service.constant import OrderStatus
@@ -56,6 +56,15 @@ class User:
             .name
         )
         self.session.add(repair_order)
+        self.session.commit()
+
+        initial_order = OrderHistory(
+            id=uuid.uuid4(),
+            order_id=repair_order_id,
+            update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+            action="Tạo đơn",
+        )
+        self.session.add(initial_order)
         self.session.commit()
         try:
             SendEmailController().send_email(

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const CreateRepairOrderForm = (props) => {
-    const { onSubmit, setOpen, busy } = props;
+    const { onSubmit, setOpen, busy, onCancelCreatePage } = props;
     const classes = useStyles();
 
     const {
@@ -151,6 +151,9 @@ const CreateRepairOrderForm = (props) => {
                         onClick={() => {
                             setOpen(false);
                             reset();
+                            if (onCancelCreatePage){
+                                onCancelCreatePage()
+                            }
                         }}
                     >
                         Cancel

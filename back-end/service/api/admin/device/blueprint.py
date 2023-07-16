@@ -50,7 +50,7 @@ def create_device():
     role = get_jwt()["sub"]["role"]
     if "admin" not in role:
         return {"msg": "Unauthorized!"}, HTTPStatus.UNAUTHORIZED
-    admin_user =  get_jwt()["sub"]["user_name"]
+    admin_user = get_jwt()["sub"]["user_name"]
 
     device = CreateDevice(**body)
 

@@ -64,6 +64,7 @@ const CreateRepairOrderPageUser = () => {
             token={token}
             onSubmit={handleSubmit}
             busy={isLoading}
+            onCancelCreatePage={goToHomePage}
             // open={open}
             setOpen={setOpen}
           />

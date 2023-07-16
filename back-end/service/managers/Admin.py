@@ -1,7 +1,9 @@
+import datetime
 import uuid
 from http import HTTPStatus
 
-from data import Device, OrderItem, RepairOrder, User
+import pytz
+from data import Device, OrderHistory, OrderItem, RepairOrder, User
 from service.ApiModel.ListOrder import ListOrder, ListOrderAdmin, ListOrderOfStaff
 from service.ApiModel.ListStaff import Staff
 from service.ApiModel.UpdateOrder import RejectOrder
@@ -82,6 +84,14 @@ class Admin:
             except Exception:
                 pass
             self.session.commit()
+            accept_history = OrderHistory(
+                id=uuid.uuid4(),
+                order_id=order_id,
+                update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+                action="Chấp nhận đơn.",
+            )
+            self.session.add(accept_history)
+            self.session.commit()
             return {}
 
     def get_order_of_staff(self, staff_id: uuid.UUID, page=1, page_size=5):
@@ -132,6 +142,14 @@ class Admin:
             return {}, HTTPStatus.BAD_REQUEST
         else:
             order.status = "Completed"
+            self.session.commit()
+            complete_history = OrderHistory(
+                id=uuid.uuid4(),
+                order_id=order_id,
+                update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+                action="Hoàn thành đơn.",
+            )
+            self.session.add(complete_history)
             self.session.commit()
             return {}, HTTPStatus.OK
 
@@ -184,6 +202,14 @@ class Admin:
         user: User = self.session.query(User).filter(User.id == customer_id).first()
         order.status = OrderStatus.REJECT
         self.session.commit()
+        reject_history = OrderHistory(
+                id=uuid.uuid4(),
+                order_id=order_id,
+                update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+                action="Từ chối đơn.",
+            )
+        self.session.add(reject_history)
+        self.session.commit()
 
         try:
             SendEmailController().send_email(
@@ -220,6 +246,14 @@ class Admin:
             customer: User = (
                 self.session.query(User).filter(User.id == order.customer_id).first()
             )
+            assign_history = OrderHistory(
+                id=uuid.uuid4(),
+                order_id=order_id,
+                update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+                action=f"Giao cho {staff.FirstName} {staff.LastName} thực hiện đơn.",
+            )
+            self.session.add(assign_history)
+            self.session.commit()
 
             try:
                 SendEmailController().send_email(
