@@ -2,8 +2,9 @@ from http import HTTPStatus
 
 from flask import Blueprint, request
 from flask_jwt_extended import get_jwt, jwt_required
-from service.ApiModel.UpdateOrder import RejectOrder
+from service.ApiModel.UpdateOrder import DeviceItem, RejectOrder
 from service.managers.Admin import Admin
+from service.managers.Order import OrderManager
 
 blueprint = Blueprint("admin/order", __name__, url_prefix="/admin/order")
 
@@ -40,3 +41,19 @@ def assign_order(order_id):
     # print(request.get_json())
     staff_id = request.get_json().get("staff", "")
     return Admin().assign_order(order_id, staff_id)
+
+
+@blueprint.route(
+    "/add_device/<uuid(strict=False):order_id>",
+    methods=["PUT"],
+    endpoint="add-device-order",
+)
+@jwt_required()
+def add_device_order(order_id):
+    body = request.get_json()
+    role = get_jwt()["sub"]["role"]
+    if "staff" not in role:
+        return {"msg": "Unauthorized!"}, HTTPStatus.UNAUTHORIZED
+    device = DeviceItem(**body)
+    staff_id = get_jwt()["sub"]["id"]
+    return OrderManager().add_device_to_order(order_id, staff_id, device)

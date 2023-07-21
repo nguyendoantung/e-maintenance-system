@@ -4,7 +4,7 @@ import OrderOfStaffAction from './Actions';
 const columns = () => {
   return [
     {
-      Header: 'Người tạo',
+      Header: 'Tên đơn',
       accessor: 'full_name',
     },
     {
@@ -14,10 +14,6 @@ const columns = () => {
     {
       Header: 'Ngày tạo',
       accessor: 'create_date',
-    },
-    {
-      Header: 'Trạng thái',
-      accessor: 'status',
     },
     {
       Header: 'Địa chỉ',

@@ -27,6 +27,7 @@ const path = {
           : `/admin/device/?page=${page}&pageSize=${pageSize}&category_id=${category}`,
       createDevice: () => `/admin/device/`,
       uploadDeviceImage: () => `/admin/device/device_image`,
+      all_device: () => `/admin/device/all_device`,
     },
     category: {
       listCategory: () => `/admin/category/`,
@@ -34,6 +35,7 @@ const path = {
     order: {
       rejectOrder: ({ orderId }) => `/admin/order/reject/${orderId}`,
       assignOrder: ({ orderId }) => `/admin/order/assign/${orderId}`,
+      addDeviceOrder: ({ orderID }) => `/admin/order/add_device/${orderID}`,
     },
     userService: {
       changePassword: () => `/user/change_password`,

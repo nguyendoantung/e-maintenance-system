@@ -56,6 +56,6 @@ def create_device():
 
     return DeviceManager().add_device(admin_user, device)
 
-@blueprint.route("/all-device", methods=["GET"], endpoint="get-all-device")
+@blueprint.route("/all_device", methods=["GET"], endpoint="get-all-device")
 def get_all_device():
     return DeviceManager().get_all_device()
