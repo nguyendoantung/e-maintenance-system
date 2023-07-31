@@ -87,11 +87,11 @@ export default function RegisterPage() {
         mutationKey: ["register"],
         mutationFn: (data) => authencation.register(data),
         onSuccess: (res) => {
-            showSuccess({ message: "Đăng kí thành công" });
+            showSuccess({ message: res?.data?.msg || "Đăng kí thành công" });
             history.push("/");
         },
         onError: (res) => {
-            showSuccess({ message: "Đăng kí thất bại" });
+            showError({ message: res?.response?.data?.msg || "Đăng kí thất bại!" });
         },
     });
     const onSubmitStepTwo = (data) => {
@@ -394,22 +394,6 @@ export default function RegisterPage() {
                                 name="phone"
                                 autoComplete="phone"
                                 autoFocus
-                            />
-                            <TextField
-                                {...register("birthday")}
-                                error={!!errors.birthday}
-                                helperText={errors.birthday?.message}
-                                variant="outlined"
-                                margin="normal"
-                                id="date"
-                                label="Birthday"
-                                type="date"
-                                defaultValue={now.getDate()}
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                fullWidth
                             />
                             <FormControlLabel
                                 control={

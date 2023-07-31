@@ -26,7 +26,7 @@ values
 (unhex(replace(uuid(),'-','')), "Staff 6","1", "Staff", "6", "user,staff", "fake6@gmail.com","");
 
 select *, hex(id) from user;
-select *, hex(id) from repair_order;
+
 
 update repair_order set repair_order.status ="Completed" where repair_order.status = "Complete";
 
@@ -51,7 +51,8 @@ select *, heX(id) from shop;
 select *, HEX(`shop_id`), HEX(`user_id`), is_admin from shop_member;
 # cd826363-fbd8-11ed-adda-5811223f09d8
 
-select * from order_history;
+select *, hex(`id`), hex(`order_id`) from order_history;
+select *, hex(id) from repair_order;
 
 update device set unit = "Chiếc";
 delete from device where name like "%PVC%";
