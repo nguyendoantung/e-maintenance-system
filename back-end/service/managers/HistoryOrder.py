@@ -21,8 +21,10 @@ class HistoryOrder:
             return {"msg": "Không tìm thấy đơn!"}, HTTPStatus.NOT_FOUND
         if order.customer_id != uuid.UUID(user_id):
             return {"msg": "Unauthorized"}, HTTPStatus.UNAUTHORIZED
-        query = self.session.query(OrderHistory).filter(
-            OrderHistory.order_id == order_id
+        query = (
+            self.session.query(OrderHistory)
+            .filter(OrderHistory.order_id == order_id)
+            .order_by(OrderHistory.update_time)
         )
         histories = query.all()
         return {
