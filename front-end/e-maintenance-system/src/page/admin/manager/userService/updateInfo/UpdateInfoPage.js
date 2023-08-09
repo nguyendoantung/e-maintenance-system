@@ -89,11 +89,11 @@ const UpdateInfoPage = () => {
                   <Typography>Phone: {profileData.phone}</Typography>
                 </CardContent>
               </Card>
-              <DialogActions>
+              {/* <DialogActions>
                 <Button variant="contained" color="primary">
                   Cập nhật thông tin
                 </Button>
-              </DialogActions>
+              </DialogActions> */}
             </Grid>
           </Grid>
         </>

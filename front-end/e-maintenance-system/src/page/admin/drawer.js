@@ -26,7 +26,7 @@ const staffFeatures = [
 const userFeatures = [
   { text: 'Quản lý đơn đặt hàng', value: 'UserOrder', icon: '' },
   {
-    text: 'Cập nhật thông tin',
+    text: 'Thông tin cá nhân',
     value: 'UpdateInfo',
     icon: '',
   },
