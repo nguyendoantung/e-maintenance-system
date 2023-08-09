@@ -40,7 +40,7 @@ const DialogHistory = (props) => {
   const orderName = order?.full_name;
 
   const { data } = GetHistoryOneOrder({ orderId, enabled: openHistory });
-  console.log(data);
+  // console.log(data);
   const { data: histories = [], total } = data?.data || {};
   return (
     <>

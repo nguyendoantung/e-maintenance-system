@@ -67,3 +67,15 @@ def get_history_one_order(order_id):
     information = get_jwt()["sub"]
     user_id = information.get("id")
     return HistoryOrder().get_history_one_order(user_id, order_id)
+
+
+@blueprint.route(
+    "/<uuid(strict=False):order_id>",
+    methods=["DELETE"],
+    endpoint="delete-order",
+)
+@jwt_required()
+def delete_one_order(order_id):
+    information = get_jwt()["sub"]
+    user_id = information.get("id")
+    return User().delete_order(user_id, order_id)

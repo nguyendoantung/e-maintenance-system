@@ -1,5 +1,6 @@
 import React from 'react';
 import DialogHistory from '../../historyOrder/list/DialogHistory';
+import CancelOrderButton from './CancelOrder';
 
 const columns = () => {
   return [
@@ -36,6 +37,12 @@ const columns = () => {
     {
       Header: 'Thiết bị',
       accessor: 'device',
+    },
+    {
+      Header: 'Actions',
+      accessor: (row) => {
+        return <CancelOrderButton order={row}/>;
+      },
     },
   ];
 };

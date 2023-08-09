@@ -189,3 +189,34 @@ class User:
                 a.staff_name = f"{staff.FirstName} {staff.LastName}"
             res.append(a.dict(by_alias=True))
         return {"data": res, "total": total}, HTTPStatus.OK
+
+    def delete_order(self, user_id, order_id):
+        order: RepairOrder = (
+            self.session.query(RepairOrder).filter(RepairOrder.id == order_id).first()
+        )
+        if not order:
+            return {}, HTTPStatus.BAD_REQUEST
+
+        if order.customer_id != uuid.UUID(user_id):
+            return {
+                "msg": "Bạn không có quyền tương tác với đơn!"
+            }, HTTPStatus.UNAUTHORIZED
+        if order.status == OrderStatus.ON_PROCESS:
+            return {
+                "msg": "Đơn đang trong quá trình thực thi, không thể hủy!"
+            }, HTTPStatus.BAD_REQUEST
+        if order.status in OrderStatus.END_ORDER_STATUS:
+            return {
+                "msg": "Quá trình thực thi đơn đã kết thúc!"
+            }, HTTPStatus.BAD_REQUEST
+        order.status = OrderStatus.DELETE
+        self.session.commit()
+        history = OrderHistory(
+            id=uuid.uuid4(),
+            order_id=order_id,
+            update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+            action=f"Hủy đơn",
+        )
+        self.session.add(history)
+        self.session.commit()
+        return {"msg": "Thành công"}, HTTPStatus.OK

@@ -17,5 +17,6 @@ class OrderStatus:
     # PENDING = "Pending"
     ON_PROCESS = "Working"
     COMPLETE = "Completed"
+    DELETE = "Deleted"
     ACTIVE_ORDER_STATUS = [START, ON_PROCESS]
-    END_ORDER_STATUS = [REJECT, COMPLETE]
+    END_ORDER_STATUS = [REJECT, COMPLETE, DELETE]
