@@ -31,13 +31,20 @@ class OrderManager:
         if not order or str(order.staff_id) != staff_id or not device:
             return {"msg": "Unauthorized!"}, HTTPStatus.UNAUTHORIZED
         else:
-            order_item = OrderItem(
-                order_id=order_id,
-                item_id=device_item.device_id,
-                number=device_item.number,
-            )
+            order_item = self.session.query(OrderItem).filter(
+                OrderItem.order_id == order_id,
+                OrderItem.item_id == device_item.device_id,
+            ).first()
+            if order_item:
+                order_item.number += device_item.number
+            else:
+                order_item = OrderItem(
+                    order_id=order_id,
+                    item_id=device_item.device_id,
+                    number=device_item.number,
+                )
 
-            self.session.add(order_item)
+                self.session.add(order_item)
             history = OrderHistory(
                 id=uuid.uuid4(),
                 order_id=order_id,

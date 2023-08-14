@@ -35,6 +35,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const renderRole = (role) => {
+  if (role?.includes('admin')) {
+    return 'Quản trị viên';
+  } else if (role?.includes('staff')) {
+    return 'Nhân viên';
+  }
+  return 'Người dùng';
+};
+
 const UpdateInfoPage = () => {
   const { adminID } = useParams();
   const classes = useStyles();
@@ -87,6 +96,9 @@ const UpdateInfoPage = () => {
                   <Typography>Name: {profileData.name}</Typography>
                   <Typography>Email: {profileData.email}</Typography>
                   <Typography>Phone: {profileData.phone}</Typography>
+                  <Typography>
+                    Quyền hiện tại: {renderRole(profileData?.role)}
+                  </Typography>
                 </CardContent>
               </Card>
               {/* <DialogActions>

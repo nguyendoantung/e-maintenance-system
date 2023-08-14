@@ -119,12 +119,14 @@ class Admin:
                 .all()
             )
             price = 0
+            a.device_use = []
             for item in items:
                 item_price = (
                     self.session.query(Device).filter(Device.id == item.item_id).first()
                 )
                 price += item_price.price * item.number
 
+                a.device_use.append(f"{item.number} {item_price.name}")
             a.price = price
             res.append(a.dict(by_alias=True))
         return {
@@ -203,11 +205,11 @@ class Admin:
         order.status = OrderStatus.REJECT
         self.session.commit()
         reject_history = OrderHistory(
-                id=uuid.uuid4(),
-                order_id=order_id,
-                update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
-                action="Từ chối đơn.",
-            )
+            id=uuid.uuid4(),
+            order_id=order_id,
+            update_time=datetime.datetime.now(tz=pytz.timezone("Asia/Ho_Chi_Minh")),
+            action="Từ chối đơn.",
+        )
         self.session.add(reject_history)
         self.session.commit()
 

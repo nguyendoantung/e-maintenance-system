@@ -29,11 +29,12 @@ const columns = () => {
     },
     {
       Header: 'Thiết bị sử dụng',
-      accessor: 'used_device',
-    },
-    {
-      Header: 'Giá',
-      accessor: 'price',
+      accessor: (row) => {
+        const { device_use } = row;
+        return device_use.map((item) => {
+          return <div key="device">{item}</div>;
+        });
+      },
     },
     {
       Header: 'Xử lý',

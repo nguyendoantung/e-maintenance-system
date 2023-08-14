@@ -80,6 +80,7 @@ def my_profile():
         "email": user.email,
         "phone": user.phone,
         "profile_link": user.profile_link,
+        "role": user.role,
     }
 
     return response_body
